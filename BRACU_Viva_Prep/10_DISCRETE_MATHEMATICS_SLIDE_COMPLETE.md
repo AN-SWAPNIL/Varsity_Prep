@@ -2,9 +2,9 @@
 
 # CSE 103 Discrete Mathematics — Slide-Complete Viva Recall
 
-This is a recall-and-explanation volume built from every lecture deck in `Discrete and C/CSE 103`, not a loose list of interview questions. The governing idea is: **define the object, state the exact conditions, work one tiny example, then say why it matters in computer science**.
+This is a recall-and-explanation volume rebuilt against the current `103-DM/Discrete_merged.pdf` (**236/236 pages**), not a loose list of interview questions. The governing idea is: **define the object, state the exact conditions, work one tiny example, then say why it matters in computer science**.
 
-The deck set contains 16 files, 760 slides in total, covering L01 through L14. The Rosen textbook was used only to clarify standard notation or fill a derivation that a slide presents graphically. The lecture-by-lecture audit is at the end.
+The current merged source covers logic and proof, induction, sets/functions, counting, pigeonhole, sequences/recurrences/generating functions, graphs and coloring. Selected graph-theory/computer-mathematics notes were used only to reinforce graph/recurrence applications already routed here or to DSA; they are not treated as additional standalone viva courses.
 
 ## How to answer a mathematical viva question
 
@@ -3360,34 +3360,26 @@ The following are deliberate corrections/clarifications, not omissions:
 | L14 wheel notation | `W_even`/`W_odd` parity | The deck counts total vertices; state whether `Wn` means `n` total vertices or rim `Cn` plus hub. |
 | L14 slide 33 | says the earliest-finishing interval has degree `k-1` | The proof establishes degree **at most** `k-1`. |
 
-# Source Coverage Audit
+# Current Source Coverage Audit
 
-## 134. Files read and slide counts
+## 134. Current merged source
 
-Every deck in `Discrete and C/CSE 103` was read slide by slide. Text-bearing shapes were extracted from the native presentation; legacy `.ppt` decks were also rendered to PDF so formulas and diagrams that disappeared from text extraction could be checked visually. Formula images in `.pptx` decks were inspected where ordinary extraction showed only placeholders. The reference `Discrete_Mathematics_and_Its_Applications_8th_Edition_Rossen.pdf` was used only for standard clarification, not as a substitute for lecture coverage; it is not included in the 760-slide total.
+| Current source | Pages | Material represented in this volume |
+|---|---:|---|
+| `Discrete_merged.pdf` | 236 | propositions/logic, predicates/quantifiers, proof, induction, sets, counting, functions, pigeonhole, sequences, generating functions, recursion/recurrences, graphs and coloring |
+| selected Computer Mathematics / Graph Theory pages | cross-reference only | recurrence, graph and scheduling reinforcement already routed to Discrete/DSA; no separate low-priority viva volume |
 
-| # | Source file | Slides | Material represented in this volume |
-|---:|---|---:|---|
-| 1 | `L01-MSR2021-A.ppt` | 50 | Motivation, checker/area puzzles, propositions, operators, truth tables, DNF/CNF, equivalence, tautology/contradiction (§1–6) |
-| 2 | `L01-MSR2021-B.pptx` | 9 | Argument validity, inference and puzzle-style deduction support (§10–12) |
-| 3 | `L02-Proposition-MSR2021.pptx` | 55 | Implication, converse/inverse/contrapositive, necessary/sufficient, rules of inference, invalid forms, Knights/Knaves (§7–12) |
-| 4 | `L03-FOL-MSR2020.pptx` | 56 | Predicates, domains, quantifiers, translations, negation, order, quantified arguments (§13–19) |
-| 5 | `L04-Proof-MSR2020.pptx` | 29 | Definitions; direct, contrapositive, biconditional, contradiction, cases and nonconstructive proof (§20–25) |
-| 6 | `L05-Induction-I-MSR2020.pptx` | 40 | Induction mechanics, algebra/divisibility/inequality examples, tromino tiling, horse fallacy (§26–29) |
-| 7 | `L06-Induction-II-MSR2020.ppt` | 43 | Strong induction, unstacking, prime products, postage, WOP/descent, invariants (§30–33) |
-| 8 | `L07-Set-MSR2020.ppt` | 30 | Set notation/operations/identities, partitions, power sets, Cartesian products, paradoxes (§34–41) |
-| 9 | `L08-Counting-MSR2020.ppt` | 65 | Sum/product/complement, inclusion-exclusion, permutations/combinations, poker, binomial identities (§42–49) |
-| 10 | `L09-1-FnAndPHP-MSR2018.ppt` | 25 | Functions, injections/surjections/bijections, fibers, ordinary/generalized pigeonhole and applications (§50–58) |
-| 11 | `L09-2-3-CountingByMap-MSR2018.ppt` | 49 | Bijections, bit strings, stars and bars, nonadjacency, loop counting, division, multinomial/Catalan mappings (§59–65) |
-| 12 | `L10-Seq.ppt` | 53 | Sequence descriptions, summation, telescoping, arithmetic/geometric series, Mersenne proof, annuities, harmonic/integral bounds, factorial (§66–75) |
-| 13 | `L11-GenFn.pptx` | 51 | OGFs, operations, convolution, Taylor, constrained counting, Fibonacci/Hanoi, all end-deck coefficient exercises (§76–84) |
-| 14 | `L12-Recursion-MSR2022.pptx` | 79 | Counting recurrences, Catalan/Stirling, Hanoi/merge sort and code, call trees, characteristic roots (§85–104) |
-| 15 | `L13-Graphs.pptx` | 91 | Graph definitions/degrees/isomorphism, paths/components, tree theorems, Euler proof/construction, digraphs, Hamilton/TSP (§105–119) |
-| 16 | `L14-GraphColoring.ppt` | 35 | Coloring, cycles/complete/wheels/trees, bipartite theorem, conflict applications, greedy ordering, interval graphs (§120–130) |
-| **Total** | **16 source files** | **760** | **L01–L14 fully represented** |
+The full 236-page merged PDF was re-read. Text-bearing pages were extracted directly; formulas, graph drawings and worked examples were checked in their page context. Repeated explanations are consolidated, but every viva-relevant definition, theorem, proof pattern, formula, recurrence, algorithm, complexity consequence and correction is retained.
 
-## 135. What “covered” means in this file
+## 135. How to rehearse this volume
 
-Coverage does not mean that every animation frame was transcribed as a separate sentence. Repeated agenda slides and incremental animation frames were consolidated, while every distinct definition, theorem, proof idea, worked example, formula, recurrence, source algorithm/code fragment, complexity consequence, and correction was retained. Diagram-only examples were translated into the invariant or reasoning the diagram demonstrates.
+Hide the explanation, answer each heading aloud, reproduce the formula/proof/code on paper, then compare. Recognition while reading is easier than retrieval in a viva; whiteboard reconstruction is the test.
 
-Use this volume actively: hide the explanation, answer the heading aloud, reproduce the formula/proof/code on paper, then compare. Recognition while reading is easier than recall in a viva; whiteboard retrieval is the test.
+Final source-specific checks:
+
+- state the pigeonhole objects, boxes and forced lower bound;
+- distinguish converse/inverse/contrapositive and necessary/sufficient conditions;
+- give bases, hypothesis and inductive step without circularity;
+- justify a recurrence from disjoint exhaustive cases;
+- distinguish Euler (edges) from Hamilton (vertices);
+- prove a chromatic number with both a lower bound and a matching coloring.

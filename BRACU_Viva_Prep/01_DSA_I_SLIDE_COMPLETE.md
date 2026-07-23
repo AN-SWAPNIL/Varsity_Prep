@@ -4,7 +4,7 @@
 
 > **Purpose.** This is a recall book, not a list of one-line interview answers. Read a definition, redraw the picture or trace, then explain the invariant and complexity aloud. Code is written in clear C++17-style pseudocode; the ideas are language-independent.
 >
-> **Source boundary.** Every meaningful item in the local CSE 105 DSA-I folder was read: all 16 PowerPoint decks, every page of all seven PDFs (including the 22-page image-only handwritten scan), and `Algorithm/Readme.txt`. When a slide contains a typo or an incomplete single-component algorithm, the corrected version is shown and the correction is named. Topics not present in these DSA-I sources are not padded into this volume. In particular, AVL and red-black rotations are **not** taught in these sources; only the reason BSTs need balancing appears.
+> **Current source boundary (re-audited 24 July 2026).** The reduced `203-DSA1` folder now contains four sources totaling **523 pages**: `Algorithms.pdf` (219), `Dsa bayezid sir.pdf` (22 image-only handwritten pages), `DSA Merged Part1.pdf` (254), and `DSA_note_by_Promi.pdf` (28). The current main sources still support the complete elementary-data-structure, graph-traversal, divide-and-conquer, greedy, and dynamic-programming spine of this volume. Old references to removed individual PowerPoint decks and auxiliary PDFs have been deleted. AVL/red-black repair, MST, shortest paths, flow, hashing, and complexity classes remain in DSA II.
 
 ## How to use this book in the final days
 
@@ -2825,43 +2825,21 @@ Answer aloud, then check the relevant section:
 
 ---
 
-# 16. Exact local-source coverage and correction ledger
+# 16. Current local-source coverage and correction ledger
 
-## 16.1 PowerPoint coverage: all 16 decks, 540 slides
+## 16.1 Current four-source coverage: 523 pages
 
-| Local deck | Slides read | Material incorporated here |
+| Current source | Pages | Material incorporated here |
 |---|---:|---|
-| `Data Structures/00. Asymptotic Analysis/CSE 203-July2022-L1.pptx` | 31 | problem/algorithm/program, data structure, ADT, logical/physical form, design trade-offs, correctness and efficiency |
-| `.../CSE 203-July2022-AlgorithmAnalysis.pptx` | 19 | empirical versus asymptotic analysis, basic operation, input size, cases, growth and faster-machine argument |
-| `Data Structures/01. List/CSE 203-July2022-List.pptx` | 43 | list/current-position ADT, array list, singly linked operations, dummy header and cursor-before-current convention |
-| `.../CSE 203-July2022-List(2).pptx` | 23 | free list, overloaded links, array-versus-linked space inequality, doubly linked lists |
-| `Data Structures/02. Stack/CSE 203-July2022-Stack-I.pptx` | 18 | LIFO, array/linked stacks, two stacks in one array, explicit simulation of recursion, Hanoi |
-| `.../CSE 203-July2022-Stack-II.pptx` | 72 | resizing/amortization, postfix evaluation, tag/delimiter matching, spans, sequence reversal/application |
-| `Data Structures/03. Queue/CSE 203-July2022-Queue-I.pptx` | 24 | FIFO, shifting/drifting failures, circular queue, empty/full pigeonhole argument, linked sentinel queue |
-| `.../CSE 203-July2022-Queue-II.pptx` | 16 | resize normalization, deque, priority-queue ADT and operation trade-offs |
-| `Data Structures/04. Tree/CSE 203-July2022-BinaryTrees.pptx` | 84 | recursive tree definition, vocabulary, full/complete properties, counting proofs, traversals, node count, representations |
-| `.../CSE 203-July2022-BST.pptx` | 46 | BST convention, inorder order, search/insert/minimum/deletion cases, `getmin`/`deletemin`, height-dependent costs |
-| `Data Structures/05. Graph/Bipartite.pptx` | 1 | BFS two-color test; extended here to disconnected graphs |
-| `.../Graphs-I.pptx` | 19 | graph vocabulary, degree facts, kinds of graph, paths/cycles/trees, matrix/list representations |
-| `.../Graphs-II.pptx` | 27 | BFS colors/trace/analysis, unweighted shortest paths, predecessor tree, queue-distance invariant and proof |
-| `.../Graphs-III.pptx` | 32 | DFS colors/timestamps/forest, parenthesis and white-path theorems, edge classification |
-| `Data Structures/06. Heap/Heaps-I.pptx` | 68 | heap/PQ motivation, complete-tree array mapping, min/max heap property, push/pop/percolation traces |
-| `.../Heaps-II.pptx` | 17 | height proof, heapify assumptions/recurrence, build-heap correctness and tight $O(n)$ analysis, heapsort |
+| `Algorithms.pdf` | 219 | min/max, maximum subarray, merge/quick sort, recurrences, activity selection, knapsack distinction, Fibonacci, LCS, coin change, 0/1 knapsack, and matrix-chain multiplication |
+| `Dsa bayezid sir.pdf` | 22 | visually inspected handwritten treatment of heaps/PQ, greedy selection, divide-and-conquer, recurrence/DP examples, weighted intervals, Kadane, edit distance, and Karatsuba |
+| `DSA Merged Part1.pdf` | 254 | asymptotic analysis, lists, stacks, queues, trees/BSTs, heaps, graph representation, BFS/DFS, and the main state/trace diagrams |
+| `DSA_note_by_Promi.pdf` | 28 | compact code/derivation cross-check for structures, traversal, heap, greedy, divide-and-conquer, and DP |
+| **Total** | **523** | current reduced source set |
 
-## 16.2 PDF and text coverage: all 7 PDFs, 583 pages, plus Readme
+The four PDFs overlap substantially. The page total records the files actually present; it is not a claim of 523 unique lecture topics.
 
-| Local source | Pages read | Material incorporated here |
-|---|---:|---|
-| `Dsa bayezid sir.pdf` | **22/22, visually inspected page by page** | heaps/PQ; fractional and 0/1 knapsack example; interval selection proof; merge sort; inversions; closest pair; Fibonacci/DP; 0/1 table; weighted intervals; Kadane; edit distance derivation; Karatsuba |
-| `DSA Merged Part1 (reduced pages).pdf` | 228/228 | compressed cross-check of the elementary-data-structure decks through graphs, including the list-state and queue-state diagrams |
-| `DSA_note_by_Promi.pdf` | 28/28 | Master extension, list/free-list/DLL code, stacks/queues, BST/graph/heap, interval/job/platform greedy, kth of two arrays, inversion/closest pair/Karatsuba, DP extensions |
-| `Algorithm/Algorithms.pdf` | 219/219 | min/max; maximum subarray; merge/quick sort; recurrence solving; activity selection; fractional/0/1 distinction; Fibonacci; LCS; coin change; 0/1 knapsack; matrix chain |
-| `Algorithm/Knapsack-greedy-HKUST.pdf` | 58/58 | formal fractional variables, density sort, exchange proof, complexity, 0/1 counterexample |
-| `Algorithm/UBC-divide-and-conquer.pdf` | 2/2 | closest-pair strip and packing argument; distinction between re-sorting and presorted variants |
-| `Data Structures/00. Asymptotic Analysis/02AlgorithmAnalysis.pdf` | 26/26 | tractability, analysis styles, formal bounds, multivariable costs, common running-time examples |
-| `Algorithm/Readme.txt` | complete | source-context note: fractional knapsack and closest-pair slides plus the large merged algorithms PDF are the supplied algorithm resources |
-
-## 16.3 Corrections and deliberate clarifications
+## 16.2 Corrections and deliberate clarifications
 
 The aim is to remember course content **correctly**, not reproduce accidental slide errors.
 
@@ -2878,7 +2856,7 @@ The aim is to remember course content **correctly**, not reproduce accidental sl
 | Closest-pair sources show two combine implementations | re-sorting per level is $\Theta(n\log^2n)$; maintaining y-order is $\Theta(n\log n)$ |
 | Height terminology varies across texts | this book declares edge height: leaf 0, empty tree -1, and flags the convention |
 
-## 16.4 Deliberately absent from this DSA-I volume
+## 16.3 Deliberately absent from this DSA-I volume
 
 Red-black rotations, AVL rotations, MST, Dijkstra, Bellman-Ford, max flow, string matching, hashing, disjoint sets, and complexity classes do not appear as taught topics in the audited DSA-I source set. Some belong to DSA-II or other volumes. The BST slides only state why balance is desirable. Keeping that boundary prevents a long generic note from crowding out the material actually in the academic slides.
 
@@ -2893,4 +2871,3 @@ For almost any question, answer in this order:
 That shape demonstrates understanding, proof awareness, implementation ability, and engineering judgment--not just memorized terminology.
 
 <!-- DSA1_END -->
-

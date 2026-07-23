@@ -2,13 +2,20 @@
 
 # Computer Networks — Slide-Complete Viva Recall
 
-This volume was rebuilt from the two local CSE321 merged slide sets, not from the previous summary:
+This volume was re-audited against the current Networking and Data Communication folders. The two CSE 321 merged decks remain the main protocol sequence, while CSE 311 supplies the signal/encoding mathematics that must not disappear from a networking viva.
 
-- `CSE321_AAI_Merged.pdf`: 268/268 pages audited. It is strongest on network foundations, physical transmission, data-link protocols, MAC, Ethernet, wireless LANs, switching, and VLANs.
-- `CSE321_MSH_Merged.pdf`: 453/453 pages audited. It is strongest on IP addressing/subnetting, NAT, switching and routing, congestion/QoS, sockets, TCP/UDP, DNS, DHCP, HTTP, email, and IPv6.
-- Total audited: **721/721 pages**. The exact non-overlapping coverage matrix is at the end.
-- Diagram-heavy and code-image pages were visually inspected. Blank separator pages are counted honestly in the matrix.
-- Anything explicitly marked **Core supplement** is useful viva material requested by the interview reports but is not presented in detail in the 721 pages. TLS is the main example.
+| Current source | Pages | How it is used |
+|---|---:|---|
+| `CSE321_AAI_Merged.pdf` | 268 | foundations, physical transmission, data link, MAC, Ethernet/WLAN, switching and VLANs |
+| `CSE321_MSH_Merged.pdf` | 453 | IP/subnetting/NAT, routing, congestion/QoS, sockets, TCP/UDP, DNS, DHCP, HTTP, email and IPv6 |
+| `CSE 321(AAI) Notebook_Kowshik.pdf` | 39 | handwritten reinforcement of the main networking sequence |
+| `Networking CHEATSHEET.pdf` | 4 | last-pass protocol and header recall |
+| `ns-3-tutorial.pdf` | 157 | simulation architecture and minimal experiment workflow |
+| `CSE311_Monir_Merged.pdf` | 1122 | signals, systems, sampling, quantization, line coding, modulation, noise, multiplexing and digital communication |
+| `CSE311_Sahil_ClassNotes.pdf` | 34 | handwritten Data Communication problem/diagram reinforcement |
+| **Total routed to this volume** | **2077** | **921 Networking pages + 1156 Data Communication pages** |
+
+Diagram-heavy handwritten pages were visually sampled as images in addition to text extraction. Anything explicitly marked **Core supplement** is standard viva material not taught in comparable depth in the selected slides; TLS is the main example.
 
 ## The 30-second map of the course
 
@@ -179,6 +186,164 @@ $$C=3000\log_2(1001)\approx 29.9\text{ kb/s}$$
 
 Nyquist limits rate by bandwidth and number of symbols; Shannon gives the theoretical noise ceiling. A practical system must satisfy both constraints.
 
+## Data Communication signal chain
+
+The CSE 311 slides repeatedly connect the stages below. Draw this first when a question mixes sampling, coding and modulation:
+
+```mermaid
+flowchart LR
+    A[Analog or digital source] --> B[Source encoding]
+    B --> C[Line or channel coding]
+    C --> D[Pulse shaping / modulation]
+    D --> E[Physical channel<br/>attenuation + distortion + noise]
+    E --> F[Demodulation / detection]
+    F --> G[Decode and reconstruct]
+```
+
+### Sinusoid, spectrum, and bandwidth
+
+A sinusoid is
+
+$$x(t)=A\cos(2\pi ft+\phi),\qquad T=\frac1f,$$
+
+where amplitude controls signal strength, frequency controls repetition rate, and phase specifies horizontal displacement. A general signal is represented by frequency components:
+
+$$X(f)=\int_{-\infty}^{\infty}x(t)e^{-j2\pi ft}\,dt,\qquad
+x(t)=\int_{-\infty}^{\infty}X(f)e^{j2\pi ft}\,df.$$
+
+For a periodic signal with fundamental angular frequency $\omega_0=2\pi/T_0$,
+
+$$x(t)=\sum_{k=-\infty}^{\infty}C_ke^{jk\omega_0t},\qquad
+C_k=\frac1{T_0}\int_{T_0}x(t)e^{-jk\omega_0t}\,dt.$$
+
+The spectrum tells which frequencies are present; **bandwidth** is the occupied/passed frequency range under the definition being used. A sharp rectangular pulse needs many harmonics, so a bandwidth-limited channel rounds its edges.
+
+For a linear time-invariant channel with impulse response $h(t)$,
+
+$$y(t)=x(t)*h(t)=\int_{-\infty}^{\infty}x(\tau)h(t-\tau)\,d\tau,$$
+
+and in frequency,
+
+$$Y(f)=X(f)H(f).$$
+
+That is why filtering is multiplication in frequency and convolution in time.
+
+### Attenuation, distortion, noise, and decibels
+
+- **Attenuation:** signal power decreases with distance.
+- **Delay/frequency distortion:** different frequency components receive different gain or delay, changing waveform shape.
+- **Noise:** unwanted energy is added; thermal noise is commonly modeled as additive white Gaussian noise (AWGN).
+- **Interference/crosstalk:** another transmitter or adjacent conductor contributes unwanted signal.
+
+For a power ratio:
+
+$$G_{\mathrm{dB}}=10\log_{10}\frac{P_{out}}{P_{in}}.$$
+
+For equal impedances and an amplitude/voltage ratio:
+
+$$G_{\mathrm{dB}}=20\log_{10}\frac{V_{out}}{V_{in}}.$$
+
+Decibel gains and losses add along a cascade. A loss of $3$ dB is roughly half power; $+3$ dB roughly doubles it; $10$ dB is a factor of ten.
+
+## Sampling, quantization, and PCM
+
+### Sampling theorem and aliasing
+
+If a continuous signal contains no frequency above $B$ Hz, perfect ideal reconstruction requires
+
+$$f_s>2B,\qquad T_s=\frac1{f_s}<\frac1{2B}.$$
+
+$2B$ is the Nyquist sampling rate. Sampling replicates the spectrum every $f_s$; if replicas overlap, high-frequency content folds into lower frequencies—**aliasing**. Therefore an analog anti-alias low-pass filter precedes the sampler, and a reconstruction low-pass filter follows decoding.
+
+Do not confuse this with the earlier Nyquist **data-rate** formula. One concerns sampling a band-limited waveform; the other concerns symbol transmission over a noiseless band-limited channel.
+
+### Uniform quantization
+
+With range $V_{\max}-V_{\min}$ and $L=2^n$ levels,
+
+$$\Delta=\frac{V_{\max}-V_{\min}}{L},\qquad
+-\frac{\Delta}{2}\le e_q<\frac{\Delta}{2}.$$
+
+Under the common uniform-error model,
+
+$$P_q=E[e_q^2]=\frac{\Delta^2}{12}.$$
+
+For a full-scale sinusoid and an ideal $n$-bit uniform quantizer,
+
+$$SQNR_{\mathrm{dB}}\approx 6.02n+1.76.$$
+
+Each additional bit improves ideal quantization SNR by about 6 dB, but increases bit rate.
+
+### PCM rate and stages
+
+Pulse Code Modulation performs:
+
+1. anti-alias filtering;
+2. sampling;
+3. quantization;
+4. binary encoding;
+5. transmission and regeneration;
+6. decoding and low-pass reconstruction.
+
+If each sample has $n=\lceil\log_2L\rceil$ bits,
+
+$$R_b=n f_s\quad\text{bits/s per signal}.$$
+
+Example: a $4$ kHz voice band sampled at $8$ ksample/s with 8 bits/sample produces $64$ kb/s before framing/error-control overhead. TDM can interleave one sample/codeword from many PCM channels into recurring frames.
+
+**Companding** uses finer effective quantization near zero and coarser at large amplitudes (for example, $\mu$-law/A-law) to improve perceived/SQNR behavior over a wide dynamic range.
+
+### DPCM and delta modulation
+
+DPCM predicts the next sample and quantizes the smaller prediction error:
+
+$$d[k]=m[k]-\hat m[k].$$
+
+If the predictor is good, the difference needs fewer bits for comparable quality. **Delta modulation** is one-bit DPCM: transmit whether the estimate should step up or down.
+
+- step too small for a fast-changing input $\rightarrow$ slope-overload distortion;
+- step too large for a slowly changing input $\rightarrow$ granular noise.
+
+Adaptive delta modulation varies step size to balance the two.
+
+## Baseband line coding, block coding, and scrambling
+
+Line coding maps bits to physical signal levels/pulses. Judge a scheme by required bandwidth, DC content, baseline wandering, clock recovery/self-synchronization, noise immunity, error-detection opportunity, and implementation cost.
+
+| Scheme | Encoding idea | Main strength | Main weakness |
+|---|---|---|---|
+| Unipolar NRZ | `1=A`, `0=0` | simplest | DC component, poor synchronization |
+| Polar NRZ-L | bit value chooses `+A/-A` | simple, less DC than unipolar | long equal runs lose clock |
+| Polar NRZ-I | `1` causes transition; `0` does not | differential/polarity robust | long zero run loses clock |
+| RZ | returns to zero inside bit | more transitions | larger bandwidth |
+| Manchester | mid-bit transition encodes bit | self-clocking, no DC | about twice NRZ signal rate |
+| Differential Manchester | always mid-bit transition; boundary behavior encodes bit | self-clocking and polarity robust | bandwidth cost |
+| AMI | `0=0`; successive `1`s alternate `+A/-A` | no DC; bipolar violation can reveal error | long zero run loses clock |
+| Pseudoternary | `1=0`; successive `0`s alternate | AMI-like properties | long one run loses clock |
+
+For **block coding**, map $m$ data bits to $n>m$ code bits. The redundancy lets the code avoid long transition-free patterns and sometimes detect invalid words. `4B/5B` has efficiency $4/5=80\%$ and is commonly combined with NRZ-I.
+
+**Scrambling** replaces troublesome all-zero runs while preserving the original bit rate:
+
+- **B8ZS:** in AMI, replace eight zeros with a pattern containing deliberate bipolar violations; the receiver recognizes and restores the zeros.
+- **HDB3:** replace each four-zero run by `000V` when the count of nonzero pulses since the last substitution is odd, or `B00V` when even. `B` is a normal balancing pulse and `V` a violation.
+
+## Pulse transmission and intersymbol interference
+
+A digital baseband waveform may be written
+
+$$s(t)=\sum_k a_kp(t-kT).$$
+
+A bandwidth-limited channel spreads pulses. Neighboring symbols then contaminate the sampling instant—**intersymbol interference (ISI)**. The zero-ISI Nyquist condition for the combined pulse/channel response is
+
+$$p(0)=1,\qquad p(nT)=0\quad\text{for every nonzero integer }n.$$
+
+Raised-cosine pulse shaping satisfies the condition while trading excess bandwidth for easier timing/implementation:
+
+$$B=\frac{1+\alpha}{2T},\qquad 0\le\alpha\le1,$$
+
+where $\alpha$ is roll-off. A matched filter maximizes sample-time SNR in AWGN for a known pulse; an equalizer compensates channel distortion. An eye diagram summarizes timing margin, noise margin and ISI: a more open eye is better.
+
 ## Guided media
 
 ### Twisted pair
@@ -212,6 +377,88 @@ Satellite orbits trade coverage and delay. Geostationary satellites appear fixed
 - **QAM:** combines amplitude and phase; QAM-16 carries $\log_2 16=4$ bits/symbol, QAM-64 carries 6, but denser constellations need better SNR.
 
 Baud is symbols per second; bit rate is symbols/s multiplied by bits/symbol. They are not always equal.
+
+## Analog carrier modulation
+
+Modulation moves a low-frequency/baseband message to a passband around carrier frequency $f_c$. It enables practical antennas, frequency allocation/multiplexing and propagation through bandpass channels.
+
+### Conventional AM
+
+Let normalized message $m_n(t)$ satisfy $|m_n(t)|\le1$ and modulation index $\mu$:
+
+$$s_{AM}(t)=A_c[1+\mu m_n(t)]\cos(2\pi f_ct).$$
+
+For undistorted envelope detection, normally $0\le\mu\le1$:
+
+- $\mu<1$: under-modulated;
+- $\mu=1$: 100% modulation;
+- $\mu>1$: over-modulated; envelope crosses/inverts and an ordinary envelope detector distorts.
+
+For single-tone $m_n(t)=\cos(2\pi f_mt)$:
+
+$$
+s_{AM}(t)=A_c\cos(2\pi f_ct)
++\frac{\mu A_c}{2}\cos2\pi(f_c+f_m)t
++\frac{\mu A_c}{2}\cos2\pi(f_c-f_m)t.
+$$
+
+There is a carrier plus upper/lower sidebands. If the message bandwidth is $B_m$:
+
+$$B_{AM}=2B_m.$$
+
+With load normalized consistently and carrier power $P_c$, single-tone total power and sideband efficiency are:
+
+$$P_T=P_c\left(1+\frac{\mu^2}{2}\right),\qquad
+\eta=\frac{P_{\text{sidebands}}}{P_T}
+=\frac{\mu^2}{2+\mu^2}.$$
+
+At $\mu=1$, maximum conventional-AM information-bearing efficiency is $1/3$; most power remains in the carrier.
+
+### DSB-SC and SSB
+
+Double-sideband suppressed-carrier:
+
+$$s_{DSB}(t)=A_cm(t)\cos(2\pi f_ct).$$
+
+Multiplication shifts the message spectrum to $\pm f_c$; bandwidth is $2B_m$. No large carrier power is transmitted, but the receiver needs coherent carrier phase/frequency recovery.
+
+Single-sideband transmits only upper or lower sideband:
+
+$$B_{SSB}=B_m.$$
+
+It saves bandwidth and power but requires sharper filtering or phase/Hilbert-transform methods and coherent demodulation. Conventional AM, DSB-SC and SSB trade receiver simplicity against power/bandwidth efficiency.
+
+### Angle modulation: PM and FM
+
+General constant-envelope angle-modulated carrier:
+
+$$s(t)=A_c\cos\!\left(2\pi f_ct+\phi(t)\right).$$
+
+Instantaneous frequency is
+
+$$f_i(t)=f_c+\frac{1}{2\pi}\frac{d\phi(t)}{dt}.$$
+
+For phase modulation:
+
+$$\phi(t)=k_pm(t),\qquad
+f_i(t)=f_c+\frac{k_p}{2\pi}\frac{dm(t)}{dt}.$$
+
+For frequency modulation:
+
+$$f_i(t)=f_c+k_fm(t),\qquad
+\phi(t)=2\pi k_f\int_{-\infty}^{t}m(\tau)\,d\tau.$$
+
+Thus FM can be produced by integrating the message then phase-modulating; PM can be produced by differentiating then frequency-modulating.
+
+For a single tone, peak frequency deviation $\Delta f$ and modulation frequency $f_m$ give FM index
+
+$$\beta=\frac{\Delta f}{f_m}.$$
+
+FM has infinitely many mathematical sidebands with Bessel-function amplitudes, but Carson's practical bandwidth rule is
+
+$$B_{FM}\approx2(\Delta f+B_m).$$
+
+Angle modulation has constant amplitude and strong amplitude-noise immunity with limiting, but usually consumes more bandwidth and needs more complex synchronization/demodulation than AM.
 
 ## FDM, WDM, TDM, and CDMA
 
@@ -1320,7 +1567,7 @@ Application responsibility does not disappear. An Internet application over UDP 
 
 # Part XI — TLS Core Supplement
 
-> **Source boundary:** The 721 networking pages list HTTPS/port 443 and VPN concepts but do not teach a full TLS handshake. This section is a standard-core supplement because the viva explicitly asked “TLS?”.
+> **Source boundary:** The two main CSE 321 decks list HTTPS/port 443 and VPN concepts but do not teach a full TLS handshake. This section is a network-side summary; the complete slide-grounded treatment is in volume 13.
 
 ## What TLS is
 
@@ -1825,9 +2072,79 @@ With capacity 2 MB and token rate 1 MB/s, a continuously backlogged sender can s
 
 $$S=2/(5-1)=0.5\text{ s}$$
 
-# Exact 721-Page Non-Overlapping Coverage Matrix
+# Part XVIII — ns-3 Network Simulation Recall
 
-Every source page appears in exactly one row. Counts include content, title, and intentionally blank separator pages.
+**ns-3** is an open-source, discrete-event network simulator. A scenario creates modeled nodes, devices, channels, protocol stacks and applications; the simulator processes time-ordered events without needing to wait in real time. It is primarily a research/education tool, not proof that a real deployment will behave identically.
+
+```mermaid
+flowchart LR
+    N[Create Nodes] --> D[Install NetDevices and Channels]
+    D --> S[Install Internet Stack]
+    S --> A[Assign IP Addresses]
+    A --> P[Install Applications]
+    P --> T[Enable Traces / PCAP]
+    T --> R[Simulator::Run]
+    R --> M[Measure, repeat, validate]
+```
+
+Minimal point-to-point UDP echo experiment:
+
+```cpp
+#include "ns3/core-module.h"
+#include "ns3/network-module.h"
+#include "ns3/internet-module.h"
+#include "ns3/point-to-point-module.h"
+#include "ns3/applications-module.h"
+using namespace ns3;
+
+int main() {
+    NodeContainer nodes;
+    nodes.Create(2);
+
+    PointToPointHelper link;
+    link.SetDeviceAttribute("DataRate", StringValue("5Mbps"));
+    link.SetChannelAttribute("Delay", StringValue("2ms"));
+    NetDeviceContainer devices = link.Install(nodes);
+
+    InternetStackHelper stack;
+    stack.Install(nodes);
+    Ipv4AddressHelper ipv4;
+    ipv4.SetBase("10.1.1.0", "255.255.255.0");
+    Ipv4InterfaceContainer iface = ipv4.Assign(devices);
+
+    UdpEchoServerHelper server(9);
+    auto serverApp = server.Install(nodes.Get(1));
+    serverApp.Start(Seconds(1.0));
+    serverApp.Stop(Seconds(10.0));
+
+    UdpEchoClientHelper client(iface.GetAddress(1), 9);
+    client.SetAttribute("MaxPackets", UintegerValue(3));
+    client.SetAttribute("Interval", TimeValue(Seconds(1.0)));
+    client.SetAttribute("PacketSize", UintegerValue(512));
+    auto clientApp = client.Install(nodes.Get(0));
+    clientApp.Start(Seconds(2.0));
+    clientApp.Stop(Seconds(10.0));
+
+    link.EnablePcapAll("echo");
+    Simulator::Run();
+    Simulator::Destroy();
+}
+```
+
+Core object model:
+
+- a `Node` is a modeled computer/router;
+- a `NetDevice` is an interface attached to a `Channel`;
+- helpers reduce repetitive configuration but create real model objects;
+- **attributes** configure parameters such as rate, delay, queue size or application interval;
+- callbacks and **trace sources** expose internal events without editing every model;
+- PCAP traces can be inspected with packet-analysis tools.
+
+A credible experiment states topology, traffic, protocol parameters, queue/channel model, warm-up and run duration, random seeds/runs, measured metric and confidence interval. Validate against a simple analytical expectation first. One run, default seed and a pretty graph do not establish a conclusion.
+
+# Current Networking and Data-Communication Coverage Matrix
+
+The detailed tables below preserve the exact non-overlapping routing of the two main CSE 321 decks. The additional current files are then routed by role rather than pretending that a 1122-page signal deck maps one-to-one onto protocol chapter headings.
 
 ## `CSE321_AAI_Merged.pdf` — 268 pages
 
@@ -1869,13 +2186,25 @@ Every source page appears in exactly one row. Counts include content, title, and
 | 415–453 | 39 | IPv6 need/coexistence; notation/compression; address types; global/link-local; SLAAC/DHCPv6; EUI-64; multicast | Part XIII |
 | **Total** | **453** | **Pages 1–453, no overlap/gap** | **Audited 453/453** |
 
-## Arithmetic check
+## Main-deck arithmetic check
 
 ```text
 AAI: 56+10+62+11+46+8+64+11 = 268
 MSH: 42+36+22+15+18+22+33+19+9+22+9+20+13+45+7+37+13+18+14+39 = 453
 Grand total: 268 + 453 = 721 pages
 ```
+
+## Additional current sources
+
+| Source | Pages | Coverage retained here |
+|---|---:|---|
+| `CSE 321(AAI) Notebook_Kowshik.pdf` | 39 | handwritten reinforcement across Parts I–VII |
+| `Networking CHEATSHEET.pdf` | 4 | high-frequency formulas, protocol facts and headers throughout |
+| `ns-3-tutorial.pdf` | 157 | Part XVIII: conceptual model, helpers, attributes, first scenario, tracing and experimental discipline |
+| `CSE311_Monir_Merged.pdf` | 1122 | expanded Part II: signals/systems, Fourier/convolution, impairment, sampling, quantization, PCM/DPCM/DM, line/block coding, scrambling and ISI |
+| `CSE311_Sahil_ClassNotes.pdf` | 34 | visually reviewed handwritten derivations and diagrams reinforcing expanded Part II |
+| **Additional** | **1356** | **all additional current files routed** |
+| **Combined current total** | **2077** | **721 main-networking + 1356 additional pages** |
 
 # Final One-Minute Checklist
 
@@ -1897,3 +2226,6 @@ Before the viva, be able to draw without notes:
 14. DNS resolution/records, DHCP DORA/relay, HTTP request/response, mail protocols.
 15. IPv4/IPv6 comparison, IPv6 compression, SLAAC, EUI-64.
 16. TCP first, TLS second, encrypted HTTP third for ordinary HTTPS.
+17. Sampling/aliasing, PCM bit rate and quantization noise.
+18. NRZ/Manchester/AMI, 4B/5B, B8ZS/HDB3, and the reason for each.
+19. An ns-3 scenario pipeline and the difference between simulation and reality.

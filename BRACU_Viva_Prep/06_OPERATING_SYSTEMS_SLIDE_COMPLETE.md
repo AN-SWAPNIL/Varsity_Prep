@@ -2,19 +2,18 @@
 
 # Operating Systems — Slide-Complete Viva Recall
 
-This is the **full OS preparation layer**. The root compact file remains the short recall chapter. This file follows the local CSE 313 scope: OS structure, processes and threads, scheduling, IPC and synchronization, deadlock, memory virtualization, I/O and storage, RAID, file systems, crash consistency, and distributed/multiprocessor ideas.
+This is the **full OS preparation layer**. It follows the current CSE 313 sources: OS structure, processes and threads, scheduling, IPC and synchronization, deadlock, memory virtualization, I/O and storage, RAID, file systems, crash consistency, multiprocessor/distributed ideas, and the command-line shell.
 
-The source audit used the CSE 313 outline plus the RRR process/thread, scheduling, IPC and deadlock lectures and the KRV address-space, memory API, base/bounds, segmentation, allocator, paging/TLB/swapping, I/O/HDD/RAID, filesystem/FFS, journaling and LFS decks. Textbook duplicates were not used to expand the topic list.
+The current academic folder was re-read page by page. It contains only the following three main PDFs; no removed textbook, duplicate deck, or old note is counted.
 
 ### Exact canonical-slide coverage
 
-| Canonical merged source | Pages | Visually flagged pages reviewed | Main range |
-|---|---:|---:|---|
-| `RRR-All-Slides-Merged-Bookmarked.pdf` | 241 | 27 | introduction, processes/threads, scheduling, IPC/synchronization, deadlocks |
-| `CSE313_KRV_Merged.pdf` | 445 | 23 | address spaces through paging/swapping, I/O/storage/RAID, filesystems and crash consistency |
-| **Total canonical sequence** | **686** | **50** | complete theory sequence represented below |
-
-Individual source decks, CT compilations, annotated copies, summary notes, and the two OS textbooks overlap these canonical merged sequences. They were consulted for legibility/context but are not added to the page total, preventing duplicate pages from masquerading as additional course coverage.
+| Current source | Pages | Main range |
+|---|---:|---|
+| `Rimpi_Maam_Merged.pdf` | 241 | introduction, processes/threads, scheduling, IPC/synchronization and deadlock |
+| `KRV_Merged.pdf` | 445 | address spaces through paging/swapping, I/O/storage/RAID, file systems and crash consistency |
+| `Shell_Commands.pdf` | 66 | paths, files, streams, pipes, permissions, search, processes, packages and scripts |
+| **Total current sequence** | **752** | **complete current OS folder represented below** |
 
 For a viva answer, use this order: **definition → mechanism/invariant → example → trade-off**. When the panel gives numbers, draw the timeline or address split before calculating.
 
@@ -856,3 +855,106 @@ The log-structured filesystem writes new segments sequentially, treats the log a
 - “exactly once” effects usually require coordination/deduplication around at-least-once delivery, not a magical packet guarantee.
 
 For an RPC timeout, enumerate possibilities: request lost, server not reached, server executed but reply lost, reply delayed, or server crashed before/after durable effect. That uncertainty is why payment/domain-registration APIs need idempotency keys and reconciliation.
+
+---
+
+# 16. Linux Shell and Command-Line Recall
+
+## 16.1 Shell, terminal, command, and path
+
+A **terminal** is the interface carrying text input and output; a **shell** such as Bash is the command interpreter. The shell parses quoting, expansion, redirection, pipelines and control operators, then runs built-ins itself or starts external programs. `$PATH` is the ordered list of directories searched for an unqualified command name; `which cmd` shows the executable selected in common cases.
+
+- `/` is the file-system root; `~` is the current user's home.
+- An **absolute path** starts at `/`; a **relative path** starts at the current working directory.
+- `.` means current directory, `..` parent, and `cd -` previous directory.
+- `./script` explicitly names a file in the current directory; the shell normally does not search `.` unless it is in `$PATH`.
+
+## 16.2 Essential commands from the 66-page shell deck
+
+| Goal | Commands / important options |
+|---|---|
+| locate and navigate | `pwd`, `cd`, `ls -laF`, `which`, `find` |
+| create/copy/move/remove | `touch`, `mkdir -p`, `cp -r`, `mv -i`, `rm -i` |
+| inspect text | `cat`, `less`, `head`, `tail -f`, `wc` |
+| transform/search | `sort`, `uniq -c`, `tr`, `grep -inrw`, `cut` |
+| processes/resources | `ps`, `htop`, `kill`, `df`, `du` |
+| ownership/access | `chmod`, `chown`, `chgrp`, `whoami`, `sudo` |
+| documentation/packages | `man`, `--help`, `apt update/install/remove`, `dpkg -i` |
+
+Wildcards such as `*.txt` are expanded by the shell before the command runs. By contrast, `grep` interprets a regular expression inside file contents. Quote a wildcard when you want another program—such as `find -name "*.txt"`—to interpret it.
+
+## 16.3 Standard streams, redirection, and pipes
+
+Every process conventionally starts with file descriptors:
+
+| Descriptor | Stream | Default |
+|---:|---|---|
+| 0 | standard input | terminal keyboard |
+| 1 | standard output | terminal display |
+| 2 | standard error | terminal display |
+
+```bash
+program < input.txt          # stdin from file
+program > output.txt         # truncate then write stdout
+program >> output.txt        # append stdout
+program 2> error.txt         # stderr only
+program > all.txt 2>&1       # point stderr where stdout now points
+producer | consumer          # producer stdout becomes consumer stdin
+```
+
+`|` connects processes; `>>` appends to a file. A pipeline is compositional because each tool can read a stream and write a stream:
+
+```bash
+tr -c '[:alnum:]' '\n' < file.txt |
+  tr '[:upper:]' '[:lower:]' |
+  sort | uniq -c | sort -nr | head -10
+```
+
+Why does `sudo echo hello > /protected/file` fail? `sudo` elevates `echo`, but the unprivileged shell performs `>` first. Use `echo hello | sudo tee /protected/file`.
+
+## 16.4 Permissions
+
+`-rwxr-xr--` has a type character followed by owner, group and other triplets. `r=4`, `w=2`, `x=1`, so:
+
+```bash
+chmod 754 file       # owner rwx, group r-x, others r--
+chmod u+x file       # symbolic form
+```
+
+For a regular file, `r/w/x` mean read contents, modify contents and execute. For a directory:
+
+- `r` permits listing names;
+- `w` permits creating/removing directory entries;
+- `x` permits traversal/search through the directory.
+
+Whether a user can access a file depends on ownership, the applicable permission triplet, enclosing-directory permissions, ACLs and possible privilege—not just the displayed bit pattern.
+
+## 16.5 Script execution and safe search
+
+The first line `#!/usr/bin/env bash` selects an interpreter through the environment. A script also needs execute permission when launched as `./script`; `bash script` only needs Bash to be able to read it.
+
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
+for file in "$@"; do
+    printf '%s: ' "$file"
+    wc -l < "$file"
+done
+```
+
+Quoting `"$@"` preserves each original argument. `find` is recursive and can filter by name, type, size and modification time:
+
+```bash
+find . -type f -name "*.log" -size +1M
+find . -type f -name "*.txt" -exec grep -nH "TODO" {} +
+```
+
+For arbitrary filenames, prefer `-exec ... {} +` or NUL-delimited `-print0 | xargs -0`; plain `find ... | xargs ...` breaks on spaces/newlines. Before any destructive `find -exec rm`, run the same predicate with `-print` and inspect the exact targets.
+
+## 16.6 Shell viva traps
+
+- A directory stores name-to-inode mappings; the inode stores metadata and block locations, not the filename.
+- A symbolic link stores a target path and can dangle; a hard link is another directory entry for the same inode.
+- `Ctrl-C` normally sends `SIGINT`; it is not the same as closing the terminal.
+- A shell built-in such as `cd` must affect the current shell; an external child process could not change its parent's working directory.
+- `kill` sends a signal; it does not necessarily mean `SIGKILL`, and graceful termination is preferable when possible.

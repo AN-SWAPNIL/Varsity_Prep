@@ -6,14 +6,13 @@ This is the Artificial Intelligence volume of the viva pack. It is written from 
 
 ## Source grounding
 
-| Local source group | Files | Pages audited | Material represented here |
-|---|---:|---:|---|
-| `MMI Sir/Merged PDF/CSE317_MMI_Merged.pdf` | 1 | 521/521 | history; agents; problem formulation; uninformed/informed/memory-bounded/local search; GA; games; CSP |
-| `SB Sir/Merged PDF/CSE317_SB_Merged.pdf` | 1 | 214/214 | Bayesian networks; HMMs; MDPs; learning; decision trees |
-| 21 MMI legacy PowerPoints rendered under `.viva_work/rendered_ai_legacy` | 21 | 863/863 | independent deck-by-deck cross-check, including image-heavy traces and archived copies |
-| **Total rendering audited** | **23 artifacts** | **1,598/1,598** | merged coverage plus legacy cross-check; duplicate archive pages remain counted as distinct artifacts |
+| Current source | Pages audited | Material represented here |
+|---|---:|---|
+| `CSE317_MMI_Merged.pdf` | 521/521 | history; agents; problem formulation; uninformed/informed/memory-bounded/local search; GA; games; CSP |
+| `CSE317_SB_Merged.pdf` | 214/214 | Bayesian networks; HMMs; MDPs; learning; decision trees |
+| **Total current source** | **735/735** | **all selected AI slide pages** |
 
-The 21 legacy renderings are listed exactly in Part XIV. A subsection marked **Standard-core supplement** is important viva knowledge but is not developed as a full lecture in the local slides; this mainly applies to formal logic, planning, and ethics.
+The removed legacy copies are no longer counted. A subsection marked **Standard-core supplement** is important viva knowledge but is not developed as a full lecture in the current slides; this mainly applies to formal logic, planning, and ethics.
 
 ## The 30-second map
 
@@ -1182,34 +1181,7 @@ Training/test leakage includes choosing hyperparameters on the test set. Use tra
 | 175–214 | 40 | decision trees/entropy/gain/overfit/pruning/issues |
 | **Total** | **214** | **all pages accounted for** |
 
-## 55. Legacy renderings: 21/21, 863/863 pages
-
-| Rendered source | Pages |
-|---|---:|
-| `MMI Sir/A-starSearch.pdf` | 22 |
-| `MMI Sir/AIHistory.pdf` | 105 |
-| `MMI Sir/Chap1-IntroAI.pdf` | 40 |
-| `MMI Sir/Chap2-IntAgent.pdf` | 32 |
-| `MMI Sir/Chap3-ProbSol.pdf` | 27 |
-| `MMI Sir/Chap4-InformedSearch.pdf` | 46 |
-| `MMI Sir/Chap4-LocalSearch.pdf` | 32 |
-| `MMI Sir/Game Playing Ch_6_Russel.pdf` | 41 |
-| `MMI Sir/New folder/AI-2016/A-starSearch.pdf` | 22 |
-| `MMI Sir/New folder/AI-2016/AIHistory.pdf` | 105 |
-| `MMI Sir/New folder/AI-2016/Chap1-IntroAI.pdf` | 40 |
-| `MMI Sir/New folder/AI-2016/Chap2-IntAgent.pdf` | 32 |
-| `MMI Sir/New folder/AI-2016/Chap3-ProbSol.pdf` | 27 |
-| `MMI Sir/New folder/AI-2016/Chap4-InformedSearch.pdf` | 46 |
-| `MMI Sir/New folder/AI-2016/Chap4-LocalSearch.pdf` | 32 |
-| `MMI Sir/New folder/AI-2016/Chap5-AdvSearch.pdf` | 43 |
-| `MMI Sir/New folder/AI-2016/CSP.pdf` | 34 |
-| `MMI Sir/New folder/AI-2016/Game Playing Ch_6_Russel.pdf` | 41 |
-| `MMI Sir/New folder/AI-2016/Genetic Algorithm.pdf` | 18 |
-| `MMI Sir/New folder/AI-2016/UnInformedSearch.pdf` | 39 |
-| `MMI Sir/UnInformedSearch.pdf` | 39 |
-| **Total** | **863** |
-
-## 56. Final self-test
+## 55. Final self-test
 
 - [ ] Four AI views; rationality; PEAS/environment.
 - [ ] Problem formulation without state/node confusion.

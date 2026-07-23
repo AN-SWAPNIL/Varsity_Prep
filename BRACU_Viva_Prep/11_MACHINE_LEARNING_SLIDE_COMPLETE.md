@@ -2,7 +2,7 @@
 
 # Machine Learning — Slide-Complete Viva Recall Book
 
-This is a recall book, not a list of one-line answers. It reconstructs the concepts, equations, derivations, algorithms, calculations, code patterns, and likely follow-up questions in both local CSE 471 merged slide sets. Read the **viva answer** first; expand into the surrounding derivation only when the interviewer asks.
+This is a recall book, not a list of one-line answers. It reconstructs the concepts, equations, derivations, algorithms, calculations, code patterns, and likely follow-up questions in both current CSE 471 merged slide sets and the selected annotated diffusion notebook. Read the **viva answer** first; expand into the surrounding derivation only when the interviewer asks.
 
 ## How to answer an ML viva question
 
@@ -2334,9 +2334,10 @@ DDPM simple loss        = E ||epsilon-epsilon_theta(x_t,t)||^2
 
 | Local source | Pages | Extraction | Visual inspection |
 |---|---:|---|---|
-| `ML/471/Fahim_sir_Merged(ML).pdf` | 674 | page-delimited text read and topic-indexed | low/zero-text, diagrams, handwritten calculations, exams, equations, and code pages rendered and inspected |
-| `ML/471/MDSR_merged(ML).pdf.pdf` | 512 | page-delimited text read and topic-indexed | handwritten derivations and image-heavy NN, Bayesian, clustering, RL, and generative-model blocks rendered and inspected |
-| **Total** | **1,186** | **complete page range accounted for** | **visual fallback used where extraction was insufficient** |
+| `Fahim_sir_Merged(ML).pdf` | 674 | page-delimited text read and topic-indexed | low/zero-text, diagrams, handwritten calculations, exams, equations, and code pages rendered and inspected |
+| `MDSR_merged(ML).pdf` | 512 | page-delimited text read and topic-indexed | handwritten derivations and image-heavy NN, Bayesian, clustering, RL, and generative-model blocks rendered and inspected |
+| `annotated_diffusion.ipynb` | 65 cells (30 code, 35 Markdown) | notebook JSON/cell sequence inspected | DDPM derivation, schedules, conditional U-Net, forward noising, loss, training and reverse sampling cross-checked against pages 638–674 |
+| **Total PDFs** | **1,186 pages** | **complete page range accounted for** | **visual fallback used where extraction was insufficient; notebook separately accounted for** |
 
 Decorative covers, acknowledgments, references, URL-only pages, and blank dividers were inspected/accounted for but were not expanded into fake technical content. Unreadable equations were checked against their rendered page; no technical claim was invented from a blank extraction.
 
@@ -2395,7 +2396,8 @@ Visual inspection was performed across the MDSR handwritten/image-heavy ranges `
 ## 108. Final self-audit checklist
 
 - [x] Begins exactly with `# Bismillah.`
-- [x] Both local PDFs accounted for: 674 + 512 = 1,186 pages.
+- [x] Both current PDFs accounted for: 674 + 512 = 1,186 pages.
+- [x] Current 65-cell annotated diffusion notebook cross-checked against the diffusion chapter/code.
 - [x] Bias and variance defined as statistical quantities, with expectation domains and squared-error derivation.
 - [x] Bias/variance explicitly distinguished from underfitting/overfitting.
 - [x] Worked numeric bias–variance example and learning-pattern remedies included.

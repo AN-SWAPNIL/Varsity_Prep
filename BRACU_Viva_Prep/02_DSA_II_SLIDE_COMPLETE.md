@@ -11,36 +11,20 @@ The notation used here is:
 - Directed edge $(u,v)$ has weight $w(u,v)$, capacity $c(u,v)$, or flow $f(u,v)$, according to context.
 - “Worst case” is the maximum cost for one input of size $n$; “amortized” is the average cost per operation over a whole sequence, with no probability assumption; “expected” averages over randomness.
 
-## Exact source coverage
+## Current source coverage
 
-All 21 local PDFs were included. The 1,669-page total counts overlapping merged decks and individual topic decks because every supplied file was independently checked; it is not a claim of 1,669 unique lecture pages.
+The reduced source set was re-audited on 24 July 2026. The current DSA-II folder contains **three PDFs / 1,078 pages**:
 
-| Source | Pages | Visual-review pages flagged by extraction |
-|---|---:|---:|
-| `DSA II.pdf` | 29 | 0 |
-| `Eunus Sir/All-pair-shortest path (1).pdf` | 8 | 0 |
-| `Eunus Sir/johnson-asps (1).pdf` | 3 | 0 |
-| `Eunus Sir/Lecture 01-Intro.pptx.pdf` | 12 | 1 |
-| `Eunus Sir/Lecture 1 - Graph Basics.pptx.pdf` | 83 | 2 |
-| `Eunus Sir/Lecture notes - mst (1).pdf` | 7 | 0 |
-| `Part1mergedNew.pdf` | 630 | 19 |
-| `Part2merged.pdf` | 419 | 21 |
-| `Tushar Sir/34HashTables.pdf` | 44 | 0 |
-| `Tushar Sir/AmortizedAnalysis.pdf` | 52 | 0 |
-| `Tushar Sir/Backtracking-BB-207.pdf` | 18 | 0 |
-| `Tushar Sir/BinomialHeaps.pdf` | 55 | 0 |
-| `Tushar Sir/BranchBound-TSP-207.pdf` | 20 | 20; image-heavy deck |
-| `Tushar Sir/DemoBinaryHeap.pdf` | 14 | 0 |
-| `Tushar Sir/DemoGreedyIndependentSetTrees-207.pdf` | 9 | 0 |
-| `Tushar Sir/DemoGreedyVertexCover-207.pdf` | 7 | 0 |
-| `Tushar Sir/DemoHeapify.pdf` | 18 | 0 |
-| `Tushar Sir/hashing.pdf` | 61 | 0 |
-| `Tushar Sir/IntractabilityI-207.pdf` | 57 | 0 |
-| `Tushar Sir/IntractabilityII-207.pdf` | 64 | 1 |
-| `Tushar Sir/IntractabilityIII-207.pdf` | 59 | 0 |
-| **Total inspected** | **1,669** | **65** |
+| Current DSA-II source | Pages | Main material |
+|---|---:|---|
+| `DSA II.pdf` | 29 | compact syllabus/summary cross-check |
+| `Part1merged.pdf` | 630 | graph foundations, MST, shortest paths, APSP, network flow, AVL, red-black, and splay trees |
+| `Part2merged.pdf` | 419 | amortized analysis, heaps, hashing, intractability, approximation/exact methods, backtracking, and branch-and-bound |
+| **DSA-II total** | **1,078** | **39 low-text/image-heavy pages visually routed** |
 
-String matching and FFT appear as syllabus headings with little expanded lecture material in the collected decks; their chapters are explicitly standard implementable supplements rather than invented slide claims.
+Because DSA is the chosen strong subject, the current `461-AE` Algorithm Engineering folder was also mapped into this volume: **seven PDFs / 453 pages**. It reinforces flow, matching, FFT, and NP-completeness and adds stable matching, directed minimum arborescence, and linear-programming ideas. Thus this volume is grounded in **1,531 current algorithm pages**, with overlap between merged/reference material stated rather than double-counted as unique lectures.
+
+String matching remains a syllabus-level topic with little expanded material in the current DSA-II decks; its chapter is retained as an implementable core supplement.
 
 ## How to answer an algorithm viva question
 
@@ -3899,7 +3883,249 @@ High-yield traps:
 
 ---
 
-# 23. Final DSA-II self-test
+# 23. Algorithm Engineering additions from the current source folder
+
+The current Algorithm Engineering folder repeats flow, FFT, reductions, and NP-completeness, but it also adds four useful viva topics that were not explicit enough in the old volume.
+
+## 23.1 Stable matching and Gale–Shapley
+
+### Problem and blocking pair
+
+There are two sets of equal size, traditionally proposers $M$ and receivers $W$. Each participant has a strict preference ordering over the opposite set. A matching is **stable** if it has no **blocking pair** $(m,w)$ such that:
+
+1. $m$ prefers $w$ to the partner assigned to $m$; and
+2. $w$ prefers $m$ to the partner assigned to $w$.
+
+A stable matching need not maximize total preference score, minimize dissatisfaction, or be the only stable matching. Stability means that no unmatched pair would jointly abandon their assigned partners.
+
+### Proposer-oriented deferred acceptance
+
+1. Initially every proposer is free.
+2. A free proposer proposes to the highest-ranked receiver not yet proposed to.
+3. A free receiver tentatively accepts.
+4. An engaged receiver keeps the more-preferred of the current partner and the new proposer; the rejected proposer becomes free.
+5. Continue until no proposer is free.
+
+“Tentative” is essential: a receiver may later replace the current partner with a more-preferred proposer.
+
+```cpp
+// prefM[m] lists receivers from most to least preferred.
+// rankW[w][m] is smaller when receiver w prefers proposer m more.
+vector<int> galeShapley(const vector<vector<int>>& prefM,
+                       const vector<vector<int>>& rankW) {
+    int n = (int)prefM.size();
+    vector<int> nextChoice(n, 0);
+    vector<int> partnerM(n, -1), partnerW(n, -1);
+    queue<int> freeM;
+    for (int m = 0; m < n; ++m) freeM.push(m);
+
+    while (!freeM.empty()) {
+        int m = freeM.front();
+        freeM.pop();
+
+        int w = prefM[m][nextChoice[m]++];
+        if (partnerW[w] == -1) {
+            partnerW[w] = m;
+            partnerM[m] = w;
+        } else {
+            int old = partnerW[w];
+            if (rankW[w][m] < rankW[w][old]) {
+                partnerW[w] = m;
+                partnerM[m] = w;
+                partnerM[old] = -1;
+                freeM.push(old);
+            } else {
+                freeM.push(m);
+            }
+        }
+    }
+    return partnerM;
+}
+```
+
+### Why it terminates and why it is stable
+
+- A proposer never proposes to the same receiver twice.
+- There are only $n^2$ possible proposals, so the algorithm terminates in $O(n^2)$ time after the receiver-rank table is built.
+- A receiver’s tentative partner can only improve according to that receiver’s preference.
+
+Suppose the final matching has a blocking pair $(m,w)$. Proposer $m$ must have proposed to $w$ before reaching the final, less-preferred partner. Receiver $w$ rejected $m$ immediately or later. At that moment $w$ held someone preferred to $m$, and the held partner only improved afterward. Therefore $w$ cannot prefer $m$ to the final partner—a contradiction.
+
+With complete strict preferences, proposer-oriented Gale–Shapley returns the **proposer-optimal** stable matching and the receiver-pessimal stable matching among all stable matchings. Switching who proposes changes this bias.
+
+### Viva traps
+
+- Stable does not mean globally maximum-weight.
+- One side’s optimality is only among **stable** matchings.
+- Ties and incomplete preference lists require variants and can change existence/optimality properties.
+
+## 23.2 Augmenting-path bipartite matching without building a flow network
+
+The flow reduction is conceptually clean. The course source also shows the direct Kuhn/DFS view.
+
+A matching is maximum iff there is no augmenting path relative to it. An augmenting path alternates:
+
+```text
+unmatched edge, matched edge, unmatched edge, ...
+```
+
+and begins/ends at unmatched vertices. Flipping matched/unmatched status along the path increases matching size by one.
+
+```cpp
+vector<vector<int>> adj;   // left vertex -> right vertices
+vector<int> matchRight;    // matched left vertex, or -1
+vector<char> seenLeft;
+
+bool augment(int u) {
+    if (seenLeft[u]) return false;
+    seenLeft[u] = true;
+
+    for (int v : adj[u]) {
+        if (matchRight[v] == -1 || augment(matchRight[v])) {
+            matchRight[v] = u;
+            return true;
+        }
+    }
+    return false;
+}
+
+int maximumMatching(int nLeft, int nRight) {
+    matchRight.assign(nRight, -1);
+    int answer = 0;
+    for (int u = 0; u < nLeft; ++u) {
+        seenLeft.assign(nLeft, false); // fresh search per attempt
+        answer += augment(u);
+    }
+    return answer;
+}
+```
+
+One DFS attempt is $O(E)$; trying all left vertices gives $O(VE)$ in a simple bound. Hopcroft–Karp finds a maximal set of shortest augmenting paths per phase and improves this to $O(E\sqrt V)$.
+
+**Do not confuse these:**
+
+- maximal matching: no edge can be added directly;
+- maximum matching: largest possible cardinality;
+- stable matching: no blocking pair under preferences.
+
+## 23.3 Minimum-cost directed arborescence
+
+An $r$-arborescence is a directed spanning tree rooted at $r$:
+
+- root $r$ has indegree zero;
+- every other vertex has indegree one;
+- every vertex is reachable from $r$.
+
+It is not an ordinary undirected MST. Prim/Kruskal and the undirected cut property do not directly solve it.
+
+### Chu–Liu/Edmonds contraction idea
+
+For every vertex $v\ne r$, choose a minimum-weight incoming edge.
+
+- If some nonroot vertex has no incoming edge, no rooted spanning arborescence exists.
+- If the chosen edges contain no directed cycle, they are the optimum arborescence.
+- If they contain a directed cycle $C$, every feasible arborescence must break that cycle by entering one cycle vertex from outside. Contract $C$ into one supervertex and solve the smaller problem.
+
+For an edge $(u,v)$ entering the contracted cycle, use adjusted cost
+
+$$
+w'(u,v)=w(u,v)-\operatorname{in}[v],
+$$
+
+where $\operatorname{in}[v]$ is the selected minimum incoming-edge cost for $v$. The subtraction avoids paying the already-accounted selected incoming edge twice.
+
+After recursively solving the contracted graph:
+
+1. expand the cycle;
+2. keep all selected cycle edges except the one entering the vertex chosen by the recursive external edge;
+3. restore original edge identities.
+
+A straightforward implementation is $O(VE)$; more sophisticated implementations improve the bound.
+
+### Correctness intuition
+
+Subtracting each chosen incoming minimum gives a lower-bound normalization: any arborescence pays at least that much for every nonroot vertex. A directed cycle is the only obstruction to simultaneously taking all normalized zero-cost incoming choices. Contracting represents the one decision that matters—where the final arborescence enters and breaks the cycle.
+
+## 23.4 Linear programming as an algorithmic language
+
+A common maximization form is
+
+$$
+\max c^\top x
+\quad\text{subject to}\quad
+Ax\le b,\qquad x\ge0.
+$$
+
+The corresponding dual form is
+
+$$
+\min b^\top y
+\quad\text{subject to}\quad
+A^\top y\ge c,\qquad y\ge0.
+$$
+
+Terms:
+
+- **feasible:** satisfies all constraints;
+- **infeasible:** no point satisfies all constraints;
+- **unbounded:** objective can improve without limit;
+- **optimal:** feasible and no feasible point has a better objective.
+
+### Duality
+
+For every primal-feasible $x$ and dual-feasible $y$,
+
+$$
+c^\top x\le b^\top y.
+$$
+
+This is **weak duality** and gives an immediate certificate: a primal solution and dual solution with equal values are both optimal. Under the ordinary feasibility/boundedness conditions of linear programming, strong duality says the optimal values are equal.
+
+Complementary slackness explains which constraints are tight:
+
+$$
+y_i(b_i-a_i^\top x)=0,
+\qquad
+x_j((A^\top y)_j-c_j)=0.
+$$
+
+Positive dual weight requires its primal constraint to be tight; a positive primal variable requires its dual constraint to be tight.
+
+### LP relaxation and integrality
+
+An integer program requires selected variables to be integers. Dropping integrality gives an LP relaxation:
+
+- minimization relaxation gives a lower bound;
+- maximization relaxation gives an upper bound.
+
+That bound can guide branch-and-bound. Rounding is not automatically feasible or approximately good; it needs a problem-specific proof.
+
+Some combinatorial LPs, including standard max-flow formulations, have integral optima when capacities are integral because of their structural constraint matrices. General LPs do not promise integral solutions.
+
+### Algorithm distinction
+
+- **Simplex:** moves between vertices of the feasible polytope; often excellent in practice but has exponential worst-case examples.
+- **Ellipsoid:** polynomial-time theoretical algorithm using a separation-oracle view; historically important, usually not the default practical solver.
+- **Interior-point:** follows the interior of the feasible region and has polynomial-time variants with strong practical performance.
+
+The key viva lesson is not to say “linear programming means simplex” or “LP is exponential.” Linear programming is polynomial-time solvable, while particular algorithms have different theoretical and practical behavior.
+
+## 23.5 Current Algorithm Engineering source ledger
+
+| Source | Pages | Retained viva value |
+|---|---:|---|
+| `Algorithm.pdf` | 35 image-heavy pages | stable marriage and algorithm traces |
+| `Algorithm2.pdf` | 75 | reductions/complexity and algorithm-design reinforcement |
+| `Complexity-Sowdha.pdf` | 23 image-heavy pages | complexity-class/reduction cross-check |
+| `FFT-Sowdha.pdf` | 9 image-heavy pages | FFT derivation/trace cross-check |
+| `LP-Sowdha.pdf` | 22 image-heavy pages | primal/dual and LP-algorithm recall |
+| `Merged_slides_AE.pdf` | 280 | stable matching, NP-completeness, flow, matching, arborescence, FFT, and LP |
+| `Mincost-Arborescence.pdf` | 9 image-heavy pages | directed minimum-arborescence contraction |
+| **Total** | **453** | integrated here rather than creating another viva volume |
+
+---
+
+# 24. Final DSA-II self-test
 
 - [ ] State graph representations and trace BFS/DFS with exact `O(V+E)` assumptions.
 - [ ] Prove cut/cycle properties and trace Kruskal/Prim with DSU or heap costs.
@@ -3917,4 +4143,8 @@ High-yield traps:
 - [ ] Give a complete polynomial-reduction proof direction and distinguish P, NP, NP-hard, and NP-complete.
 - [ ] Trace backtracking versus branch-and-bound and justify every pruning bound.
 - [ ] Distinguish exact exponential, pseudo-polynomial, approximation, PTAS/FPTAS, and heuristic algorithms.
-- [ ] Account for all 21 source PDFs using the matrix above.
+- [ ] Explain stable matching, blocking pairs, Gale–Shapley optimality, and $O(n^2)$.
+- [ ] Distinguish stable, maximal, and maximum matching; trace one augmenting-path repair.
+- [ ] Explain why a directed minimum arborescence needs cycle contraction rather than Prim/Kruskal.
+- [ ] State primal/dual LP, weak duality, complementary slackness, and relaxation bounds.
+- [ ] Account for the three current DSA-II PDFs and the seven Algorithm Engineering sources using the ledgers above.

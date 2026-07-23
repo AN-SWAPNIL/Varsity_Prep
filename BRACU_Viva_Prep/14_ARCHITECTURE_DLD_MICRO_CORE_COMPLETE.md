@@ -12,9 +12,21 @@ Boolean logic -> combinational blocks -> state/flip-flops -> registers and FSMs
 
 In a viva, do not merely name components. Draw signals, state the clock/timing assumption, calculate one example, and connect the circuit to its software-visible behavior.
 
-## Source-scope note
+## Current source-scope note
 
-No dedicated Architecture, DLD, or Microprocessor academic folder is present in this workspace. This module is therefore a standard-core supplement guided by the reported BRACU questions (cache, asynchronous counter, microprocessor versus microcontroller) and by your stated hardware strength. It is intentionally kept separate from claims about the locally read course-slide sequence.
+The hardware folders are present and were re-read:
+
+| Current source | Pages | Main coverage |
+|---|---:|---|
+| `Merged_Tanzima_Maam_Combinational_Cir.pdf` | 131 | Boolean minimization, codes, arithmetic, mux/decoder/encoder, comparators, programmable logic and hazards |
+| `Merged_Adnan_Sir_Sequential_Cir.pdf` | 60 | image-dominant latches/flip-flops, sequential analysis, registers, counters, FSM reduction and asynchronous machines |
+| `CSE305AllSlidesMerged.pdf` | 459 | ISA/datapath, performance, pipelining, cache and virtual memory/TLB |
+| `CSE315AllMerged.pdf` | 899 | 8086 architecture/assembly, data/addressing, procedures/stack/interrupts and ATmega32 peripherals |
+| `ElinSir_merged.pdf` | 192 | microprocessor/embedded-system reinforcement and laboratory-style examples |
+| `Elin_Sir_Formulas.pdf` | 3 | image-formula last-pass sheet |
+| **Total** | **1744** | **191 DLD + 459 Architecture + 1094 Microprocessor pages** |
+
+The 60-page sequential-DLD PDF and 3-page formula sheet have sparse text layers, so their pages were reviewed visually rather than treated as empty.
 
 ## Part I — Digital Logic Design
 
@@ -692,7 +704,532 @@ Security and safety overlap but differ: safety protects people/environment from 
 - “DMA means CPU is uninvolved.” CPU/driver sets up, synchronizes, maps buffers, and handles completion/errors.
 - “An RTOS makes a system real-time.” Schedulability and bounded worst-case behavior do.
 
-## 23. Hardware core-subject self-test
+## 23. DLD Slide Additions: Minimization, Arithmetic, PLDs, and Asynchronous Machines
+
+### 23.1 Quine–McCluskey tabulation
+
+K-maps are practical for a few variables; Quine–McCluskey systematizes two-level minimization:
+
+1. list minterms in binary and group by number of `1` bits;
+2. combine terms in adjacent groups that differ in one position, replacing it by `-`;
+3. repeat on newly formed implicants; mark every combined term;
+4. uncombined terms are **prime implicants**;
+5. build a prime-implicant chart: rows are prime implicants, columns are required minterms;
+6. select **essential** prime implicants (a column covered by only one row);
+7. cover remaining columns with a minimum-cost set, using inspection or Petrick's method.
+
+Example:
+
+```text
+0000 (m0) and 0001 (m1) -> 000-
+0001 (m1) and 0011 (m3) -> 00-1
+```
+
+Two implicants combine only when their dash positions match and exactly one remaining bit differs. Do not combine terms differing in two positions. Tabulation can grow exponentially; it is exact for two-level cost criteria, not a guarantee of the best multilevel physical circuit.
+
+### 23.2 Static hazards and the consensus term
+
+In a two-level SOP, a **static-1 hazard** can occur when output should remain 1 while one variable changes but the two covering product paths have unequal delay. The consensus theorem is:
+
+$$XY+\bar XZ+YZ=XY+\bar XZ.$$
+
+Logically `YZ` is redundant, but physically adding it bridges the transition and can remove the static-1 hazard:
+
+$$F=XY+\bar XZ\quad\longrightarrow\quad F_h=XY+\bar XZ+YZ.$$
+
+Static-0 hazards are dual in POS circuits. Dynamic hazards involve multiple output changes and generally require multilevel-delay analysis. Synchronous systems often sample after settling, but asynchronous/control/clock paths require explicit hazard discipline.
+
+### 23.3 Carry lookahead and BCD addition
+
+Using $G_i=A_iB_i$ and $P_i=A_i\oplus B_i$:
+
+$$C_{i+1}=G_i+P_iC_i.$$
+
+Expansion avoids waiting for a ripple:
+
+$$
+\begin{aligned}
+C_1&=G_0+P_0C_0,\\
+C_2&=G_1+P_1G_0+P_1P_0C_0,\\
+C_3&=G_2+P_2G_1+P_2P_1G_0+P_2P_1P_0C_0.
+\end{aligned}
+$$
+
+Carry lookahead trades more gates/fan-in/wiring for shorter carry depth; large adders use hierarchical groups.
+
+For one BCD digit, first add the two 4-bit digits and carry-in. If the binary result exceeds `1001` or produces a carry, add `0110`. A common correction detector for intermediate bits $S_3S_2S_1S_0$ and carry $C_4$ is
+
+$$K=C_4+S_3S_2+S_3S_1.$$
+
+### 23.4 Multipliers, comparators, code/parity blocks
+
+An unsigned shift-add multiplier examines each multiplier bit: if bit $i=1$, add multiplicand shifted by $i$. An $n\times n$ combinational array uses partial products $a_jb_i$ and adder rows; it is fast but area-heavy. Sequential multiplication reuses an adder over cycles.
+
+For an equality comparator:
+
+$$A=B=\bigwedge_i(A_i\ \text{XNOR}\ B_i).$$
+
+For magnitude, compare from the most significant differing bit. Cascaded comparator inputs propagate “less/equal/greater” from less significant groups.
+
+- Binary-to-Gray: $G_{n-1}=B_{n-1}$ and $G_i=B_{i+1}\oplus B_i$.
+- Gray-to-binary: $B_{n-1}=G_{n-1}$ and $B_i=B_{i+1}\oplus G_i$.
+- Even parity bit: $p=d_0\oplus d_1\oplus\cdots$ so total XOR becomes 0.
+
+### 23.5 Decoder, MUX, tri-state, ROM, PLA, and PAL
+
+- An $n$-to-$2^n$ decoder generates minterms; OR selected outputs to realize an SOP.
+- A $2^n$-to-1 MUX uses variables as selects and data inputs as constants/remaining-variable functions.
+- A tri-state output can be `0`, `1`, or high impedance `Z`; only one enabled driver may own a shared line unless the electrical scheme explicitly supports otherwise.
+- ROM has fixed decoding and programmable output contents.
+- PLA has programmable AND and OR planes—flexible shared product terms.
+- PAL traditionally has programmable AND and fixed OR—simpler/faster but less flexible.
+
+### 23.6 Sequential analysis, reduction, and incompletely specified machines
+
+For a synchronous sequential circuit:
+
+1. write flip-flop input equations from combinational logic;
+2. use characteristic equations to derive next-state bits;
+3. derive output equations;
+4. build state table and state diagram;
+5. identify unreachable states and verify recovery.
+
+Characteristic/excitation recall:
+
+| FF | Characteristic next state | Required excitation |
+|---|---|---|
+| D | $Q^+=D$ | $D=Q^+$ |
+| T | $Q^+=Q\oplus T$ | $T=Q\oplus Q^+$ |
+| JK | $Q^+=J\bar Q+\bar KQ$ | `0→0: J=0`; `0→1: J=1`; `1→0: K=1`; `1→1: K=0` |
+
+Two states of a completely specified Moore machine are equivalent if they produce the same output and their next states under every input are equivalent. Partition refinement:
+
+```text
+partition by output
+repeat split any block whose states transition to different blocks
+until no block changes
+```
+
+For an incompletely specified machine, states may be **compatible** even if not fully equivalent: specified outputs do not conflict and implied successor pairs are compatible. Use implication/compatibility tables, maximal compatibles and a closed cover; compatibility is not always transitive.
+
+### 23.7 Asynchronous sequential circuits: races and flow tables
+
+An asynchronous circuit changes state as inputs/propagation permit—there is no global sampling edge. A **race** occurs when multiple state variables should change and path delays determine the visited/final state. A race is **critical** if final stable state depends on order; otherwise noncritical.
+
+Design steps in fundamental mode:
+
+1. permit only one external input change at a time and wait for stability;
+2. construct primitive flow table;
+3. reduce compatible rows;
+4. assign binary states to avoid critical races, adding intermediate states if needed;
+5. derive excitation/output logic and remove essential hazards.
+
+Fundamental-mode assumptions are part of correctness; violating them can invalidate the design.
+
+## 24. MIPS-Style ISA and Single-Cycle Datapath
+
+### 24.1 Instruction formats
+
+```text
+R: op[31:26] rs[25:21] rt[20:16] rd[15:11] shamt[10:6] funct[5:0]
+I: op[31:26] rs[25:21] rt[20:16] immediate[15:0]
+J: op[31:26] target[25:0]
+```
+
+- `add rd,rs,rt`: `R[rd]=R[rs]+R[rt]`.
+- `lw rt,imm(rs)`: address=`R[rs]+signext(imm)`; read memory into `rt`.
+- `sw rt,imm(rs)`: write `R[rt]` to that address.
+- `beq rs,rt,label`: if equal, branch to `PC+4+(signext(imm)<<2)`.
+- `j target`: combine upper bits of `PC+4` with `target<<2` in the classic 32-bit MIPS encoding.
+
+The immediate is sign-extended for arithmetic/address/branch operations; logical immediates use zero extension in the relevant instructions.
+
+### 24.2 Datapath story
+
+```mermaid
+flowchart LR
+    PC[PC] --> IM[Instruction memory]
+    PC --> ADD4[PC + 4]
+    IM --> RF[Register file]
+    IM --> IMM[Sign extend / shift]
+    RF --> ALU[ALU]
+    IMM --> ALU
+    ALU --> DM[Data memory]
+    DM --> WB[Write-back MUX]
+    ALU --> WB
+    WB --> RF
+    ALU --> BR{Branch condition}
+    IMM --> BT[Branch target adder]
+    ADD4 --> BT
+    BR --> PCMUX[Next-PC MUX]
+    BT --> PCMUX
+    ADD4 --> PCMUX
+    PCMUX --> PC
+```
+
+Single-cycle control summary (`X` means don't care):
+
+| Instruction | RegDst | ALUSrc | MemtoReg | RegWrite | MemRead | MemWrite | Branch | ALUOp idea |
+|---|---:|---:|---:|---:|---:|---:|---:|---|
+| R-type | 1 | 0 | 0 | 1 | 0 | 0 | 0 | use `funct` |
+| `lw` | 0 | 1 | 1 | 1 | 1 | 0 | 0 | add |
+| `sw` | X | 1 | X | 0 | 0 | 1 | 0 | add |
+| `beq` | X | 0 | X | 0 | 0 | 0 | 1 | subtract/compare |
+
+The clock period must accommodate the slowest instruction path, usually load: instruction memory → register read → ALU → data memory → register setup. That simplicity wastes time for short instructions and motivates multicycle/pipelined designs.
+
+### 24.3 Assembly loop example
+
+C:
+
+```c
+int sum = 0;
+for (int i = 0; i < n; ++i) sum += a[i];
+```
+
+MIPS-like:
+
+```asm
+    add  $t0, $zero, $zero    # i = 0
+    add  $t1, $zero, $zero    # sum = 0
+loop:
+    beq  $t0, $a1, done
+    sll  $t2, $t0, 2          # byte offset i*4
+    add  $t3, $a0, $t2
+    lw   $t4, 0($t3)
+    add  $t1, $t1, $t4
+    addi $t0, $t0, 1
+    j    loop
+done:
+    add  $v0, $t1, $zero
+```
+
+Know which registers conventionally carry arguments/results/temporaries/saved values, but a calling convention is an ABI agreement rather than an ISA law.
+
+## 25. Pipeline, Cache, and Virtual-Memory Calculation Cards
+
+### 25.1 Five-stage pipeline control
+
+`IF → ID → EX → MEM → WB`. Pipeline registers hold both data and the control bits needed later.
+
+For:
+
+```asm
+lw  $t0, 0($s0)
+add $t1, $t0, $s1
+sub $t2, $t1, $s2
+```
+
+- load value appears after MEM, too late for the next instruction's EX input in the classic timing; insert one bubble even with forwarding;
+- forward the `add` result from an EX/MEM or MEM/WB path to the `sub`;
+- detect load-use when ID/EX is a load and its destination matches an IF/ID source;
+- on a taken branch resolved later, squash younger wrong-path instructions.
+
+Pipeline ideal cycles for $N$ instructions and $k$ stages are $N+k-1$; stalls/flushes add cycles:
+
+$$CPI_{\text{actual}}=CPI_{\text{ideal}}+\text{stall cycles/instruction}.$$
+
+### 25.2 Cache fields and miss equations
+
+For capacity $C$, block size $B$, associativity $A$:
+
+$$\text{sets}=\frac{C}{BA},\quad
+b=\log_2B,\quad s=\log_2(\text{sets}),\quad
+t=\text{address bits}-s-b.$$
+
+Example: 32 KiB, 64-byte blocks, 4-way, 32-bit addresses:
+
+$$\text{sets}=\frac{32768}{64\cdot4}=128,\quad
+b=6,\ s=7,\ t=19.$$
+
+Average memory access time:
+
+$$AMAT=T_{hit}+MR\cdot MP.$$
+
+For multiple levels:
+
+$$AMAT=T_{L1}+MR_{L1}(T_{L2}+MR_{L2}MP_{memory}).$$
+
+Distinguish compulsory, capacity and conflict misses; coherence misses appear in multiprocessors. Larger blocks exploit spatial locality but increase miss penalty/pollution and reduce number of lines.
+
+### 25.3 Page translation and TLB
+
+For virtual page number `VPN` and page offset:
+
+```text
+VA = VPN | offset
+TLB hit: VPN -> PPN
+PA = PPN | same offset
+```
+
+On a TLB miss, hardware/software walks page tables. A valid present PTE refills the TLB; a not-present mapping causes a page fault and OS intervention. Protection is checked during translation.
+
+Ignoring overlap and using TLB lookup time $t_T$, memory time $t_M$, hit rate $h$, one-level page table:
+
+$$EAT=h(t_T+t_M)+(1-h)(t_T+2t_M),$$
+
+before adding page-fault probability. Because a page fault may cost milliseconds, even a tiny fault rate can dominate.
+
+### 25.4 x86 protected-mode segmentation and two-level paging
+
+The three-page microprocessor formula note distinguishes **logical**, **linear**, and **physical** addresses. In protected mode, a logical address is a segment selector plus an offset. A 16-bit selector has:
+
+```text
+15                    3 2  1 0
++----------------------+----+--+
+| descriptor-table index | TI |RPL|
++----------------------+----+--+
+```
+
+- `index`: selects an 8-byte descriptor;
+- `TI=0`: Global Descriptor Table (GDT), `TI=1`: Local Descriptor Table (LDT);
+- `RPL`: requested privilege level.
+
+Ignoring descriptor caching for the explanation,
+
+$$
+\text{descriptor address}
+=
+\begin{cases}
+\text{GDTR.base}+8(\text{index}), & TI=0,\\
+\text{LDTR-table base}+8(\text{index}), & TI=1.
+\end{cases}
+$$
+
+The descriptor supplies the segment base, limit, type and privilege/access bits. After limit and privilege checks,
+
+$$\text{linear address}=\text{descriptor.base}+\text{offset}.$$
+
+If paging is disabled, the linear address is the physical address. With classic 32-bit, two-level 4 KiB paging, split the 32-bit linear address as:
+
+```text
+31            22 21            12 11             0
++---------------+----------------+-----------------+
+| directory (10)| page table (10)| byte offset (12)|
++---------------+----------------+-----------------+
+```
+
+`CR3` gives the page-directory base. A 10-bit directory index chooses one of $2^{10}=1024$ page-directory entries; the selected PDE gives a page-table base; the next 10 bits choose one of 1024 PTEs; the PTE gives the page-frame base. Since a page is $2^{12}=4096$ bytes,
+
+$$\text{physical address}=(\text{page-frame number}\ll12)+\text{offset}.$$
+
+Each 4-byte table has $1024\times4=4096$ bytes, exactly one page. Present, writable, user/supervisor and related control bits are checked along the walk. A TLB hit skips the memory-resident walk but does not change the translation or protection semantics.
+
+**Do not mix the two modes:** real-mode 8086 uses `segment << 4 + offset`; protected mode uses a selector to locate a descriptor, then adds the descriptor base, and may subsequently page the resulting linear address.
+
+## 26. 8086 Architecture and Assembly Recall
+
+### 26.1 Programmer-visible registers
+
+- General: `AX`, `BX`, `CX`, `DX`, each split into high/low bytes.
+- Pointer/index: `SP`, `BP`, `SI`, `DI`.
+- Segments: `CS`, `DS`, `SS`, `ES`.
+- Instruction pointer: `IP`.
+- Flags: `CF PF AF ZF SF TF IF DF OF` plus reserved bits.
+
+The Bus Interface Unit (BIU) forms addresses, fetches instructions through a prefetch queue and handles bus operations; the Execution Unit decodes/executes using ALU/registers. Fetch/execute overlap improves throughput but a branch flushes the queue.
+
+### 26.2 Segmented physical addresses
+
+$$\text{physical address}=16\times\text{segment}+\text{offset}
+=(\text{segment}\ll4)+\text{offset}.$$
+
+Example:
+
+$$1234_h:5678_h\rightarrow12340_h+5678_h=179B8_h.$$
+
+Different pairs can name the same byte because segments overlap. Classic 8086 has a 20-bit address bus (1 MiB address space) while registers are 16 bits.
+
+Default pairs:
+
+- instruction fetch: `CS:IP`;
+- stack: `SS:SP`, and BP-based addresses normally default to `SS`;
+- most data: `DS` plus effective address;
+- string destination: `ES:DI`, source often `DS:SI`.
+
+### 26.3 Addressing modes
+
+```asm
+mov ax, bx              ; register
+mov ax, 1234h           ; immediate
+mov ax, [1234h]         ; direct memory offset
+mov ax, [bx]            ; register indirect
+mov ax, [bx+si]         ; based-indexed
+mov ax, [bp+di+8]       ; based-indexed + displacement, SS default
+```
+
+Memory-to-memory ordinary `MOV` is generally not allowed (string instructions are special). Operand size must be inferable or specified.
+
+### 26.4 Arithmetic, flags, branches, and a loop
+
+`CMP a,b` performs `a-b` only to set flags. For unsigned comparisons use CF/ZF-based conditions (`JA/JB` families); for signed comparisons use SF/OF/ZF (`JG/JL` families). Mixing them gives wrong answers around the sign bit.
+
+Sum `1..N`:
+
+```asm
+; input: CX = N, output: AX = sum (assuming it fits 16 bits)
+xor ax, ax
+test cx, cx
+jz   done
+again:
+add  ax, cx
+loop again              ; CX <- CX-1; jump if CX != 0
+done:
+```
+
+For unsigned multiplication, `MUL r/m16` multiplies `AX` by the operand and returns `DX:AX`; `DIV r/m16` divides `DX:AX`, placing quotient in `AX`, remainder in `DX`. `IMUL/IDIV` are signed.
+
+### 26.5 Stack, procedure, and interrupt
+
+The stack grows toward lower addresses. A 16-bit `PUSH` decrements `SP` by 2 then stores; `POP` loads then increments. `CALL` pushes return IP (and CS for far call), then transfers; `RET` restores return address.
+
+```asm
+sum2 proc near
+    push bp
+    mov  bp, sp
+    mov  ax, [bp+4]      ; first stack argument under this convention
+    add  ax, [bp+6]
+    pop  bp
+    ret
+sum2 endp
+```
+
+The exact argument offsets depend on push order, near/far call, saved registers and ABI; draw the stack before answering.
+
+For an interrupt, the CPU saves `FLAGS`, `CS`, `IP`, clears trap/interrupt enable as specified, and loads the handler address from the interrupt-vector table. 8086 IVT begins at physical 0; vector type $n$ occupies four bytes at $4n$: offset then segment. `IRET` restores `IP`, `CS`, and `FLAGS`. An interrupt is asynchronous hardware/software service; an exception arises synchronously from the current instruction (terminology varies by architecture).
+
+## 27. ATmega32 / AVR Embedded Recall
+
+### 27.1 Core and register model
+
+ATmega32 is an 8-bit AVR microcontroller with separate program/data address spaces (Harvard-style), 32 general-purpose 8-bit registers `R0..R31`, flash, SRAM, EEPROM, GPIO, timers, ADC and serial peripherals. Register pairs `X=R27:R26`, `Y=R29:R28`, `Z=R31:R30` support indirect addressing.
+
+`SREG` flags include:
+
+```text
+I T H S V N Z C
+```
+
+`I` globally enables maskable interrupts; `C/Z/N/V/S/H` reflect arithmetic. The stack pointer lives in I/O registers and should be initialized by startup/runtime before calls/interrupts.
+
+### 27.2 GPIO
+
+For port `B`:
+
+- `DDRB` bit 1 = output, 0 = input;
+- `PORTB` writes output value; on an input, writing 1 enables internal pull-up;
+- `PINB` reads pin state.
+
+```c
+#include <avr/io.h>
+
+int main(void) {
+    DDRB |=  (1u << PB0);      // LED output
+    DDRD &= ~(1u << PD2);      // button input
+    PORTD |= (1u << PD2);      // enable pull-up
+
+    for (;;) {
+        if (!(PIND & (1u << PD2))) PORTB |=  (1u << PB0);
+        else                       PORTB &= ~(1u << PB0);
+    }
+}
+```
+
+With a pull-up, pressed-to-ground reads 0; forgetting active-low polarity is a frequent lab/viva error.
+
+### 27.3 Timers, CTC, and PWM
+
+Timer tick:
+
+$$f_{tick}=\frac{f_{CPU}}{N},\qquad
+T_{overflow}=\frac{N(TOP+1)}{f_{CPU}}.$$
+
+For CTC interrupt at `OCR`:
+
+$$f_{interrupt}=\frac{f_{CPU}}{N(1+OCR)}.$$
+
+Example: $f_{CPU}=8$ MHz, prescaler 64, desired 1 kHz:
+
+$$OCR=\frac{8\,000\,000}{64\cdot1000}-1=124.$$
+
+```c
+OCR0 = 124;
+TCCR0 = (1u << WGM01) | (1u << CS01) | (1u << CS00); // CTC, /64
+TIMSK |= (1u << OCIE0);
+sei();
+```
+
+PWM changes average delivered power/duty without analog output. In 8-bit fast PWM, duty is approximately `(OCR+1)/256` under the chosen polarity/mode; state exact mode because formulas differ for phase-correct PWM and toggle output.
+
+### 27.4 ADC
+
+For an ideal $n$-bit ADC:
+
+$$code\approx\operatorname{round}\left(\frac{V_{in}}{V_{ref}}(2^n-1)\right),\qquad
+LSB\approx\frac{V_{ref}}{2^n}.$$
+
+ATmega32 ADC is 10-bit. Select reference/channel in `ADMUX`, enable and choose prescaler in `ADCSRA`, start with `ADSC`, wait for completion/flag, then read low/high result in the documented order.
+
+```c
+ADMUX  = (1u << REFS0);                         // AVCC reference, ADC0
+ADCSRA = (1u << ADEN) | (1u << ADPS2) |
+         (1u << ADPS1) | (1u << ADPS0);        // enable, /128
+ADCSRA |= (1u << ADSC);
+while (ADCSRA & (1u << ADSC)) { }
+uint16_t sample = ADC;
+```
+
+Choose ADC clock in the datasheet's accuracy range; source impedance, reference decoupling, acquisition time and noise matter beyond the formula.
+
+### 27.5 UART
+
+Asynchronous normal-speed baud setting:
+
+$$UBRR\approx\frac{f_{CPU}}{16\,baud}-1.$$
+
+```c
+static void uart_init(uint16_t ubrr) {
+    UBRRH = (uint8_t)(ubrr >> 8);
+    UBRRL = (uint8_t)ubrr;
+    UCSRB = (1u << RXEN) | (1u << TXEN);
+    UCSRC = (1u << URSEL) | (1u << UCSZ1) | (1u << UCSZ0); // 8N1
+}
+
+static void uart_putc(uint8_t c) {
+    while (!(UCSRA & (1u << UDRE))) { }
+    UDR = c;
+}
+```
+
+The achieved baud differs after integer rounding; calculate percentage error and ensure both endpoints' combined clock error remains tolerable.
+
+### 27.6 Interrupt discipline
+
+```mermaid
+flowchart LR
+    E[Peripheral event] --> F[Set interrupt flag]
+    F --> G{local enable AND global I?}
+    G -- no --> W[flag waits / polling]
+    G -- yes --> C[finish current instruction]
+    C --> S[save return state, jump vector]
+    S --> I[ISR: minimal acknowledge/capture]
+    I --> R[restore and RETI]
+```
+
+An ISR should be short, bounded, nonblocking, and share data with main code using `volatile` plus atomic/critical-section rules appropriate to data width. Clear flags according to the device's exact write-one-to-clear/read sequence; an incorrect generic assignment can lose events.
+
+## 28. Current Hardware Source Ledger
+
+| Folder | Pages | Material retained |
+|---|---:|---|
+| 205-DLD | 191 | number/codes, Boolean algebra/K-map/Quine–McCluskey, combinational arithmetic/data selectors/PLDs/hazards; latches/FFs, analysis, registers/counters, Moore/Mealy, reduction/compatibility, asynchronous flow tables/races |
+| 305-CA | 459 | ALU and MIPS-style ISA/datapath/control, performance/CPI/Amdahl, pipeline/hazards/forwarding/branch, cache, VM/TLB |
+| 315-MP | 1094 | 8086 assembly/architecture/segmentation/addressing/arrays/procedures/interrupts plus ATmega32 GPIO/interrupt/ADC/timer/PWM/UART |
+| **Total** | **1744** | **all current DLD + CA + MP pages routed** |
+
+---
+
+## 29. Hardware core-subject self-test
 
 - [ ] Convert signed/unsigned numbers and detect carry/overflow.
 - [ ] Minimize Boolean functions and implement NAND/NOR-only.
@@ -707,4 +1244,13 @@ Security and safety overlap but differ: safety protects people/environment from 
 - [ ] Defend microprocessor vs MCU/SoC and explain why integration affects cost.
 - [ ] Trace registers/stack/calling convention and an 8086 segment address.
 - [ ] Explain GPIO, timer/PWM, ADC, UART, SPI, I2C, watchdog, and RTOS trade-offs.
+- [ ] Perform Quine–McCluskey and identify essential prime implicants.
+- [ ] Derive carry-lookahead equations and explain BCD correction.
+- [ ] Reduce a complete FSM and explain compatibility/closed cover for incomplete FSMs.
+- [ ] Explain critical races and fundamental-mode assumptions in asynchronous circuits.
+- [ ] Encode/decode MIPS R/I/J instructions and draw control/data paths for `lw/sw/beq/R`.
+- [ ] Trace one load-use stall, forwarding path and branch flush.
+- [ ] Write/trace 8086 loops, flags, addressing modes, stack frame and interrupt vector.
+- [ ] Configure AVR GPIO, timer CTC/PWM, ADC and UART with formulas/register roles.
+- [ ] Account for all 1744 current hardware-source pages using the ledger.
 - [ ] Complete at least five board exercises cleanly within five minutes each.

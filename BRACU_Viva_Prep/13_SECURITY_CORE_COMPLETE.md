@@ -2,7 +2,7 @@
 
 # Cybersecurity — Core-Complete Viva Recall
 
-> **Source boundary:** there is no standalone cybersecurity slide folder in this workspace. This is a rigorous standard-core supplement built around the reported BRAC viva questions, the security material in your networking/OOP/SWE background, and the concepts required to defend your Matter thesis. It is not labeled as a local-slide transcription.
+> **Current source basis:** the Security folder now contains `ABS_Merged_taky.pdf` (815 pages), `ART_merged_taky.pdf` (722 pages), and the 35-page image-dominant `ABS_Sir(Note).pdf`: **1572 pages total**. The merged slides were re-read in lecture order and the note was visually reviewed. The original viva-focused chapters below are retained, then expanded with the slide sequence: classical/modern cryptography, web security, memory safety, network attacks, TLS/DoS/IDS, malware, DNS security and anonymity.
 
 Security answers should begin with the asset, adversary, and threat model. “Use encryption” is incomplete until you say **what is encrypted, against whom, where the key lives, and what integrity/authentication mechanism is used**.
 
@@ -485,7 +485,493 @@ Not for a useful real system. Security manages risk under assumptions, costs, us
 
 ---
 
-# 14. Final security self-test
+# 14. Cryptographic Foundations from the ABS Slides
+
+## 14.1 Security must not depend on hiding the algorithm
+
+**Kerckhoffs's principle:** a cryptosystem should remain secure even if everything about the system except the key is public. Algorithms receive public scrutiny; keys are smaller, replaceable secrets. “The attacker will not understand our custom algorithm” is obscurity, not a defensible cryptographic assumption.
+
+Define the experiment:
+
+```text
+K <- KeyGen()
+C <- Enc(K, M)
+M or failure <- Dec(K, C)
+```
+
+Correctness requires `Dec(K, Enc(K,M))=M`. Security is a separate property: correctness alone says nothing about what ciphertext reveals or whether it can be modified.
+
+## 14.2 Classical ciphers and why they fail
+
+- **Caesar/shift:** $E_k(x)=(x+k)\bmod26$; only 26 keys, so brute force is trivial.
+- **Monoalphabetic substitution:** a permutation of the alphabet gives a large key space, but language-frequency and pattern leakage defeat it.
+- **Vigenère:** repeated-key shifts hide single-letter frequencies better; repeated key period enables Kasiski/index-of-coincidence style analysis.
+
+Lesson: a large nominal key space is not sufficient when ciphertext structure leaks information.
+
+## 14.3 Perfect secrecy and the one-time pad
+
+For bit strings, OTP uses:
+
+$$C=M\oplus K,\qquad M=C\oplus K.$$
+
+If $K$ is uniformly random, as long as $M$, used exactly once, and kept secret, then for every $m,c$:
+
+$$P(M=m\mid C=c)=P(M=m).$$
+
+Intuition: for every candidate message $m$, exactly one equally likely key $k=m\oplus c$ explains ciphertext $c$. Therefore ciphertext changes no message probability.
+
+The requirements are also why OTP is rarely a general storage/network solution:
+
+- key length equals message length;
+- secure key distribution/storage is difficult;
+- reuse is catastrophic: $C_1\oplus C_2=M_1\oplus M_2$;
+- OTP provides no integrity—an attacker can flip chosen plaintext bits by flipping ciphertext bits.
+
+## 14.4 Block cipher model, DES, and AES
+
+A block cipher is a keyed pseudorandom permutation on fixed-size blocks:
+
+$$E_K:\{0,1\}^n\rightarrow\{0,1\}^n.$$
+
+It does not by itself define how to encrypt a long message.
+
+**DES** is a 16-round Feistel network on 64-bit blocks with an effective 56-bit key. In a Feistel round:
+
+$$L_{i+1}=R_i,\qquad R_{i+1}=L_i\oplus F(R_i,K_i).$$
+
+The Feistel structure makes decryption use the same structure with subkeys reversed. DES is obsolete because exhaustive key search is practical; 3DES extended life but is slow and has a small block size.
+
+**AES** is a substitution–permutation network with 128-bit blocks and 128/192/256-bit keys. For AES-128, after initial `AddRoundKey`, 9 full rounds apply:
+
+1. `SubBytes`—nonlinear S-box;
+2. `ShiftRows`—permute byte positions;
+3. `MixColumns`—linear diffusion over $GF(2^8)$;
+4. `AddRoundKey`—XOR round key.
+
+The tenth round omits `MixColumns`. Nonlinearity supplies confusion; permutations/mixing spread one input change across the state (diffusion). Use a standard library/mode—do not implement AES primitives for an application.
+
+# 15. Modes of Operation and Authenticated Encryption
+
+For blocks $P_i,C_i$ and block cipher $E_K$:
+
+| Mode | Core relation | Required uniqueness | Main warning |
+|---|---|---|---|
+| ECB | $C_i=E_K(P_i)$ | none | equal blocks leak patterns; do not use for structured messages |
+| CBC | $C_i=E_K(P_i\oplus C_{i-1}),\ C_0=IV$ | unpredictable fresh IV | padding, sequential encryption, malleable without MAC |
+| CTR | $C_i=P_i\oplus E_K(N\|counter_i)$ | never repeat nonce/counter under a key | reuse exposes XOR of plaintexts; no integrity alone |
+| GCM | CTR encryption plus polynomial authenticator | unique nonce, normally 96 bits | nonce reuse can break confidentiality and authentication |
+
+CBC decryption is
+
+$$P_i=D_K(C_i)\oplus C_{i-1}.$$
+
+Changing one ciphertext block predictably flips bits in the next plaintext block, showing why encryption alone does not authenticate. A padding oracle occurs when a system reveals whether decrypted CBC padding is valid; the response becomes a decryption side channel. Authenticate before exposing parsing differences, or use a well-designed AEAD.
+
+AEAD interface:
+
+$$ (C,T)=\operatorname{Enc}_K(N,P,A),\qquad
+P\ \text{or}\ \bot=\operatorname{Dec}_K(N,C,A,T),$$
+
+where associated data $A$—such as version, record type or identifier—is authenticated but not encrypted. Never release unauthenticated plaintext before tag verification.
+
+Nonce, IV, salt, and key are different:
+
+- a **key** is secret;
+- a **nonce** is a once-per-key value, often public;
+- an **IV** is an initialization value whose unpredictability/uniqueness rule depends on the mode;
+- a **salt** separates password/KDF instances and is normally public.
+
+# 16. Randomness, Key Derivation, Diffie–Hellman, and RSA
+
+## 16.1 PRG/CSPRNG and entropy
+
+A pseudorandom generator expands a short random seed into a longer deterministic stream:
+
+$$G:\{0,1\}^s\rightarrow\{0,1\}^{\ell},\quad \ell>s.$$
+
+For cryptography, output should be computationally indistinguishable from random to feasible attackers and resist state compromise according to the generator's guarantee. Seed from the operating system CSPRNG; timestamps, process IDs, ordinary language PRNGs and user names are not cryptographic entropy.
+
+A KDF such as HKDF derives context-separated keys:
+
+$$PRK=\operatorname{HMAC}(salt,IKM),\qquad
+OKM=\operatorname{Expand}(PRK,info,L).$$
+
+`info` binds purpose/protocol/context so the same input secret does not silently reuse one key across encryption, MAC and unrelated protocols.
+
+## 16.2 Diffie–Hellman
+
+In a group generated by $g$:
+
+1. Alice chooses secret $a$, sends $A=g^a$.
+2. Bob chooses secret $b$, sends $B=g^b$.
+3. Alice computes $B^a=g^{ab}$; Bob computes $A^b=g^{ab}$.
+
+An eavesdropper sees $g,g^a,g^b$ but should not feasibly recover $g^{ab}$ under the computational Diffie–Hellman assumption for the chosen group.
+
+DH establishes a secret but not identity. An active attacker can form separate secrets with Alice and Bob. Authenticate the transcript with signatures/certificates, a PSK, or another trusted mechanism. Ephemeral DH (`DHE`/`ECDHE`) gives forward secrecy when ephemeral secrets are erased.
+
+## 16.3 RSA
+
+Educational key generation:
+
+1. choose large primes $p,q$, set $n=pq$;
+2. $\phi(n)=(p-1)(q-1)$;
+3. choose $e$ with $\gcd(e,\phi(n))=1$;
+4. choose $d\equiv e^{-1}\pmod{\phi(n)}$.
+
+Then:
+
+$$c=m^e\bmod n,\qquad m=c^d\bmod n.$$
+
+Textbook RSA is deterministic and insecure. Encryption needs randomized OAEP; signatures need a signature encoding such as PSS. Encryption and signing are not simply interchangeable “private-key encryption.” Modern protocols generally use RSA/ECDSA/EdDSA for authentication and ephemeral (EC)DH for key agreement, then symmetric AEAD for data.
+
+# 17. Hashes, MACs, Signatures, and Certificates
+
+## 17.1 Hash security and the birthday bound
+
+For an ideal $n$-bit hash:
+
+- preimage work is about $2^n$;
+- second-preimage work is about $2^n$;
+- collision work is about $2^{n/2}$.
+
+With $q$ random samples, collision probability is approximately
+
+$$1-\exp\left(-\frac{q(q-1)}{2^{n+1}}\right).$$
+
+Collision resistance does not make a bare hash a MAC. If an attacker changes `message`, they can recompute `Hash(message)`.
+
+HMAC is conceptually
+
+$$\operatorname{HMAC}_K(m)=H((K'\oplus opad)\|H((K'\oplus ipad)\|m)).$$
+
+It is not just `H(key || message)` and avoids weaknesses such as length extension in common Merkle–Damgård hashes.
+
+## 17.2 MAC versus signature
+
+| Property | MAC | Digital signature |
+|---|---|---|
+| keys | shared secret | private signing/public verification |
+| who can verify | secret holders | anyone trusted to possess public key |
+| can verifier forge? | yes, verifier knows shared key | no, under signature security |
+| public attribution | no | potentially, with identity/key evidence |
+| speed | normally faster | normally slower |
+
+Both require canonical encoding, domain separation and replay context. Signing a JSON string without a defined canonical representation can let equivalent/ambiguous encodings undermine what was approved.
+
+## 17.3 PKI and certificate validation
+
+An X.509 certificate binds a subject name/public key to issuer-signed metadata such as validity period, serial number, key usage and extensions. A typical chain is:
+
+```mermaid
+flowchart LR
+    R[Trusted root CA<br/>self-signed trust anchor] -->|signs| I[Intermediate CA]
+    I -->|signs| L[Server leaf certificate]
+    L --> H[Hostname + public key + validity + usage]
+```
+
+A TLS client must:
+
+1. build a chain to a locally trusted anchor;
+2. verify every signature;
+3. verify current validity;
+4. match requested hostname against SAN entries;
+5. enforce basic constraints/key usage/policy;
+6. apply revocation handling according to platform policy.
+
+A certificate does not mean the site is benevolent; it means the validated key is authorized for the stated name under the CA trust model.
+
+# 18. TLS 1.3 in Enough Detail for a Viva
+
+```mermaid
+sequenceDiagram
+    participant C as Client
+    participant S as Server
+    C->>S: ClientHello: versions, suites, key_share, random, SNI
+    S-->>C: ServerHello: selected suite + key_share
+    Note over C,S: ECDHE secret -> HKDF handshake keys
+    S-->>C: EncryptedExtensions
+    S-->>C: Certificate + CertificateVerify
+    S-->>C: Finished(transcript MAC)
+    C->>S: Finished(transcript MAC)
+    Note over C,S: derive application traffic keys
+    C->>S: encrypted HTTP/application records
+```
+
+The server's certificate signature authenticates its long-term public key; `CertificateVerify` proves possession and signs the current handshake transcript. `Finished` authenticates the transcript using a derived secret, detecting parameter tampering. Record protection then uses AEAD with sequence-derived nonces.
+
+TLS 1.3 removes obsolete static RSA key exchange and old unauthenticated/weak constructions. Cipher-suite naming mainly selects AEAD and hash because key exchange/signature choices are negotiated separately.
+
+Session resumption uses a PSK/ticket to reduce latency. **0-RTT early data** can be replayed, so use it only for replay-safe/idempotent operations under an explicit anti-replay design. TLS protects bytes between TLS endpoints; a reverse proxy that terminates TLS becomes a plaintext/trust endpoint.
+
+# 19. Browser Security, Cookies, CSRF, XSS, and SQL Injection
+
+## 19.1 Same-origin policy and cookies
+
+An origin is the tuple `(scheme, host, port)`. The same-origin policy prevents a document from freely reading another origin's data; controlled mechanisms such as CORS, `postMessage` and embedded-resource rules create exceptions.
+
+Cookie controls:
+
+- `Secure`: send only over HTTPS;
+- `HttpOnly`: JavaScript cannot read it, reducing token theft from XSS but not actions performed by XSS;
+- `SameSite=Lax/Strict/None`: controls cross-site attachment (`None` requires `Secure`);
+- narrow `Domain`/`Path`, short lifetime and rotation reduce exposure.
+
+Prefer an opaque unpredictable session ID in a secure cookie. Regenerate it after login/privilege change; expire server-side on logout; do not put session IDs in URLs.
+
+## 19.2 CSRF request trace
+
+```mermaid
+flowchart LR
+    U[Logged-in victim browser] -->|session cookie| B[Bank]
+    A[Attacker page] -->|causes cross-site POST| U
+    U -->|browser auto-attaches cookie| B
+    B --> C{CSRF token / SameSite / Origin check?}
+    C -- absent --> X[Unwanted state change]
+    C -- valid defense --> R[Reject forged request]
+```
+
+CSRF relies on ambient credentials and an action endpoint; the attacker often cannot read the response. XSS executes in the trusted origin and can often read tokens or call same-origin APIs, so eliminating XSS is critical.
+
+## 19.3 Context-specific XSS defense
+
+Encoding depends on where data is inserted: HTML text, attribute, URL, JavaScript string and CSS have different grammars. Prefer framework auto-escaping and safe DOM APIs such as `textContent`; avoid `innerHTML`, inline script construction and `eval`. Sanitize only when the product intentionally permits HTML. CSP with nonces/hashes and `object-src 'none'` is defense in depth, not permission to interpolate unsafely.
+
+## 19.4 SQL injection, prepared statements, and identifiers
+
+Parameter binding keeps values out of SQL grammar:
+
+```python
+row = db.execute(
+    "SELECT id, role FROM users WHERE email = ?",
+    (email,)
+).fetchone()
+```
+
+Parameters cannot usually stand for table/column/order keywords. Map an external choice to a fixed allow-list:
+
+```python
+columns = {"newest": "created_at DESC", "price": "price ASC"}
+order_sql = columns.get(user_choice)
+if order_sql is None:
+    raise ValueError("invalid sort")
+query = "SELECT id, price FROM products ORDER BY " + order_sql
+```
+
+Stored procedures are safe only if they avoid unsafe dynamic SQL. Input escaping is database/encoding-specific and inferior to separating code/data.
+
+## 19.5 CAPTCHA
+
+CAPTCHA attempts to distinguish automated abuse from human use. It raises attacker cost but can harm accessibility/privacy and is vulnerable to solver services, ML and session/token replay. Bind challenges to action/session, expire them, rate-limit verification and use risk-based layered controls; CAPTCHA is not authentication or authorization.
+
+# 20. Tor and Anonymity
+
+Tor routes traffic through a circuit—typically guard, middle and exit—and layers encryption so each relay learns only adjacent hops:
+
+```mermaid
+flowchart LR
+    C[Client] --> G[Guard<br/>knows client, not destination]
+    G --> M[Middle relay]
+    M --> E[Exit<br/>knows destination, not client]
+    E --> D[Destination]
+```
+
+The client negotiates separate keys with relays and wraps cells in layers; each relay removes one layer. The exit can observe non-TLS destination traffic, so use HTTPS. Tor hides network linkage under assumptions; it does not fix browser fingerprinting, logged-in identity, malicious downloads, endpoint compromise, application identifiers or global traffic-correlation attackers. A VPN shifts trust to one provider; Tor distributes trust across circuit relays and has different performance/threat assumptions.
+
+# 21. Memory Safety
+
+## 21.1 Main bug classes
+
+- stack/heap buffer overflow or out-of-bounds read/write;
+- use-after-free and double free;
+- uninitialized memory;
+- integer overflow/truncation leading to wrong allocation/bounds;
+- format-string vulnerability;
+- null/dangling pointer and type confusion.
+
+Vulnerable C:
+
+```c
+void copy_name(const char *src) {
+    char name[16];
+    strcpy(name, src);          // no destination bound
+    printf(name);               // attacker controls format string
+}
+```
+
+Safer shape:
+
+```c
+bool copy_name(char dst[16], const char *src) {
+    size_t n = strlen(src);
+    if (n >= 16) return false;
+    memcpy(dst, src, n + 1);
+    printf("%s", dst);
+    return true;
+}
+```
+
+The safe version still needs a trustworthy NUL-terminated `src`; APIs carrying `(pointer,length)` and memory-safe languages reduce hidden assumptions.
+
+## 21.2 From overwrite to control-flow attack
+
+A stack overflow may corrupt adjacent data, a saved frame pointer or return address. Historical attacks injected machine code; with non-executable memory, attackers may reuse existing code through return-to-libc or return-oriented programming (ROP). A ROP chain combines short instruction sequences (“gadgets”) ending in control transfers.
+
+Mitigations are layered:
+
+| Mitigation | Stops/raises cost | Limitation |
+|---|---|---|
+| bounds checks / safe APIs / safe language | root memory bug | unsafe FFI/native components remain |
+| stack canary | detects overwrite before return | leaks/bypasses/non-stack targets |
+| NX/DEP | prevents executing writable data | code-reuse attacks |
+| ASLR + PIE | randomizes addresses | information leaks/brute force reduce benefit |
+| RELRO | hardens relocation tables | not all control/data targets |
+| CFI | restricts indirect control flow | policy precision/overhead/implementation |
+| sanitizers | detect bugs in testing | overhead; not complete production prevention |
+
+Patch the root bug; mitigations do not make unsafe code correct.
+
+## 21.3 Integer and lifetime example
+
+Before allocating `count * element_size`, check overflow:
+
+```c
+if (count > SIZE_MAX / element_size) return ERROR;
+size_t bytes = count * element_size;
+```
+
+A use-after-free may become exploitable when the freed slot is reallocated with attacker-controlled data. Ownership/borrowing discipline, RAII, smart pointers, garbage collection or memory-safe languages reduce lifetime errors, but logic-level resource leaks and races still exist.
+
+# 22. Low-Level Network and Routing Attacks
+
+## 22.1 ARP, spoofing, and local networks
+
+ARP has no built-in authentication. A local attacker can send forged mappings so traffic uses the attacker's MAC, enabling interception or denial. Defenses include switch port security, DHCP snooping plus Dynamic ARP Inspection, segmentation, static entries for narrow fixed cases, and end-to-end TLS so a poisoned path still cannot read/modify application content.
+
+IP source addresses can be spoofed where networks do not filter impossible sources. Ingress/egress filtering (BCP 38-style), stateful challenge/response and cryptographic authentication reduce abuse. A source address alone is not identity.
+
+## 22.2 TCP attacks and defenses
+
+- **SYN flood:** many half-open handshakes consume backlog/state. Use SYN cookies, tuned backlogs/timeouts, rate controls and upstream mitigation.
+- **Sequence prediction/injection:** an off-path attacker needs an acceptable sequence number; modern random initial sequence numbers and challenge ACK behavior raise difficulty.
+- **RST injection:** a forged acceptable reset tears down a connection; encrypted/authenticated upper layers protect content but TCP reset can still cause availability loss.
+- **Session hijacking:** on-path observation/injection may take over plaintext protocols; TLS authenticates and integrity-protects application records.
+
+## 22.3 UDP reflection/amplification
+
+Connectionless UDP lets an attacker spoof a victim's source address; public servers send replies to the victim. If response size exceeds request size:
+
+$$\text{amplification factor}=\frac{\text{response bytes}}{\text{request bytes}}.$$
+
+Prevent source spoofing at networks, avoid open amplifiers, use response-rate limiting/cookies, minimize unauthenticated response size and obtain provider-scale scrubbing for large attacks.
+
+## 22.4 BGP attacks
+
+BGP exchanges reachability between autonomous systems and historically trusts advertisements. A mistaken or malicious announcement can hijack a prefix or create a more-specific route that wins longest-prefix matching.
+
+Controls:
+
+- prefix/AS-path filters and maximum-prefix limits;
+- monitoring and rapid coordination/withdrawal;
+- RPKI Route Origin Authorizations and Route Origin Validation to check whether an AS may originate a prefix;
+- path-validation mechanisms where deployed.
+
+RPKI origin validation does not prove the whole AS path is legitimate and deployment/policy determine effect.
+
+# 23. Denial of Service and Intrusion Detection
+
+DoS can target:
+
+- **volume:** exhaust link bandwidth;
+- **protocol/state:** exhaust connection, fragment, NAT/firewall or kernel state;
+- **application:** force expensive database/search/authentication work;
+- **dependency/business logic:** exhaust quotas, inventory or third-party limits.
+
+Use capacity and redundancy, caching/CDNs/anycast, bounded queues/timeouts, authentication before expensive work where possible, per-principal/resource rate limits, circuit breakers, graceful degradation, provider scrubbing and rehearsed incident response.
+
+## 23.1 IDS/IPS models
+
+- **Signature/misuse detection:** precise for known patterns, weaker for novel variants.
+- **Anomaly detection:** models normal behavior, can detect novelty but often produces false positives under legitimate change.
+- **Host-based IDS:** process/file/system-call/endpoint telemetry.
+- **Network IDS:** packets/flows/protocol behavior at observation points.
+
+Base rates matter. If prevalence is $P(A)$, true-positive rate $TPR$ and false-positive rate $FPR$:
+
+$$P(A\mid alert)=
+\frac{TPR\cdot P(A)}
+{TPR\cdot P(A)+FPR\cdot(1-P(A))}.$$
+
+Example: with 0.1% attacks, 99% detection and 1% false-positive rate:
+
+$$P(A\mid alert)\approx
+\frac{0.99(0.001)}{0.99(0.001)+0.01(0.999)}
+\approx9\%.$$
+
+Even a seemingly good detector gives mostly false alerts. Improve context, correlation, thresholds and response workflow; do not report only accuracy.
+
+# 24. Malware, Viruses, Worms, Rootkits, and Ransomware
+
+| Term | Defining feature |
+|---|---|
+| Trojan | malicious behavior disguised as/inside desired software; does not define self-replication |
+| Virus | attaches to a host file/boot/document and replicates when the host executes |
+| Worm | self-propagates across systems/networks without needing a host file |
+| Bot | compromised machine remotely controlled as part of a botnet |
+| Spyware/keylogger | covertly observes/exfiltrates activity |
+| Ransomware | denies access, commonly by encrypting data and attacking backups |
+| Rootkit | hides/preserves privileged access by modifying or subverting system visibility |
+
+A malware lifecycle may include delivery, exploitation/execution, persistence, privilege escalation, defense evasion, credential access, discovery/lateral movement, command-and-control and impact/exfiltration. These are behaviors, not a guaranteed linear order.
+
+Defenses: patching, least privilege, application control, macro/script restrictions, endpoint detection, segmentation, egress control, protected credentials, centralized logs, sandboxing, immutable/offline backups and restore tests. Signature scanning alone misses new/packed/fileless behavior; anomaly/behavior detection has false positives.
+
+A kernel rootkit may hook kernel data/control paths so normal tools lie. Investigate from a trusted environment; compromise of the observation layer undermines in-system evidence. For high-assurance recovery, rebuild from known-good media, rotate credentials and restore verified data rather than merely deleting one visible file.
+
+# 25. DNS Security, DNSSEC, DoT, and DoH
+
+## 25.1 Resolver and cache-poisoning model
+
+A recursive resolver follows referrals from root to TLD to authoritative servers and caches results until TTL expiry. In classic spoofing, an attacker races a forged response matching the outstanding query. Random transaction IDs and source ports enlarge the guessing space; bailiwick rules limit which additional records are accepted; query minimization reduces exposed names.
+
+DNS cache poisoning redirects future clients even if their own machines were not directly attacked. TLS hostname/certificate validation can still stop transparent HTTPS impersonation, but DNS manipulation can deny service or redirect users to convincing different names.
+
+## 25.2 DNSSEC chain of trust
+
+```mermaid
+flowchart TB
+    R[Root trust anchor DNSKEY] -->|DS authenticates child key| T[TLD DNSKEY]
+    T -->|DS authenticates child key| Z[Zone DNSKEY]
+    Z -->|RRSIG validates RRset| A[Signed A/AAAA/MX/etc.]
+```
+
+- `DNSKEY` publishes zone public keys;
+- `RRSIG` signs an RRset;
+- parent `DS` authenticates a digest of the child's key;
+- `NSEC/NSEC3` gives authenticated denial of existence.
+
+DNSSEC provides origin authentication and integrity of DNS data, not confidentiality. It also does not prove the named server/application is benevolent.
+
+## 25.3 Encrypted DNS
+
+- **DoT:** DNS over TLS, conventionally on a dedicated port.
+- **DoH:** DNS carried over HTTPS.
+
+Both encrypt client-to-resolver queries and authenticate the resolver under TLS, protecting against local path observation/modification. They shift visibility/trust to the chosen resolver and do not hide subsequent destination IP/SNI/traffic from every observer. DNSSEC validates data; DoT/DoH encrypt a transport leg—they solve different problems.
+
+## 25.4 Current slide-source ledger
+
+| Current source | Pages | Lecture sequence represented |
+|---|---:|---|
+| `ABS_Merged_taky.pdf` | 815 | security principles; introductory/classical crypto; OTP/block ciphers/modes; hashes/MAC; PRNG/DH; public-key crypto/signatures/certificates/passwords; web/cookies/CSRF/XSS/SQLi/CAPTCHA; Tor; memory safety |
+| `ART_merged_taky.pdf` | 722 | principles; memory safety I/II; network foundations and low-level attacks; BGP/TCP/UDP; TLS; DoS; IDS; malware/virus/worm/rootkit; DNS, DNSSEC and encrypted DNS |
+| `ABS_Sir(Note).pdf` | 35 | image-dominant handwritten reinforcement, visually reviewed and routed into cryptography/web/memory topics |
+| **Total** | **1572** | **all current Security folder pages routed** |
+
+---
+
+# 26. Final security self-test
 
 - [ ] Define every CIA property with one control and one failure example.
 - [ ] State an asset/adversary/trust boundary before proposing a defense.
@@ -498,3 +984,16 @@ Not for a useful real system. Security manages risk under assumptions, costs, us
 - [ ] Separate authentication, authorization, session, JWT, OAuth, and OIDC.
 - [ ] Defend SQLi, XSS, CSRF, IDOR, SSRF, command injection, traversal, upload, and CORS controls.
 - [ ] Explain why NAT, TLS, a WAF, or encryption alone is never the complete security story.
+- [ ] Prove OTP secrecy intuitively and state every condition; explain two-time-pad failure.
+- [ ] Compare ECB/CBC/CTR/GCM and state exact IV/nonce/authentication requirements.
+- [ ] Draw AES round structure and a Feistel round; explain why DES is obsolete.
+- [ ] Calculate DH/RSA toy steps and explain why authentication/padding are mandatory.
+- [ ] Distinguish hash, HMAC, signature and certificate-chain validation.
+- [ ] Draw the TLS 1.3 transcript and explain `CertificateVerify`, `Finished`, forward secrecy and 0-RTT replay.
+- [ ] Explain SOP/cookies, CSRF request flow, contextual XSS encoding and prepared SQL.
+- [ ] Explain Tor's guard/middle/exit knowledge and its endpoint/correlation limits.
+- [ ] Trace buffer overflow/code reuse and compare canary, NX, ASLR, PIE and CFI.
+- [ ] Defend against SYN flood, UDP amplification, ARP poisoning and BGP hijack.
+- [ ] Use Bayes's rule to explain IDS false-alert base-rate problems.
+- [ ] Distinguish virus, worm, Trojan, bot, ransomware and rootkit.
+- [ ] Draw DNSSEC's DS/DNSKEY/RRSIG chain and distinguish DNSSEC from DoT/DoH.

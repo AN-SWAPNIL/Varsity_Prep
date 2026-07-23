@@ -293,6 +293,66 @@ Therefore the fourth flip-flop output is 2 kHz under ordinary stage numbering. T
 
 **B+ tree versus hash index:** B+ tree supports equality, range, ordering, and logarithmic search; hash excels at expected equality lookup but does not preserve order. Index choice depends on query workload and maintenance/storage cost.
 
+## 2.6 Data Communication
+
+**Sampling theorem:** for a signal band-limited to `B` Hz, sample above `2B` samples/s for ideal reconstruction. Sampling below this lets spectral replicas overlap, causing aliasing; an anti-alias low-pass filter is used before sampling.
+
+**PCM:** filter → sample → quantize → binary encode. With `L=2^n` levels and sampling rate `f_s`,
+
+$$R_b=nf_s,\qquad \Delta=\frac{V_{\max}-V_{\min}}{L},\qquad
+P_q\approx\frac{\Delta^2}{12}.$$
+
+**Line coding:** NRZ is bandwidth-efficient but long unchanged runs hurt clock recovery/DC behavior. Manchester always has a mid-bit transition and self-clocks but needs more signaling bandwidth. AMI alternates the polarity of `1`s and has no DC but long zero runs; B8ZS/HDB3 replace zero runs with recognizable violations.
+
+**AM/FM:** conventional AM is $A_c[1+\mu m_n(t)]\cos(2\pi f_ct)$; require $\mu\le1$ for ordinary envelope detection, and bandwidth is $2B_m$. FM has $f_i(t)=f_c+k_fm(t)$ and Carson bandwidth $2(\Delta f+B_m)$. AM varies amplitude; FM keeps a constant envelope and varies instantaneous frequency, usually trading more bandwidth for noise robustness.
+
+**Nyquist versus Shannon:** noiseless symbol/level limit:
+
+$$C=2B\log_2M.$$
+
+Noisy information-capacity ceiling:
+
+$$C=B\log_2(1+S/N).$$
+
+They answer different questions; a real design must respect both.
+
+## 2.7 TOC and Compiler
+
+**Regular versus context-free:** a finite automaton has finite memory and recognizes regular languages; a PDA adds a stack and recognizes CFLs. `0^n1^n` is context-free but not regular; `a^n b^n c^n` is not context-free.
+
+**Pumping lemma warning:** it gives a necessary property of regular/CFL languages and is mainly used by contradiction to prove nonmembership. Satisfying it does not prove regularity/context-freeness.
+
+**Compiler phases:** characters → lexer/tokens → parser/AST → semantic analysis/types/bindings → IR/TAC → optimization → instruction selection/register allocation → target code. Symbol table and error handling support several phases.
+
+**FIRST/FOLLOW and LL(1):** `FIRST(α)` says which terminals can begin strings from `α`; `FOLLOW(A)` says what can immediately follow `A`. Fill `M[A,a]` from `FIRST(RHS)` and, for nullable RHS, `FOLLOW(A)`. Multiple productions in one cell are a conflict.
+
+**LR versus LL:** LL predicts a leftmost derivation top-down; LR recognizes handles and constructs a rightmost derivation in reverse bottom-up. LR accepts a larger practical grammar class. SLR uses LR(0) states plus global FOLLOW sets; canonical LR(1) has item-specific lookaheads; LALR merges equal LR(0) cores.
+
+**Liveness:** backward equations:
+
+$$OUT[B]=\bigcup_{S\in succ(B)}IN[S],\qquad
+IN[B]=USE[B]\cup(OUT[B]-DEF[B]).$$
+
+Overlapping live ranges interfere and cannot share a register; graph-coloring allocation assigns registers and spills when necessary.
+
+## 2.8 Deeper security and hardware
+
+**OTP:** `C=M xor K` is perfectly secret only when the key is uniform, message-length, secret, and never reused. Reuse reveals `C1 xor C2 = M1 xor M2`; OTP also does not authenticate.
+
+**ECB/CBC/CTR/GCM:** ECB leaks equal-block patterns. CBC needs an unpredictable fresh IV and authentication. CTR needs a never-reused nonce/counter and authentication. GCM is AEAD but nonce reuse can break both confidentiality and tags.
+
+**DH:** Alice sends `g^a`, Bob `g^b`, both derive `g^(ab)`. Unauthenticated DH is vulnerable to MITM; certificates/signatures/PSK authenticate it. Ephemeral DH gives forward secrecy.
+
+**DNSSEC versus DoT/DoH:** DNSSEC signs DNS data and builds a DS/DNSKEY/RRSIG chain of trust; it does not hide queries. DoT/DoH encrypt client-to-resolver transport but shift trust to that resolver.
+
+**MIPS branch target:** `PC+4+(sign-extended immediate << 2)`. A classic load-use dependency needs one stall even with forwarding because load data appears after MEM.
+
+**8086 address:** physical address = `(segment << 4) + offset`; `1234h:5678h = 179B8h`. `CALL` saves return state; `RET` restores it; an interrupt vector `n` starts at byte address `4n` in the IVT.
+
+**ATmega32 GPIO/timer:** `DDRx` chooses direction, `PORTx` writes output or enables pull-up, `PINx` reads. In CTC:
+
+$$OCR=\frac{f_{CPU}}{Nf_{interrupt}}-1.$$
+
 ---
 
 # 3. Formula and invariant sweep
@@ -341,6 +401,9 @@ Therefore the fourth flip-flop output is 2 kHz under ordinary stage numbering. T
 - `n`-stage ripple divider output `f/2^n`;
 - cache sets = capacity/(block size × associativity);
 - page offset bits = `log2(page size)`.
+- MIPS branch target = `PC+4+(signext(imm)<<2)`;
+- 8086 physical address = `(segment<<4)+offset`;
+- AVR CTC `f_interrupt=f_CPU/[N(1+OCR)]`.
 
 ## 3.4 Networking/DBMS/security
 
@@ -354,6 +417,10 @@ Therefore the fourth flip-flop output is 2 kHz under ordinary stage numbering. T
 - relation decomposition lossless when spurious tuples cannot appear after join;
 - password storage: unique salt + memory-hard/approved password KDF, never plaintext or plain fast hash;
 - authenticated encryption protects confidentiality and integrity but still needs nonce discipline and key management.
+- sampling: `f_s>2B`; PCM bit rate `n f_s`;
+- Nyquist `2B log2 M`; Shannon `B log2(1+S/N)`;
+- CBC `C_i=E_K(P_i xor C_{i-1})`; CTR/GCM nonce must not repeat under a key;
+- live variables: `IN=USE union (OUT-DEF)`, `OUT=union successor IN`.
 
 ---
 
@@ -408,12 +475,13 @@ Draw each without notes:
 - OOP: binding, polymorphism, equality/hash, exceptions, generics/collections, threads.
 - OS: scheduling/synchronization/deadlock/memory/files/I/O.
 - DBMS: SQL/ER/FD-normalization/index/transaction/recovery.
-- Network/security: TCP/IP/subnet/DHCP/NAT/routing/link/TLS/CIA.
+- Network/Data Communication: TCP/IP/subnet/DHCP/NAT/routing plus sampling/PCM/line coding.
+- Security: CIA/threat model, crypto/modes/PKI/TLS, web, memory/network/DNS attacks.
 
 ## Day 3 — breadth and delivery
 
-- architecture/DLD/micro;
-- AI, graphics, SWE, TOC, C, numerical methods;
+- architecture/DLD/micro and MIPS/8086/ATmega32 calculation cards;
+- AI, graphics, SWE/ISD, TOC/Compiler, C, numerical methods;
 - industry/project one-minute answers;
 - two timed English mock vivas;
 - repair only missed concepts; do not passively reread everything.
@@ -449,6 +517,14 @@ Use active recall cycles: answer → check chapter → correct aloud → re-answ
 23. Explain conflict serializability.
 24. Compare B+ tree and hash index.
 25. Four ripple flip-flops receive 32 kHz. Label every output.
+26. Explain sampling, quantization and PCM bit rate.
+27. Compare NRZ, Manchester and AMI; why B8ZS/HDB3?
+28. Compute FIRST/FOLLOW and one LL(1) table row.
+29. Compare SLR, canonical LR(1), and LALR.
+30. Draw the compiler pipeline and explain liveness/register interference.
+31. Compare ECB/CBC/CTR/GCM and state nonce/IV rules.
+32. Draw TLS 1.3 certificate/key/Finished flow.
+33. Compute one 8086 segment:offset and one AVR CTC value.
 
 # 7. Mock viva B — teaching and research panel
 

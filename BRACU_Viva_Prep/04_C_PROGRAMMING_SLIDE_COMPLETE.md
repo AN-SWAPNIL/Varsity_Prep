@@ -1,34 +1,20 @@
 # Bismillah.
 
-# C Programming — Slide-and-Code Complete Viva Recall
+# C Programming — Current-Slide-and-Code Viva Recall
 
-> **Source basis:** all 13 PDFs in `Discrete and C/CSE 101/Mahfuj Islam Sir` were read: 12 individual lecture PDFs totaling 147 pages and the 147-page merged compilation, for 294 inspected PDF pages. The merged file substantially repeats the individual lectures, so page totals are coverage totals, not 294 unique lectures. All 35 non-metadata `.c` files and the accompanying READMEs in `Rayhan Rashed Sir` were also audited. Modern corrections are marked explicitly because several teaching examples use obsolete or unsafe C idioms.
+> **Current source basis (re-audited 24 July 2026):** `101-CP/Mahfuz_Sir_C_Merged.pdf` (**147 pages**) and `101-CP/Merged_C_Rayhan.pdf` (**45 pages**), for **192 pages**. The second PDF contains the consolidated string, structure, file, and bitwise source-code appendix, so the useful program audits below remain supported even though the old standalone `.c` tree has been removed. Modern corrections are explicit because several historical teaching examples use obsolete or unsafe C idioms.
 
 ---
 
 # 1. Source coverage matrix
 
-| Source | Pages | Main content |
+| Current source | Pages | Main content |
 |---|---:|---|
-| Lecture 1 Writing C Program | 17 | program structure, formatted I/O, algorithm-to-code workflow |
-| Lecture 2 Programming Language C | 11 | character set, tokens, identifiers, types, scope |
-| Lecture 3 Operator | 14 | unary/binary/ternary operators, conversion, precedence |
-| Lecture 4 Library Functions and Header Files | 15 | prototypes, headers, math/string/I/O functions, formatting |
-| Lecture 5 Control Structure | 15 | statements, selection, loops |
-| Lecture 6 Function | 6 | prototype/call/definition, arguments, return, variadic example |
-| Lecture 7 Recursive Function — General | 6 | factorial, Fibonacci, Euclid GCD, recurrence |
-| Lecture 7A Recursive Function — Tower of Hanoi | 9 | recursive design and trace |
-| Lecture 7B Recursive Function — BST | 5 | iterative/recursive binary search and array BST ideas |
-| Lecture 8A — 1D Array | 17 | traversal, sort, search, insert/delete, passing arrays |
-| Lecture 8A — 2D Array | 12 | matrices, addition, multiplication, transpose |
-| Lecture 9 Pointer | 20 | addresses, dereference, pointer parameters and arrays |
-| Mahfuz_Sir_C_Merged | 147 | merged repetition/sequence of the above material |
-| Rayhan string programs | 10 files | representation, input, library/manual operations, substring search |
-| Rayhan structure programs | 7 files | nested structures, typedef, arrays, contact application |
-| Rayhan file programs | 14 files | text/binary I/O, seeking, redirection, persistence |
-| Rayhan bitwise programs | 4 files | masks, shifts, fields, reversal, next bit pattern |
+| `Mahfuz_Sir_C_Merged.pdf` | 147 | program structure, types/operators, I/O, control flow, functions, recursion, arrays/matrices, pointers, sorting/searching, Hanoi, and binary-search ideas |
+| `Merged_C_Rayhan.pdf` | 45 | strings and manual string functions; structures; text/binary/random-access files; bitwise masks/packing/reversal; embedded full source appendix |
+| **Total** | **192** | current reduced source set |
 
-Exact code audit appears in §19.
+The embedded-code audit appears in §19.
 
 ---
 
@@ -1088,7 +1074,7 @@ High-yield defects in teaching code:
 
 ---
 
-# 19. Exact audit of all 35 supplied C programs
+# 19. Audit of the 35 programs embedded in the current Rayhan PDF
 
 ## 19.1 Strings — 10/10
 
@@ -1247,5 +1233,4 @@ a+1    -> &a[1]
 - [ ] Write correct stream loops for characters, lines, records, and binary arrays.
 - [ ] Build and explain masks for set/clear/test/extract/pack.
 - [ ] Diagnose every modern-correction item in §18.
-- [ ] Account for all 35 supplied programs using the audit in §19.
-
+- [ ] Account for all 35 programs embedded in the current Rayhan PDF using §19.

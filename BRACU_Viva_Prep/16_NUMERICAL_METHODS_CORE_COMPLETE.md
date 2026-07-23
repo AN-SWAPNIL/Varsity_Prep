@@ -2,7 +2,7 @@
 
 # Numerical Methods — Core-Complete Viva Recall
 
-> **Source boundary:** no local Numerical Methods slide folder exists in this workspace. This is a standard-core supplement. It focuses on the equations, assumptions, stopping rules, error analysis, and algorithms expected in a CSE viva.
+> **Current source basis:** `218-NM/Merged.pdf` was re-read in full (**198/198 pages**). Its assessed sequence emphasizes bisection and Newton–Raphson; Gaussian elimination/partial pivoting and LU; Newton/Lagrange interpolation; trapezoidal/Simpson integration; and linear, polynomial, exponential and transformed regression. Those topics are the P0 core below. False position/fixed point/secant, iterative linear solvers, splines/differentiation, Gaussian quadrature, ODE and eigenvalue methods are retained as clearly lower-priority standard-core recall rather than falsely attributed equal slide weight.
 
 A numerical answer is not only a decimal. A strong answer states:
 
@@ -571,3 +571,16 @@ Local truncation error is one step assuming the starting value exact; global err
 - [ ] Write composite trapezoid/Simpson formulas and error orders.
 - [ ] Trace Euler, Heun, and RK4; explain stiffness and stability.
 - [ ] Trace the power method and state its spectral-gap assumption.
+
+## Current 198-page source routing
+
+| Priority | Slide-derived block | Recall sections |
+|---|---|---|
+| P0 | error, iteration/stopping and root finding—especially bisection/Newton | 1–2 |
+| P0 | Gaussian elimination, partial pivoting, LU and triangular solves | 3.1–3.4 |
+| P0 | Newton divided differences and Lagrange interpolation | 4.1–4.3 |
+| P0 | trapezoidal and Simpson rules with composite calculations | 7.1–7.2 |
+| P0 | least-squares linear/polynomial/exponential regression and transformations | 5 |
+| P1 supplement | other roots/linear iterations/splines/differentiation/quadrature/ODE/eigen topics | remaining labeled sections |
+
+The current source total is `Merged.pdf` = **198 pages**; no removed old deck is counted.

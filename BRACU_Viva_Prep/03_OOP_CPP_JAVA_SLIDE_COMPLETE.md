@@ -1,8 +1,8 @@
 # Bismillah.
 
-# Object-Oriented Programming: C++ and Java — Slide-Complete Viva Recall
+# Object-Oriented Programming: C++ and Java — Current-Slide Viva Recall
 
-This chapter was rebuilt from the complete CSE 107 corpus: all 14 C++ lectures, all 11 Java lecture PDFs, and all 178 non-generated Java source files, including the lambda, module, networking, and Apache POI examples. It corrects obsolete or technically inaccurate slide statements while retaining the concepts the course intended to teach.
+> **Current source basis (re-audited 24 July 2026):** `107-OOP/C++_Merged.pdf` (**192 pages**) and `107-OOP/Java-merged.pdf` (**244 pages**), for **436 current pages**. The C++ merge contains fourteen lecture segments. The Java merge concentrates on platform/object fundamentals, arrays and language details, strings, inheritance/equality, packages/interfaces/exceptions, threads, and generics/collections. The obsolete inventory of 178 removed `.java` files, modules, Apache POI, and removed networking examples has been deleted. A few compact standard-Java supplements remain only when they are likely viva follow-ups and are labeled as such.
 
 ## How to answer an OOP viva question
 
@@ -964,7 +964,7 @@ Ada=90
 Important algorithms from the slides: `find`, `find_if`, `count`, `sort`, `search`, `merge`, `for_each`, and `transform`. `merge` expects sorted input ranges. Prefer a range `for` for simple traversal; use algorithms when they state intent more clearly.
 
 ---
-# Part III — Java lecture- and source-complete recall
+# Part III — Java current-merged-slide recall
 
 ## Java Lecture 1 — Platform, classes, objects, types, and references
 
@@ -1578,100 +1578,7 @@ Prevention techniques:
 
 Deprecated `Thread.stop`, `suspend`, and `resume` are unsafe. Cooperative cancellation uses interruption or a condition flag with proper visibility.
 
-## Java Lecture 7 — Networking APIs and socket examples
-
-### TCP and UDP in Java
-
-- TCP: connection-oriented reliable ordered byte stream. Server uses `ServerSocket`; each accepted connection is a `Socket`.
-- UDP: connectionless datagrams with no built-in delivery/order/duplicate guarantee. Both ends use `DatagramSocket`; messages use `DatagramPacket`.
-
-The stream-oriented nature of TCP means one `write` is not guaranteed to correspond to one peer `read`; applications need framing, such as a length prefix, delimiter, or serialization protocol.
-
-### TCP lifecycle
-
-```text
-ServerSocket(port) → accept() → connected Socket
-Client Socket(host, port) ──────┘
-Both: getInputStream()/getOutputStream() → exchange → close
-```
-
-`accept()` and ordinary reads block by default. A server normally handles clients with separate tasks/threads or non-blocking I/O. Use timeouts and close resources.
-
-### Complete two-process line echo example
-
-Server:
-
-```java
-import java.io.*;
-import java.net.*;
-import java.nio.charset.StandardCharsets;
-
-public class EchoServer {
-    public static void main(String[] args) throws IOException {
-        try (ServerSocket server = new ServerSocket(33333);
-             Socket socket = server.accept();
-             BufferedReader in = new BufferedReader(new InputStreamReader(
-                     socket.getInputStream(), StandardCharsets.UTF_8));
-             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
-                     socket.getOutputStream(), StandardCharsets.UTF_8))) {
-            String line;
-            while ((line = in.readLine()) != null) {
-                out.write("echo: " + line);
-                out.newLine();
-                out.flush();
-            }
-        }
-    }
-}
-```
-
-Client:
-
-```java
-import java.io.*;
-import java.net.*;
-import java.nio.charset.StandardCharsets;
-
-public class EchoClient {
-    public static void main(String[] args) throws IOException {
-        try (Socket socket = new Socket("127.0.0.1", 33333);
-             BufferedReader in = new BufferedReader(new InputStreamReader(
-                     socket.getInputStream(), StandardCharsets.UTF_8));
-             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
-                     socket.getOutputStream(), StandardCharsets.UTF_8))) {
-            out.write("hello");
-            out.newLine();
-            out.flush();
-            System.out.println(in.readLine()); // echo: hello
-        }
-    }
-}
-```
-
-### Object streams and course `SocketWrapper`
-
-The source creates `ObjectOutputStream` before `ObjectInputStream` on both peers. That order avoids both sides blocking while waiting for the other's stream header. Serializable message types (`Data`, `Message`) give object-level framing, but Java native deserialization of untrusted data is dangerous; validate/filter inputs or use a safer explicit format.
-
-`writeUnshared/readUnshared` avoids ordinary object-handle sharing. Shared client maps need concurrent protection when multiple connection threads mutate/read them.
-
-### UDP pattern
-
-Sender builds bytes, destination address/port, packet, then calls `send`. Receiver binds a socket, prepares a buffer/packet, calls `receive`, and uses `packet.getLength()`—not the full backing array length—when decoding.
-
-UDP preserves datagram boundaries, unlike TCP, but packets may be lost, duplicated, reordered, or truncated if the receive buffer is too small.
-
-### Addresses and HTTP
-
-`InetAddress.getLocalHost`, `getByName`, and `getByAddress` model IP addresses/name resolution. `UnknownHostException` indicates lookup/construction failure.
-
-The course demonstrates:
-
-- legacy `HttpURLConnection`: obtain from `URL.openConnection`, configure, read response, disconnect;
-- Java 11 `HttpClient`: build `HttpRequest`, call `send` or `sendAsync`, inspect `HttpResponse` status, headers, and body.
-
-HTTP over TLS is HTTPS; the socket examples themselves do not add encryption/authentication.
-
-## Java Lecture 8 — Generics and collections
+## Java current unit 7 — Generics and collections
 
 ### Why generics
 
@@ -1788,7 +1695,7 @@ students.sort(Comparator.comparing(Student::name)
 
 Lookup broadly computes a hash, selects a bucket, then uses `equals` among candidates. Equal keys must keep stable equality/hash-relevant fields while stored. `HashMap` order is unspecified.
 
-## Java Lecture 9 — Enums, wrappers, and autoboxing
+## Compact Java viva supplement — enums, wrappers, and autoboxing
 
 ### Enum
 
@@ -1828,7 +1735,7 @@ System.out.println(x == y); // normally false
 
 Use `a.equals(b)` or compare unboxed primitives. Wrapper constructors such as `new Integer(100)` are deprecated; use `Integer.valueOf` or autoboxing.
 
-## Java Lecture 10 — File and stream I/O
+## Compact Java viva supplement — file and stream I/O
 
 ### File/path metadata versus contents
 
@@ -1883,119 +1790,6 @@ while ((n = in.read(buffer)) != -1) out.write(buffer, 0, n);
 - `RandomAccessFile("rw")` supports both read/write; `seek` changes its file pointer and `getFilePointer` reports it.
 
 Serialization vocabulary: serialization writes object state to a byte stream; deserialization reconstructs it.
-
-## Java source-only unit 11 — Lambdas and streams
-
-### Functional interface and lambda
-
-A functional interface has one abstract method; default/static methods do not count. A lambda supplies that function's implementation.
-
-```java
-@FunctionalInterface
-interface NumericTest { boolean test(int n); }
-
-NumericTest even = n -> n % 2 == 0;
-System.out.println(even.test(8));       // true
-```
-
-A lambda can capture local variables only if they are final or effectively final. `this` inside a lambda refers to the enclosing object, unlike an anonymous class's own `this`.
-
-Common standard interfaces: `Predicate<T>`, `Function<T,R>`, `Consumer<T>`, `Supplier<T>`, `UnaryOperator<T>`, `BinaryOperator<T>`.
-
-Method references include `Type::staticMethod`, `object::instanceMethod`, `Type::instanceMethod`, and `Type::new`.
-
-### Stream pipeline
-
-```java
-List<String> names = students.stream()
-        .filter(s -> s.id() % 2 == 0)       // intermediate, lazy
-        .map(Student::name)                 // intermediate, lazy
-        .sorted()
-        .toList();                          // terminal
-```
-
-A stream is not a data structure and is normally single-use. Intermediate operations are lazy; a terminal operation triggers traversal. Avoid stateful side effects, especially with `parallelStream`; parallelism helps only suitable large, independent, CPU-bound work and has overhead.
-
-## Java PDF 11 (course folder 12) — Module system
-
-Java 9 modules group packages/resources, declare dependencies, and strongly encapsulate non-exported packages. Descriptor file:
-
-```java
-module A {
-    exports p1;
-}
-
-module B {
-    requires A;
-}
-```
-
-- `requires A`: B reads/depends on A.
-- `exports p1`: public top-level types in package `p1` become accessible to reading modules; their members still obey ordinary public/protected/package/private access rules.
-- A public type in an unexported package remains inaccessible outside its module.
-- `exports p1 to B, C`: qualified export only to listed modules.
-- `requires transitive A`: modules that require B also read A.
-- Every named module implicitly requires `java.base`; it exports essentials such as `java.lang`, `java.io`, and `java.util`.
-- Classpath legacy code belongs to the unnamed module.
-
-Compile/run shape from the slides:
-
-```text
-javac --module-path <mods> -d <output> module-info.java package/Class.java
-java  --module-path <mods> --module ModuleName/package.Main
-```
-
-A modular JAR contains `module-info.class`. `jlink` creates a custom runtime image containing selected modules and their dependencies, reducing deployment footprint.
-
-The course A/B/C source demonstrates qualified exports from A, `requires transitive A` in B, an exported B package, and C accessing both A and B with only `requires B`.
-
-## Additional source — Apache POI spreadsheet processing
-
-The JavaExcel examples map spreadsheet rows to `Employee`, read `.xlsx` with `XSSFWorkbook` and fall back to `.xls` with `HSSFWorkbook`, then write rows and autosize columns.
-
-Core object model:
-
-```text
-Workbook → Sheet → Row → Cell
-```
-
-Safer resource pattern:
-
-```java
-try (InputStream in = Files.newInputStream(path);
-     Workbook workbook = WorkbookFactory.create(in)) {
-    Sheet sheet = workbook.getSheetAt(0);
-    DataFormatter formatter = new DataFormatter();
-    for (Row row : sheet) {
-        String idText = formatter.formatCellValue(row.getCell(0,
-                Row.MissingCellPolicy.RETURN_BLANK_AS_NULL));
-        // validate missing/type/content before conversion
-    }
-}
-```
-
-For writing, close both workbook and output stream:
-
-```java
-try (Workbook workbook = new XSSFWorkbook();
-     OutputStream out = Files.newOutputStream(path)) {
-    Sheet sheet = workbook.createSheet("Employees");
-    Row row = sheet.createRow(0);
-    row.createCell(0).setCellValue("Id");
-    workbook.write(out);
-}
-```
-
-Source traps worth recognizing:
-
-- iterating only physically defined cells can shift columns when blanks exist;
-- one reused `values` array can retain stale cells across rows;
-- casting every numeric cell to `int` loses salary decimals;
-- input/output streams must close on successful and exceptional paths;
-- logging and swallowing an exception may let a null workbook escape;
-- formulas, dates, booleans, blanks, and numeric/text IDs require explicit policies.
-
----
 
 # Part IV — High-yield C++/Java contrasts and viva traps
 
@@ -2064,266 +1858,17 @@ Java cloning is not automatic and `Cloneable` is often awkward; prefer copy cons
 
 ---
 
-# Appendix A — Per-lecture coverage audit
+# Appendix — current two-PDF source coverage
 
-## C++: all 14 lecture sources
+| Current source | Pages | Material represented in this volume |
+|---|---:|---|
+| `C++_Merged.pdf` | 192 | fourteen lecture segments: OOP foundations; class construction/destruction; copy/reference ownership; arrays/pointers/references; overloads; operators; inheritance and virtual bases; stream/file I/O; virtual functions; templates/exceptions; RTTI/casts; namespaces/conversions/static members; STL |
+| `Java-merged.pdf` | 244 | seven main units: Java/JVM/object fundamentals; arrays/static/final/nested classes/varargs; strings; inheritance/dispatch/`Object`/equality; packages/interfaces/exceptions; threads/concurrency; generics/collections |
+| **Total** | **436** | current reduced source set |
 
-1. **Lecture 1, An overview of C++:** C/C++ syntax differences, classes/structs, OOP pillars, namespaces, scope resolution, console streams, comments, and a first encapsulated object.
-2. **Lecture 2, Introducing class:** constructors/destructors, parameterized construction, elementary inheritance, object pointers, class/struct/union distinctions, anonymous unions, inline and automatic-inline functions.
-3. **Lecture 3, A Closer Look at Classes:** object assignment, shallow-copy failure, pass/return by value, references as the solution to unwanted copying, temporaries, friend functions, and cross-class friendship.
-4. **Lecture 4, Arrays, Pointers and References:** object arrays, multidimensional initialization, pointer traversal, `this`, `new/delete`, dynamic arrays, parameter/return/independent references, dangling-reference warning.
-5. **Lecture 5, Function Overloading:** constructor overloads, copy constructor, copy versus assignment, defaults, overload ambiguity, obsolete `overload` keyword, and overloaded function addresses.
-6. **Lecture 6, Operator Overloading:** restrictions, member/friend forms, binary/unary operators, prefix/postfix distinction, references for operands, assignment, subscript, inserter/extractor implications.
-7. **Lecture 7, Inheritance:** public/protected/private inheritance mapping, base access, constructor/destructor order, argument chaining, multilevel and multiple inheritance, diamond ambiguity and virtual bases.
-8. **Lecture 8, C++ IO Systems:** standard/wide streams, stream class hierarchy, flags, `setf/unsetf/flags`, width/precision/fill, manipulators, custom insertion/extraction, and custom manipulators.
-9. **Lecture 9, C++ File IO:** file lifecycle, file stream hierarchy, formatted/unformatted operations, `get/put/read/write/getline`, modes, peek/putback/flush, random access, state bits, and custom file I/O.
-10. **Lecture 10, Virtual Functions:** base pointers, virtual dispatch, pure virtual functions, abstract classes, virtual destructors, compile-time/runtime taxonomy, early/late binding, polymorphic stack/queue application.
-11. **Lecture 11, Template and Exception Handling:** generic functions/classes, multiple parameters, generic stack/list, try/throw/catch, matching, catch-all, rethrow, old exception specifications, and `bad_alloc`/`nothrow`.
-12. **Lecture 12, RTTI and Casting:** `typeid/type_info`, polymorphic dynamic type, `dynamic_cast`, `static_cast`, `const_cast`, `reinterpret_cast`, null and `bad_cast` failure modes.
-13. **Lecture 13, Namespaces, Conversion Function, Static Member and Others:** named/unnamed/reopened namespaces, using forms, conversion operators, static data/functions, const/mutable, implicit/explicit construction, language linkage, assembly, old array streams and modern replacement.
-14. **Lecture 14, STL:** template recap, container/algorithm/iterator separation, sequence/associative/adaptor containers, vector/list/deque, generic algorithms, iterator categories/reverse iteration, map, set, costs and invalidation.
-
-## Java: all 11 lecture PDFs
-
-1. **Java-Introduction:** history/properties, editions/platform, edit–compile–load–verify–execute pipeline, bytecode/JVM, source/class rules, `main`, `System.out`, types, references and corrected pass-by-value semantics.
-2. **Java-MoreDetails:** arrays/reference arrays/jagged arrays, command-line arguments, enhanced for, `Scanner`, `JOptionPane`, static/final, `>>>`, nested/inner/local classes, varargs and ambiguity, local `var` rules.
-3. **Java-Strings:** construction, immutability/pool, length/extraction/substrings, equality/order/regions, concatenation/search/split/conversion, `StringBuffer`, `StringBuilder`, legacy tokenizer.
-4. **Java-Inheritance:** simple/multilevel inheritance, member access, superclass references, `super`, overriding and dynamic dispatch, abstract/anonymous classes, `final`, inferred types, `Object`, `toString`, equality/hash.
-5. **Java-Package_Interface_Exception:** package hierarchy/import/compilation, the complete access matrix, interfaces and multiple inheritance of type, nested/default/static/private methods, exception hierarchy and all five handling keywords.
-6. **Java-Thread:** process/thread multitasking, states, creation/sleep/join, monitor synchronization, inter-thread communication, deadlock, deprecated control, executors, futures, blocking queues, atomic/locks, fork/join.
-7. **Java-Networking:** TCP client/server sockets, multithreaded string/object/multi-client/forwarding designs, UDP datagrams, `InetAddress`, `HttpURLConnection`, Java 11 `HttpClient`.
-8. **Java-Generics_Collections:** parameterized types and safety, generic class/method/interface, bounds/wildcards, collection/list/deque APIs, ArrayList/LinkedList/Arrays/Vector/Hashtable/HashMap, natural/custom ordering.
-9. **Java-Enumeration_TypeWrappers_Autoboxing:** enum constants and generated methods, enum state/constructors, wrappers, boxing/unboxing, automatic conversion and associated traps.
-10. **Java-IO:** path metadata/directories, stream abstraction, byte/character hierarchies, file and buffered streams, serialization, data streams, console and random access.
-11. **Java-Modules:** module descriptors, `requires`/`exports`, `java.base`, unnamed module, qualified exports, transitive readability, modular JARs and `jlink`.
-
-Additional code-only course units covered: **Java lambda expressions/streams** and **JavaExcel/Apache POI**.
+The enums/boxing and file-stream notes are retained as compact standard-Java follow-ups, not claimed as separate current slide units. Removed-file inventories, Java networking, modules, lambda/stream source audits, and Apache POI were deleted because they no longer belong to the current academic source folder and are lower value for this viva than equality, exceptions, generics, collections, dispatch, ownership, and concurrency.
 
 ---
-
-# Appendix B — Per-source-code-file audit (178/178)
-
-The entries below record the specific behavior found in every non-generated `.java` source. Compiled `.class` files, IDE metadata, bundled JARs, and ZIP duplicates were intentionally excluded.
-
-## 01. JavaIntro — 4 files
-
-- `A.java` — private integer state, constructor trace, `this`, setter/getter, declaration versus `new`, and a class-local `main`.
-- `Boolean.java` — Java condition requires `boolean`; demonstrates `if/else`; filename/class shadows `java.lang.Boolean`, a naming trap.
-- `Box.java` — two references alias one `Box`, then reassignment changes reachability; the abandoned `(3,9,2)` object becomes GC-eligible.
-- `Welcome.java` — canonical `main`, `println`, formatted `printf`, `print`, and string concatenation.
-
-## 02. JavaMoreDetails — 15 files
-
-- `ArrayDemo.java` — creates an `int[10]`, initializes by index, reads `length`, and traverses with an indexed loop.
-- `ArrayDemo2.java` — an `A[]` initially holds null references; each element needs a separate object before method calls.
-- `CommandLineTest.java` — prints `args.length` and each command-line string.
-- `ForEachTest.java` — enhanced-for over 1D/2D arrays; modifying primitive loop variable does not modify the source array.
-- `InnerClassDemo1.java` — member inner class accesses private outer state; contrasts creation inside and `outer.new Inner()` outside.
-- `InnerClassDemo2.java` — inner state/scope and shadowing; `Outer2.this.outer_x` selects the enclosing field.
-- `InnerClassDemo3.java` — method-local class created in each loop iteration and accessing outer instance state.
-- `JOptionPaneTest.java` — dialog input returns strings, parsing via `Integer.parseInt`, and dialog output.
-- `RefVarDemo.java` — local type inference for a user-defined reference and a string; inferred type remains static.
-- `ScannerTest.java` — token input with `nextInt`, `next`, `hasNextInt`, plus the alternative line-reading loop.
-- `StaticNestedClassDemo.java` — static nested class needs an explicit outer object to access outer instance state.
-- `StaticNestedClassDemo2.java` — static nested class directly reads outer static state and its own instance state but not outer instance state.
-- `StaticTest.java` — static field/block, instance initializer, constructor order, static-access restrictions, and class versus object calls.
-- `VarArgsTest.java` — overloaded `int...`, `boolean...`, and prefixed varargs; documents empty-call and overlapping-signature ambiguities.
-- `VarDemo.java` — valid inference for primitive/reference/array/loops and invalid uninitialized, null-only, bracketed, and initializer-list forms.
-
-## 03. JavaStrings — 6 files
-
-- `StringBufferTest.java` — initial capacity, `charAt`, append, insert, delete, reverse; comment allows direct comparison with `StringBuilder`.
-- `StringConstructorTest.java` — strings from literal, empty/copy constructors, character-array ranges, byte-array ranges, and concatenated constants.
-- `StringEqualsTest.java` — exhaustive `equals` versus `==` observations for literals, pooled compile-time concatenations, and explicitly allocated strings.
-- `StringSplitTest.java` — regex split of `abc,,def,123` retains the interior empty token; compares the commented tokenizer behavior.
-- `StringTest.java` — `getChars` into an array and case-insensitive `regionMatches`.
-- `StringTokenizerTest.java` — whitespace and comma delimiter tokenization, remaining-token count, iteration; tokenizer is legacy.
-
-## 04. JavaInheritance — 14 files
-
-- `AbstractDemo.java` — abstract plus concrete methods, anonymous implementation of abstract `S`, and concrete subclass `T`.
-- `DynamicDispatchTest.java` — one `P` reference invokes `P`, `Q`, or `R` override according to actual object.
-- `FindAreas.java` — concrete base fallback plus rectangle/triangle overrides through a `Figure` reference.
-- `FindAreas2.java` — pure abstract `area` contract and concrete rectangle/triangle dispatch.
-- `InheritanceVarDemo.java` — `var` inference from constructors versus the declared `AA` return type of a factory; dispatch remains dynamic but subtype-only methods are unavailable.
-- `MethodOverride.java` — `@Override`, inherited field access, and a `Base` reference calling `Child.show`.
-- `MultilevelInheritance.java` — `X → Y → Z` construction trace and inherited fields.
-- `ObjectTest.java` — `Point.toString`, identity versus logical equality, `Objects.hash`, and equivalent-key lookup in a hash map; source uses a raw map.
-- `ObjectTest2.java` — composed `Circle` equality delegates to `Point.equals`, includes radius, and aligns hash code for map lookup.
-- `RealInheritance.java` — overloaded/copy constructors for `Box`, `BoxWeight` extension, legal upcast, and compile-time access through base reference.
-- `SimpleInheritance.java` — inherited fields/methods plus derived state and sum operation.
-- `SimpleInheritance2.java` — private superclass field is not directly accessible from subclass even though it exists in the object.
-- `SuperTest.java` — explicit superclass constructor chaining across default, dimensions, cube, and copy construction.
-- `UseSuper.java` — hidden field selection with `super.i` and explicit call of the superclass implementation.
-
-## 05. JavaPackageInterfaceException — 25 files
-
-- `ExceptionCaught1.java` — division failure, broad catch, exception text, guaranteed ordinary `finally`, and execution after handling.
-- `ExceptionCaught2.java` — `finally` runs even when the catch executes `return`; definite-assignment implications for local `c`.
-- `ExceptionCaught3.java` — repeated arithmetic exceptions with random operands and a per-iteration `finally` trace.
-- `ExceptionCustom.java` — checked custom `MyException`, threshold validation, `throw`, `throws`, override of `toString`, and handling.
-- `ExceptionMultipleCatch.java` — catch ordering from specific arithmetic/null types to general `Exception`.
-- `ExceptionThrow.java` — programmatically created exception, local catch, bare rethrow, and outer catch.
-- `ExceptionThrows.java` — checked `IllegalAccessException` declaration, handling, and stack-trace output.
-- `ExceptionTryNested.java` — nested try/finally with inner null handler and outer arithmetic handler.
-- `ExceptionUncaught.java` — despite the stale comment, `b` is `1`, so division succeeds; the later null string produces the actual uncaught `NullPointerException`.
-- `InterfaceApplyTest.java` — two implementations behind one interface reference, demonstrating interface-based runtime polymorphism.
-- `InterfaceDefaultMethodTest.java` — abstract interface method plus inherited default implementation.
-- `InterfaceExtendsTest.java` — interface `I3` extends two interfaces and one class implements all three contracts.
-- `InterfaceMultipleInheritanceTest.java` — two conflicting default `reset` methods require the implementing class's explicit override.
-- `InterfaceNestedTest.java` — member interface `A.NestedIF`, implementation, and reference-based use.
-- `InterfacePrivateMethodTest.java` — Java 9 private interface helper shared by two default methods.
-- `InterfaceStaticMethodTest.java` — Java 8 static interface method called through the interface; it is not inherited.
-- `InterfaceTest.java` — interface cannot be instantiated; implementing object exposes extra methods only through its concrete reference.
-- `InterfaceVariableTest.java` — implicitly public-static-final constants used by an implementing random-answer class.
-- `StackExceptionTest.java` — fixed stack, checked full/empty exceptions, rejected value detail, push/pop boundary traces.
-- `mypackage/AccountBalance.java` — package declaration, package-private `Balance`, public launcher, object array, enhanced-for display.
-- `p1/DerivedProtection.java` — same-package subclass access to package, protected, and public members, but not private.
-- `p1/Protection.java` — declares all four Java access levels and prints them from the defining class.
-- `p1/SamePackage.java` — same-package non-subclass sees package/protected/public but not private; constructs all p1 examples.
-- `p2/OtherPackage.java` — unrelated other-package code can access only public members of `Protection`.
-- `p2/Protection2.java` — other-package subclass accesses inherited protected and public members, not package-private/private.
-
-## 06. JavaThread — 27 files
-
-- `CallableFutures.java` — fixed thread pool, twenty raw `Callable/Future` tasks, blocking `get`, aggregate result `1100`; raw types should be parameterized.
-- `CallableFutures2.java` — typed task list, `invokeAll`, futures, aggregation, and shutdown.
-- `CorrectPC.java` — monitor-based one-slot producer/consumer, condition loops, `wait`, state flag, and `notifyAll`.
-- `CreateThread.java` — method references to instance/static methods used as `Runnable` targets for named threads.
-- `Deadlock.java` — main/racing threads acquire `A` and `B` monitors in opposite orders, producing circular wait.
-- `ExecutorServiceTest.java` — submits twenty `Runnable` tasks to ten workers and shuts the pool down.
-- `ExtendsThread.java` — subclass of `Thread`, named child, start/run/sleep; starts from constructor and therefore illustrates `this`-escape risk.
-- `ForkJoinTest.java` — `RecursiveAction` string splitting and `RecursiveTask<Integer>` array-sum splitting/joining in the common pool.
-- `ImplementsThread.java` — a `Runnable` owns/starts a thread and runs beside main; also starts from its constructor.
-- `ImplementsThread2.java` — separates `Runnable` from `Thread` and includes a lambda alternative; the commented version has a small `t/t1` naming typo.
-- `IncorrectPC.java` — busy-waiting producer/consumer with volatile flag; wastes CPU and remains a fragile protocol despite visibility.
-- `JoinAliveThreads.java` — observes `isAlive`, joins three `NewThread` instances, then verifies termination.
-- `Main.java` — bounded `LinkedBlockingQueue`, two consumers, two poison pills, interruption restoration; `Integer ==` works for cached `-1` but `equals` is safer.
-- `MainThread.java` — obtains/renames current thread and sleeps in a countdown.
-- `MultipleThreads.java` — starts three named workers; sleep-based “wait” is unreliable compared with join.
-- `MultipleThreadSum.java` — partitions `1..10000` into four tasks, joins each, then safely reads/combines results.
-- `NonSynchronized.java` — shared method calls interleave because no monitor protects the operation.
-- `NonSynchronizedCounter.java` — filename is stale: `increment` actually synchronizes on `this`, so the shown counter update is protected.
-- `PCBlockingQueue.java` — infinite producer/consumer using raw `ArrayBlockingQueue(1)`; blocking operations replace manual wait/notify.
-- `SuspendResume.java` — cooperative suspend flag with synchronized wait/notify instead of deprecated thread control.
-- `SynchronizationLock.java` — `ReentrantLock` serializes access; source should place `unlock()` in `finally` to survive exceptions.
-- `SynchronizedBlock.java` — locks `this` inside the shared object's method for the full operation.
-- `SynchronizedBlock2.java` — caller locks the shared object around an otherwise unsynchronized method.
-- `SynchronizedCounterBlock.java` — each worker locks shared counter for its whole 10,000-increment batch.
-- `SynchronizedCounterMethod.java` — each increment is a synchronized instance method; join ensures final visibility before print.
-- `SynchronizedMethod.java` — synchronized shared instance method serializes three workers.
-- `SynchronizedTest.java` — contrasts unsynchronized, instance-synchronized, and static-synchronized methods; active calls lock the `TestClass.class` monitor.
-
-## 07. JavaNetworking — 30 files
-
-- `others/AddressGenerator.java` — constructs an IPv4 `InetAddress` from four signed bytes; casts preserve raw octets such as 192.
-- `others/HostInfo.java` — resolves and prints the local host, handling `UnknownHostException`.
-- `others/Resolver.java` — DNS/name lookup with `InetAddress.getByName`.
-- `others/TestHttpClient.java` — Java 11 `HttpClient`, request/send, status/method/headers, streaming body; input stream should be closed.
-- `others/TestHttpURL.java` — legacy URL/`HttpURLConnection`, buffered line reading, exception paths, and explicit disconnect.
-- `tcpdiff/Client.java` — prompts for client name, opens wrapper, registers name, and starts independent reader/writer tasks.
-- `tcpdiff/ReadThread.java` — continuously receives string objects and closes the wrapper after failure/termination.
-- `tcpdiff/Server.java` — accepts clients, stores name-to-wrapper mapping, and starts server console writer/read task; ordinary `HashMap` needs coordination under concurrent use.
-- `tcpdiff/WriteThreadClient.java` — console messages are prefixed with client name and sent continuously.
-- `tcpdiff/WriteThreadServer.java` — server operator parses `client,message`, looks up target wrapper, and sends; delimiter/length validation is missing.
-- `tcpforward/Client.java` — registers a named client then starts object-message reader and writer.
-- `tcpforward/Message.java` — serializable from/to/text DTO with no-arg constructor and accessors.
-- `tcpforward/ReadThreadClient.java` — type-tests received objects and prints routed message fields.
-- `tcpforward/ReadThreadServer.java` — reads `Message`, finds destination in shared map, forwards the same object.
-- `tcpforward/Server.java` — accept/register loop and one forwarding reader per client; shared map/disconnection cleanup are concurrency concerns.
-- `tcpforward/WriteThreadClient.java` — builds a serializable message from interactive destination/text fields and sends it.
-- `tcpobject/Client.java` — opens a wrapped socket and starts object read/write tasks.
-- `tcpobject/Data.java` — serializable `id/value` transfer object.
-- `tcpobject/ReadThread.java` — reads unshared objects, checks `instanceof Data`, displays fields, closes on exit.
-- `tcpobject/Server.java` — accept loop creates wrapper plus independent object reader/writer per connection.
-- `tcpobject/WriteThread.java` — constructs sequentially numbered `Data` objects from console input.
-- `tcpsimple/Client.java` — one blocking object-stream request/reply; output stream is constructed first to avoid header deadlock.
-- `tcpsimple/Server.java` — accepts sequential clients, counts them, reads client name, writes greeting; sockets/streams should use deterministic closure.
-- `tcpstring/Client.java` — symmetric full-duplex string client using wrapper and separate reader/writer threads.
-- `tcpstring/ReadThread.java` — blocking string receive loop and cleanup path.
-- `tcpstring/Server.java` — accepts connections and creates one read and one write thread for each socket.
-- `tcpstring/WriteThread.java` — interactive name-prefixed string send loop.
-- `udp/DatagramClient.java` — binds port 8000 per receive, decodes only packet length, sleeps; recreating socket each cycle can lose intervening datagrams.
-- `udp/DatagramServer.java` — repeatedly constructs/sends loopback datagrams; tight loop has no pacing and creates a new socket each send.
-- `util/SocketWrapper.java` — symmetric socket/object-stream setup, `readUnshared/writeUnshared`, and close method; lacks flushing/reset policy and direct socket close/half-close controls.
-
-## 08. JavaGenericsCollections — 17 files
-
-- `ArrayListDemo1.java` — interface-typed `List<String>`, indexed insertion, traversal, removal by object versus index, sizes and display.
-- `ArrayListDemo2.java` — boxed integer list, enhanced-for/lambda traversal, index removal, list/array conversion, and fixed-size `Arrays.asList` result.
-- `ArrayListDemo3.java` — typed list of custom objects, getters, `toString`, and indexed traversal.
-- `ArraysDemo.java` — initialize/display, `Arrays.sort`, range fill, resort, and binary search after sorting.
-- `ComparatorDemo.java` — natural name order through `Comparable` and external ID order through `Comparator`; subtraction comparison should be `Integer.compare`.
-- `HashMapDemo.java` — generic key/value map, permitted null key/values, key iteration, lookup/update; order unspecified.
-- `HashTableDemo.java` — legacy synchronized `Hashtable`, enumeration, no null key/value, and balance update.
-- `LinkedListDemo.java` — list/deque end operations, indexed insertion/removal, get/set; index access remains O(n).
-- `VectorDemo.java` — legacy synchronized dynamic array, capacity, element methods, contains/removal, and indexed traversal.
-- `generics/GenObject.java` — pre-generic `Object` holder accepts unrelated values; final cast to `String` fails after a `Thread` is stored.
-- `generics/MyGenerics1.java` — single parameter, safe integer/string instances, diamond, and unsafe raw-type fallback.
-- `generics/MyGenerics2.java` — two independent type parameters and typed accessors.
-- `generics/MyGenerics3.java` — intersection bound `T extends X & Y & Z` and a conforming implementation.
-- `generics/MyGenerics4.java` — bounded generic constructor and generic `isIn`; it uses reference `==`, so logical generic membership should use `Objects.equals`.
-- `generics/MyGenerics5.java` — generic stack interface/implementation over supplied arrays for strings and integers.
-- `generics/MyGenerics6.java` — `T extends Number`, numeric average, same-type comparison, and unbounded wildcard comparison across numeric types.
-- `generics/MyGenerics7.java` — hierarchy of 2D/3D/4D coordinates and progressively bounded `? extends` wildcard readers.
-
-## 09. JavaEnumerationTypeWrappersAutoboxing — 5 files
-
-- `AutoBoxingUnboxingDemo.java` — boxing at call/assignment, unboxing on return/arithmetic, increment unbox–modify–rebox, numeric promotion across wrappers.
-- `EnumDemo.java` — fixed enum constants, safe identity comparison, display, and enum-controlled switch.
-- `EnumDemo2.java` — generated `values()` traversal and exact-name `valueOf` lookup.
-- `EnumDemo3.java` — enum constructor/field/method, one object per constant, mutable price demonstration, and custom `toString`; immutable enum state is safer.
-- `WrapDemo.java` — explicit deprecated wrapper construction and `intValue`; modern replacement is boxing/`Integer.valueOf`.
-
-## 10. JavaIO — 17 files
-
-- `BufferedReaderDemo.java` — wraps `FileReader`, loops on `readLine() == null`, then closes; one try-with-resources block would be safer.
-- `BufferedReaderDemoWithException.java` — contrasts verbose finally cleanup with the active try-with-resources form.
-- `BufferedWriterDemo.java` — buffered line-by-line source copy with `newLine`; manual multi-resource closure can be simplified.
-- `ConsoleDemo.java` — handles possibly absent console, reads username/password, and prints; password echo in the example is a security anti-pattern.
-- `DataIODemo.java` — writes and reads double/int/boolean in exactly matching sequence through data streams.
-- `DirectoryDemo.java` — `File.isDirectory`, `list`, child path reconstruction, and file/directory classification; `list()` may return null.
-- `FileCopyDemo.java` — byte copy attempt based on `available()` and assumed full reads; appendix text replaces it with the correct read-count loop.
-- `FileDemo.java` — file/path/name/absolute/parent/existence/permissions/type/timestamp/size metadata.
-- `FileInputStreamDemo.java` — single-byte/buffered reads, `available`, `skip`, offset reads; stream is not closed in the source.
-- `FileOutputStreamDemo.java` — writes alternate bytes, all bytes, and a final quarter into three files.
-- `FileReaderDemo.java` — allocates a character array from byte file length and assumes one full read; unsafe for multibyte encodings/partial reads.
-- `FileWriterDemo.java` — character writes by stride/all/range and explicit UTF-8 Bengali output.
-- `ObjectSerializationDemo.java` — serializable three-field object and paired object streams; active block deserializes two objects, while the comments label serialization/deserialization backwards.
-- `RandomAccessFileDemo.java` — writes `Hello`, seeks, reads, seeks past current end, writes `World`, then observes the gap/content.
-- `UnicodeReadWrite.java` — explicit UTF-8 input/output bridges, buffering, line copying, and display.
-- `TestFile.java` — packaged older copy of the file-input demonstration; closes stream and uses `System.err` on short reads.
-- `TestFileCopy.java` — generated/copied duplicate of `TestFile.java`, confirming the buffered copy example's output artifact.
-
-## 11. JavaLambdaExpressions — 4 files
-
-- `ApplyLambda.java` — lambda replacements for anonymous `Runnable`, multi-statement task, comparator lambda, sorting, and `forEach`.
-- `MyClass.java` — immutable-by-interface ID/name value holder shared by lambda examples, getters, and `toString`.
-- `StreamDemo.java` — collection/array streams, boxing primitive stream, `map`, `filter`, `collect`, method references, and parallel stream.
-- `TestLambda.java` — five functional interfaces, zero/one/two-argument lambdas, predicate changes, factorial block body, and string reversal.
-
-## 12. Java-Modules — 10 files
-
-- `JavaModules/moduleA/src/module-info.java` — module A qualified-exports `p1` only to B and C.
-- `JavaModules/moduleA/src/p1/Calculator.java` — exported arithmetic service; division returns zero for zero divisor, a policy that hides the error rather than throwing.
-- `JavaModules/moduleB/src/module-info.java` — B requires A transitively and exports `p2`.
-- `JavaModules/moduleB/src/p2/TestCalculator.java` — public B service consumes A's calculator and combines four operations.
-- `JavaModules/moduleC/src/module-info.java` — C requires only B and gains readability of A transitively.
-- `JavaModules/moduleC/src/p3/TestCalculator2.java` — C directly uses both B's service and A's calculator, proving transitive readability plus qualified export.
-- `JavaModulesSimple/moduleA/src/module-info.java` — simple A exports `p1` to all reading modules.
-- `JavaModulesSimple/moduleA/src/p1/Calculator.java` — simple exported arithmetic implementation.
-- `JavaModulesSimple/moduleB/src/module-info.java` — simple B explicitly requires A.
-- `JavaModulesSimple/moduleB/src/p2/TestCalculator.java` — executable B client prints sum/subtraction/multiplication/division results.
-
-## 13. JavaExcel — 4 files
-
-- `Employee.java` — mutable JavaBean-style ID/name/department/salary model with getters, setters, and `toString`.
-- `Main.java` — orchestration: read `employees.xlsx` into a list, print with lambda, then write `employees-generated.xlsx`.
-- `ReadExcel.java` — XSSF then HSSF fallback, first-sheet row/cell iteration, header skip, string buffer mapping; resource, blank-cell, type, stale-value, and decimal-loss traps documented above.
-- `WriteExcel.java` — creates XSSF workbook/sheet/header/data rows, chooses numeric/string cell values, autosizes, and writes; output stream needs try-with-resources.
-
----
-
 # Final oral-recall drill
 
 Try to answer each in 20–40 seconds before reading the cue.

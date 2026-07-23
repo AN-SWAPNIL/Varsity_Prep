@@ -1,8 +1,8 @@
 # Bismillah.
 
-# Theory of Computation — Core-Complete Viva Recall
+# Theory of Computation and Compiler Design — Slide-Grounded Viva Recall
 
-> **Source boundary:** no local TOC slide folder exists in this workspace. This is a standard-core supplement, not a claim of slide-by-slide alignment. It emphasizes definitions, constructions, proof techniques, algorithms, and the distinctions most often tested in a viva.
+> **Current source basis:** TOC contains `AtifSir_Merged.pdf` (703 pages) and `MasroorSir_Merged.pdf` (562 pages); Compiler contains `CSE309_KMS_Merged.pdf` (509 pages) and `CSE309_Mashroor_Merged.pdf` (893 pages). All **2667 pages** were re-read and routed here: **1265 TOC + 1402 Compiler**. The first part emphasizes formal definitions/constructions/proofs; the second follows the complete compiler pipeline with algorithms, equations, data structures and code-like procedures.
 
 The subject asks three increasingly deep questions:
 
@@ -563,3 +563,767 @@ Containments are proper under the standard definitions. A grammar’s syntactic 
 - [ ] State a mapping reduction in the correct direction.
 - [ ] Explain HALT undecidability and Rice’s theorem boundaries.
 - [ ] Prove a problem NP-complete using membership, reduction, iff correctness, and polynomial cost.
+
+---
+
+# Part II — Compiler Design
+
+# 18. Compiler Mental Model and Phases
+
+A compiler translates a source program to an equivalent target program while reporting errors and preserving the source-language meaning. It is not merely “convert high-level code to machine code”; it performs analysis, representation changes, optimization and target-specific synthesis.
+
+```mermaid
+flowchart LR
+    S[Source characters] --> L[Lexical analysis<br/>tokens]
+    L --> P[Syntax analysis<br/>parse tree / AST]
+    P --> M[Semantic analysis<br/>types + bindings]
+    M --> I[Intermediate-code generation<br/>IR / TAC / CFG]
+    I --> O[Machine-independent optimization]
+    O --> C[Code generation<br/>selection + registers]
+    C --> Q[Machine-dependent optimization]
+    Q --> T[Assembly / object code]
+    ST[(Symbol table)] --- L
+    ST --- P
+    ST --- M
+    ST --- C
+    E[Error handling] --- L
+    E --- P
+    E --- M
+```
+
+- **Front end:** source-language dependent analysis and IR generation.
+- **Middle end:** mostly target-independent IR optimization.
+- **Back end:** target-machine instruction selection, scheduling and register allocation.
+- **Phase:** conceptual function; **pass:** one traversal/read of a representation. Several phases can share a pass, or one phase can need several passes.
+
+An interpreter executes a representation directly; a compiler produces another program. JIT systems compile during execution using runtime profiles; hybrid VMs may interpret, profile, then optimize hot methods.
+
+**Bootstrapping:** implement a compiler for language `L` in `L`; an initial compiler/interpreter must already translate the subset. A **cross-compiler** runs on host `H` but emits code for target `T`.
+
+# 19. Lexical Analysis
+
+## 19.1 Token, lexeme, and pattern
+
+- **Token:** category returned to parser, e.g. `ID`, `NUM`, `IF`, `LE`.
+- **Lexeme:** exact source substring, e.g. `count`, `42`, `<=`.
+- **Pattern:** rule describing all lexemes of a token, often a regular expression.
+
+A token commonly carries an attribute:
+
+```text
+<ID, symbol-table pointer>
+<NUM, numeric value>
+<RELOP, LE>
+```
+
+The lexer removes whitespace/comments when language rules permit, tracks locations, recognizes literals/identifiers/operators, and coordinates with the symbol table. It should not normally parse nested grammatical structure; regular languages/finite automata are its natural model.
+
+## 19.2 Regular definitions and automata
+
+Example regular definitions:
+
+```text
+digit   -> [0-9]
+letter  -> [A-Za-z_]
+id      -> letter (letter | digit)*
+integer -> digit+
+real    -> digit+ "." digit+ ([eE][+-]?digit+)?
+```
+
+Construction pipeline:
+
+```text
+regular expressions
+-> Thompson epsilon-NFA
+-> subset-construction DFA
+-> optional DFA minimization/table compression
+-> scanner
+```
+
+If multiple patterns match, apply:
+
+1. **maximal munch/longest lexeme**;
+2. if equal length, rule priority.
+
+Thus `>=` should be one token rather than `>` then `=`, and `ifx` is normally an identifier rather than keyword `if` plus `x`. Recognize the identifier, then consult a keyword table.
+
+## 19.3 Scanner skeleton
+
+```cpp
+Token nextToken() {
+    skipWhitespaceAndComments();
+    SourcePos start = position();
+    char c = peek();
+
+    if (isLetter(c) || c == '_') {
+        string s;
+        do { s += get(); } while (isLetterOrDigit(peek()) || peek() == '_');
+        if (auto kw = keywordToken(s)) return Token{*kw, s, start};
+        return Token{ID, intern(s), start};
+    }
+
+    if (isDigit(c)) {
+        long long v = 0;
+        do {
+            int d = get() - '0';
+            if (v > (LLONG_MAX - d) / 10) lexicalError("integer overflow", start);
+            v = 10 * v + d;
+        } while (isDigit(peek()));
+        return Token{INT_LITERAL, v, start};
+    }
+
+    c = get();
+    if (c == '<' && peek() == '=') { get(); return {LE, "<=", start}; }
+    if (c == '=' && peek() == '=') { get(); return {EQ, "==", start}; }
+    if (isSingleCharToken(c)) return tokenFor(c, start);
+
+    lexicalError("invalid character", start);
+    return {ERROR_TOKEN, c, start};
+}
+```
+
+Production scanners must handle Unicode/encodings, escapes, numeric suffixes, comment/string termination, overflow and source spans according to the language specification.
+
+## 19.4 Input buffering
+
+Reading one character per system call is slow. A two-buffer scheme reads blocks and places a sentinel at each end. `lexemeBegin` marks token start; `forward` scans and can cross/refill buffers; retract backs up when lookahead belongs to the next token.
+
+The sentinel avoids testing “end of buffer?” on every ordinary character, but EOF and lexemes longer than a buffer still need explicit handling.
+
+## 19.5 Lexical errors
+
+Examples: illegal character, malformed exponent, unclosed string/comment, invalid escape, literal overflow. Recovery may delete/insert/replace/transposition-correct a character or return an error token, but must advance—otherwise the compiler loops at one bad character.
+
+# 20. Context-Free Grammars and Top-Down Parsing
+
+## 20.1 Parse tree versus AST
+
+A parse tree includes every grammar nonterminal/terminal derivation. An AST removes punctuation and grammar-only nodes, retaining semantic structure.
+
+For `a + b * c`, precedence grammar/AST should mean:
+
+```text
+      +
+     / \
+    a   *
+       / \
+      b   c
+```
+
+Ambiguity means one string has multiple parse trees/leftmost/rightmost derivations. Resolve by rewriting grammar or explicit parser precedence/associativity rules.
+
+## 20.2 Eliminate immediate left recursion
+
+For:
+
+$$A\rightarrow A\alpha_1|\cdots|A\alpha_m|\beta_1|\cdots|\beta_n,$$
+
+where no $\beta_i$ begins with $A$, transform:
+
+$$
+\begin{aligned}
+A&\rightarrow\beta_1A'|\cdots|\beta_nA',\\
+A'&\rightarrow\alpha_1A'|\cdots|\alpha_mA'|\epsilon.
+\end{aligned}
+$$
+
+For indirect left recursion, order nonterminals, substitute earlier productions into later ones, then remove immediate recursion. Naively changing left-recursive arithmetic grammar may change associativity in the parse tree; build AST actions to preserve intended left associativity.
+
+## 20.3 Left factoring
+
+If:
+
+$$A\rightarrow\alpha\beta_1|\alpha\beta_2|\gamma,$$
+
+factor:
+
+$$A\rightarrow\alpha A'|\gamma,\qquad A'\rightarrow\beta_1|\beta_2.$$
+
+This delays a decision until enough input is seen; it does not remove true ambiguity.
+
+## 20.4 FIRST and FOLLOW
+
+`FIRST(α)` contains terminals that can begin strings derived from `α`, plus $\epsilon$ if `α⇒*ε`. `FOLLOW(A)` contains terminals that can immediately follow `A` in some sentential form; `$` is in `FOLLOW(start)`.
+
+Fixed-point rules:
+
+1. terminal `a`: `FIRST(a)={a}`;
+2. for `A→X1...Xk`, add `FIRST(X1)-{ε}`, then continue while preceding symbols are nullable; add `ε` if all nullable;
+3. put `$` in `FOLLOW(S)`;
+4. for `A→αBβ`, add `FIRST(β)-{ε}` to `FOLLOW(B)`;
+5. if `β⇒*ε` (including empty), add `FOLLOW(A)` to `FOLLOW(B)`;
+6. repeat until no set changes.
+
+Example grammar:
+
+```text
+E  -> T E'
+E' -> + T E' | epsilon
+T  -> id
+```
+
+```text
+FIRST(E)=FIRST(T)={id}
+FIRST(E')={+,epsilon}
+FOLLOW(E)={$}
+FOLLOW(E')={$}
+FOLLOW(T)={+,$}
+```
+
+## 20.5 LL(1) table construction
+
+For every production `A→α`:
+
+- for each `a in FIRST(α)-{ε}`, put it in `M[A,a]`;
+- if `ε in FIRST(α)`, for each `b in FOLLOW(A)`, put it in `M[A,b]`.
+
+Two productions in one cell create an LL(1) conflict. A grammar is LL(1) when one lookahead token selects one production at every step; absence of table conflict after correct construction is the operational test.
+
+Predictive parser:
+
+```text
+stack = [$, Start]
+lookahead = nextToken()
+while top(stack) != $:
+    X = top(stack)
+    if X is terminal:
+        if X == lookahead: pop; lookahead=nextToken()
+        else: report/recover missing or unexpected terminal
+    else:
+        production = M[X, lookahead]
+        if none: report/recover
+        else:
+            pop X
+            push RHS symbols in reverse, omitting epsilon
+accept iff stack top and lookahead are both $
+```
+
+With a table and token stream, time is $O(n)$ for a fixed grammar, excluding semantic work/recovery.
+
+## 20.6 Recursive descent
+
+One procedure per nonterminal:
+
+```cpp
+Node* parseExpr() {
+    Node* left = parseTerm();
+    while (look.kind == PLUS || look.kind == MINUS) {
+        Token op = take();
+        Node* right = parseTerm();
+        left = new Binary(op, left, right);  // preserves left associativity
+    }
+    return left;
+}
+```
+
+Recursive descent can use more than one token/backtracking, but unrestricted backtracking can be exponential and produces poor errors. Predictive grammars make choices from lookahead sets.
+
+## 20.7 Panic-mode recovery
+
+On a nonterminal error, discard tokens until a synchronizing set—often `FOLLOW(nonterminal)` or statement delimiters—appears. Mark `synch` table entries. Recovery should report the earliest useful error, avoid cascades, preserve enough structure to find later errors and always make progress.
+
+# 21. Bottom-Up Parsing: Shift–Reduce, LR, SLR, CLR, and LALR
+
+## 21.1 Handles and shift–reduce actions
+
+A **handle** is a substring matching a production RHS whose reduction is one step of the reverse rightmost derivation. A shift–reduce parser maintains a stack and input:
+
+- **shift:** move next token to stack;
+- **reduce `A→β`:** replace handle `β` by `A`;
+- **accept**;
+- **error**.
+
+Conflicts:
+
+- shift/reduce: both shifting and reducing appear valid;
+- reduce/reduce: two reductions appear valid.
+
+Operator-precedence declarations may resolve intended expression conflicts, but silently resolving a grammar-design mistake is dangerous.
+
+## 21.2 LR(0) items, closure, and goto
+
+An LR(0) item marks parser progress:
+
+$$A\rightarrow\alpha\cdot\beta.$$
+
+Closure:
+
+```text
+CLOSURE(I):
+    repeat
+        for each [A -> alpha . B beta] in I
+            for each production B -> gamma
+                add [B -> . gamma]
+    until unchanged
+```
+
+Goto:
+
+```text
+GOTO(I, X) =
+    CLOSURE({[A -> alpha X . beta] |
+             [A -> alpha . X beta] in I})
+```
+
+Augment grammar with `S'→S`. Starting at `CLOSURE({S'→·S})`, repeatedly apply `GOTO` on grammar symbols to form the canonical collection/state DFA.
+
+## 21.3 SLR table
+
+For state `i`:
+
+1. if `[A→α·aβ]` and `GOTO(i,a)=j`, set `ACTION[i,a]=shift j`;
+2. if `[A→α·]`, `A≠S'`, set `ACTION[i,a]=reduce A→α` for each `a∈FOLLOW(A)`;
+3. if `[S'→S·]`, set `ACTION[i,$]=accept`;
+4. nonterminal transitions fill `GOTO[i,A]`.
+
+Parser:
+
+```text
+state stack starts [0]
+repeat:
+    s = top state; a = lookahead
+    case ACTION[s,a]:
+      shift t: push a,t; a=next token
+      reduce A->beta:
+          pop 2*|beta| stack entries
+          s=top state
+          push A, GOTO[s,A]
+          execute semantic action
+      accept: return result
+      error: recover/fail
+```
+
+Each state/symbol step is constant table work, so deterministic LR parsing is $O(n)$ for a fixed grammar.
+
+## 21.4 Why LR(1) is stronger
+
+An LR(1) item includes a lookahead:
+
+$$[A\rightarrow\alpha\cdot\beta,\ a].$$
+
+For `[A→α·Bβ,a]`, closure adds `[B→·γ,b]` for each
+
+$$b\in FIRST(\beta a).$$
+
+- **LR(0):** reductions without lookahead; weakest.
+- **SLR(1):** LR(0) states, reductions on global `FOLLOW(A)`; compact but coarse.
+- **Canonical LR(1)/CLR:** item-specific lookaheads; most states, strongest of these.
+- **LALR(1):** merge canonical LR(1) states with identical LR(0) cores, union lookaheads; near-SLR table size and often stronger, but merging can introduce reduce/reduce conflicts absent in CLR.
+
+All deterministic CFLs are not necessarily LL(1); LR methods recognize a larger practical grammar class and detect a viable-prefix error as soon as no valid continuation exists.
+
+# 22. Syntax-Directed Translation and Semantic Analysis
+
+## 22.1 Attributes
+
+An SDD associates attributes/rules with grammar symbols:
+
+- **synthesized** attribute flows from children to parent;
+- **inherited** attribute flows from parent/siblings into a node.
+
+An S-attributed definition uses only synthesized attributes and fits bottom-up evaluation. An L-attributed definition restricts inherited dependencies so a left-to-right depth-first traversal can evaluate them.
+
+Example expression value:
+
+```text
+E -> E1 + T    { E.val = E1.val + T.val }
+E -> T         { E.val = T.val }
+T -> NUM       { T.val = NUM.lexval }
+```
+
+An **SDT** embeds actions in productions; action placement affects when values are available.
+
+## 22.2 Symbol table and scope
+
+Entry fields can include name, kind, type, scope depth, storage class, size/alignment, offset/address, parameter list, return type, declaration location and linkage.
+
+Implement nested scopes with:
+
+- a stack of hash tables; lookup searches innermost outward;
+- one hash table plus scope chains/undo logs;
+- persistent trees for functional compiler designs.
+
+On entering scope, push; on declaration, reject illegal duplicate in same scope; on exit, remove/hide its bindings. Shadowing an outer name may be legal even when redeclaration in the same scope is not.
+
+## 22.3 Type checking
+
+Semantic analysis catches:
+
+- undeclared/redeclared identifiers;
+- incompatible operators/operands;
+- wrong argument count/types;
+- invalid return/break/index/member use;
+- assignment incompatibility;
+- inaccessible names and control-flow rules.
+
+For numeric coercion:
+
+```text
+int + float -> convert int to float -> float result
+```
+
+Coercion is implicit conversion chosen by language rules; a cast is an explicit request. Widening may preserve range but still lose exactness (large integer to float); narrowing needs explicit policy/check.
+
+A structural type system compares component structure; a nominal system relies on declared names/relationships. Static checking proves rules before execution under its model; dynamic checks still handle casts, bounds, null, tags or reflection where required.
+
+# 23. Intermediate Representations and Three-Address Code
+
+## 23.1 Common IR forms
+
+- parse tree/AST;
+- DAG for shared expression values;
+- three-address code (TAC);
+- quadruples/triples/indirect triples;
+- control-flow graph;
+- SSA and machine IR.
+
+TAC forms:
+
+```text
+x = y op z
+x = op y
+x = y
+if x relop y goto L
+goto L
+param x
+t = call f, n
+return x
+x = y[i]
+x[i] = y
+x = &y / *y / *x = y
+```
+
+Example:
+
+```text
+x = (a - b) * (c + d)
+```
+
+becomes:
+
+```text
+t1 = a - b
+t2 = c + d
+t3 = t1 * t2
+x  = t3
+```
+
+## 23.2 Quadruples, triples, indirect triples
+
+- Quadruple: `(op,arg1,arg2,result)`, easy to reorder because results have names.
+- Triple: result is instruction position, saving temporary names but making motion harder.
+- Indirect triple: a separate pointer list gives reorderability without changing triple references.
+
+## 23.3 Boolean short-circuit translation
+
+For `B1 && B2`, evaluate `B2` only where `B1` is true. For `B1 || B2`, evaluate `B2` only where `B1` is false. Control-flow representation avoids materializing every Boolean:
+
+```text
+if a < b goto L_rhs
+goto L_false
+L_rhs:
+if c != 0 goto L_true
+goto L_false
+```
+
+## 23.4 Backpatching
+
+Generate jumps before targets are known and keep lists:
+
+- `makelist(i)`: singleton list containing instruction `i`;
+- `merge(p1,p2)`: concatenate lists;
+- `backpatch(p,i)`: fill every incomplete target in list `p` with label/instruction `i`.
+
+Boolean attributes:
+
+```text
+B.truelist
+B.falselist
+```
+
+For `B1 || M B2`:
+
+```text
+backpatch(B1.falselist, M.instr)
+B.truelist = merge(B1.truelist, B2.truelist)
+B.falselist = B2.falselist
+```
+
+For a statement sequence, backpatch the previous statement's `nextlist` to the next statement's first instruction.
+
+# 24. Runtime Environments
+
+## 24.1 Storage regions
+
+```mermaid
+flowchart TB
+    C[Code / read-only constants]
+    G[Static/global data<br/>lifetime: whole program]
+    H[Heap<br/>dynamic objects]
+    F3[Activation record: current call]
+    F2[Activation record: caller]
+    F1[Older activation records]
+    C --- G
+    G --- H
+    H --- F3
+    F3 --- F2
+    F2 --- F1
+```
+
+- Static allocation works for fixed-lifetime objects but not arbitrary recursion.
+- Stack allocation matches nested call/return lifetimes.
+- Heap allocation supports objects whose lifetimes do not follow call nesting.
+
+## 24.2 Activation record
+
+Possible fields:
+
+```text
+arguments
+return value slot
+return address
+control/dynamic link (caller's frame)
+access/static link or display support
+saved registers
+local variables
+temporaries/spill slots
+```
+
+Exact order is ABI/compiler-specific. A frame pointer gives stable offsets when stack pointer changes; compilers can omit it when unwind/debug/variable-size needs allow.
+
+For lexically nested functions, a **static link** points to the frame of the lexically enclosing activation; the dynamic link points to the caller. They are not always the same. A display stores one active frame pointer per nesting level for faster nonlocal access.
+
+## 24.3 Parameter passing
+
+- call by value: copy value;
+- reference: callee receives alias/address;
+- value-result/copy-in-copy-out: copy in then out, with alias-order issues;
+- name: delayed expression-like substitution/thunk semantics;
+- object sharing: copy object reference value; mutation visible, rebinding local.
+
+State the language's actual semantics rather than assuming “objects are passed by reference.”
+
+## 24.4 Garbage collection
+
+**Mark–sweep:**
+
+1. start from roots (stacks, globals, registers);
+2. traverse pointers and mark reachable objects;
+3. sweep heap; reclaim unmarked objects.
+
+Time is $O(\text{reachable graph}+\text{heap scanned})$. It can fragment memory and pause execution.
+
+**Copying collector:** copy reachable objects from from-space to to-space; allocation becomes bump-pointer and compacts, but reserves space and cost tracks live data.
+
+**Reference counting:** reclaim when count hits zero; often prompt/incremental, but cycles survive without additional tracing and updates add overhead.
+
+Generational GC relies on the empirical hypothesis that most objects die young; a write barrier records old-to-young references.
+
+# 25. Basic Blocks and Control-Flow Graphs
+
+## 25.1 Leaders
+
+Leaders are:
+
+1. first TAC instruction;
+2. every jump target;
+3. instruction immediately following a jump/conditional/return if present.
+
+A basic block begins at a leader and ends before the next. Inside it, control enters at the top and leaves at the bottom without branching except at the end.
+
+CFG nodes are basic blocks. Add edge `B→C` if B can branch to C or fall through to C.
+
+```mermaid
+flowchart TD
+    E[Entry: i=0, sum=0] --> T{i < n?}
+    T -- yes --> B["sum = sum + a[i]<br/>i = i + 1"]
+    B --> T
+    T -- no --> X[return sum]
+```
+
+## 25.2 Dominators and natural loops
+
+Node `d` dominates `n` if every path from entry to `n` passes through `d`. Equations:
+
+$$Dom(entry)=\{entry\},$$
+
+$$Dom(n)=\{n\}\cup\bigcap_{p\in pred(n)}Dom(p).$$
+
+An edge `n→d` is a back edge when `d` dominates `n`. Its natural loop contains `d`, `n`, and nodes that can reach `n` without passing through `d`. Dominance helps identify safe code motion and loop structure.
+
+# 26. Local and Global Optimization
+
+Optimization must preserve observable semantics under the language model. Floating point, exceptions, overflow, volatile/atomic operations, aliasing and concurrency restrict algebraic transformations.
+
+## 26.1 Local DAG/value-numbering ideas
+
+For a basic block:
+
+```text
+t1 = a + b
+t2 = a + b
+x  = t2 * 1
+```
+
+Common-subexpression elimination and algebraic simplification can yield:
+
+```text
+t1 = a + b
+x  = t1
+```
+
+Only if neither `a` nor `b` changed and evaluation has no observable distinction. A DAG node represents an operation and children; identifiers label the node containing their current value.
+
+Common transformations:
+
+- constant folding/propagation;
+- copy propagation;
+- common-subexpression elimination;
+- dead-code/dead-store elimination;
+- algebraic identities;
+- strength reduction (`x*2` to shift only when semantics permit);
+- loop-invariant code motion;
+- induction-variable simplification;
+- unreachable-code elimination;
+- inlining with code-size trade-off.
+
+## 26.2 Data-flow framework
+
+For forward reaching definitions:
+
+$$IN[B]=\bigcup_{P\in pred(B)}OUT[P],$$
+
+$$OUT[B]=GEN[B]\cup(IN[B]-KILL[B]).$$
+
+For backward live variables:
+
+$$OUT[B]=\bigcup_{S\in succ(B)}IN[S],$$
+
+$$IN[B]=USE[B]\cup(OUT[B]-DEF[B]).$$
+
+`x` is live at a point if some path uses its current value before redefining it. A dead assignment can be removed only if the expression has no required side effect/exception.
+
+Generic worklist:
+
+```text
+initialize IN/OUT to boundary and lattice defaults
+put all blocks in worklist
+while worklist not empty:
+    B = remove one
+    recompute transfer result using meet over neighbors
+    if result changed:
+        add affected neighbors
+```
+
+Finite bit-vector lattices and monotone transfer functions converge. Union is a “may” merge; intersection is often a “must” merge (e.g. an expression is available only if available on every incoming path).
+
+## 26.3 SSA
+
+Static Single Assignment gives each variable definition one version:
+
+```text
+if (...) x1 = 1
+else     x2 = 2
+x3 = phi(x1, x2)
+```
+
+The $\phi$ chooses the value from the executed predecessor; it is conceptual parallel edge selection, not an ordinary eager function call. SSA simplifies def-use chains, propagation and many optimizations; later lowering inserts/moves values into machine locations.
+
+# 27. Code Generation and Register Allocation
+
+## 27.1 Core back-end tasks
+
+1. instruction selection: map IR patterns to target instructions/addressing modes;
+2. register allocation/assignment;
+3. evaluation order and instruction scheduling;
+4. stack-frame/calling-convention generation;
+5. branch/label/object emission;
+6. target-specific peephole cleanup.
+
+Quality objectives conflict: execution time, code size, compile time, energy and debugability.
+
+For `x = a[i]` with 4-byte elements:
+
+```text
+t1 = i * 4
+t2 = base(a) + t1
+x  = load [t2]
+```
+
+A target with scaled-index addressing may combine arithmetic into one memory operand.
+
+## 27.2 Register descriptors and next use
+
+Within a block, a register descriptor records which current values reside in each register; an address descriptor records valid locations of a variable. Liveness/next-use guides choices:
+
+- reuse a register whose value is dead/no next use;
+- avoid spilling a soon-used dirty value;
+- store a dirty live value before overwriting if memory needs the current copy.
+
+## 27.3 Interference graph coloring
+
+Two temporaries interfere when their live ranges overlap and cannot share a register. Build graph: vertex per live range, edge per interference.
+
+Simplified coloring:
+
+1. while a vertex of degree `<K` exists, remove/push it;
+2. if none, choose a spill candidate and remove it optimistically;
+3. pop vertices and assign a color different from colored neighbors;
+4. if impossible, insert spill loads/stores and rebuild.
+
+Graph coloring is NP-hard in general; allocators use heuristics/coalescing. Coalescing a move `x=y` can remove the move if their nodes do not interfere, but may make coloring harder.
+
+Linear-scan allocation sorts live intervals by start, expires finished intervals and assigns free registers; otherwise it spills an interval. It is faster and common in JITs, often with somewhat lower code quality than sophisticated coloring.
+
+## 27.4 Peephole optimization
+
+Examine short instruction windows:
+
+```text
+MOV R1,R1          -> remove
+JMP L1; L1:JMP L2  -> JMP L2
+MUL R1,2           -> shift/add if exact target semantics permit
+LOAD R1,x; STORE x,R1 -> second may be redundant if no intervening effect
+```
+
+Also eliminate unreachable code, redundant loads/stores and exploit machine idioms. Peephole rules need accurate flags, aliasing, delay-slot and exception semantics.
+
+# 28. Compiler Errors and Diagnostics
+
+| Phase | Example |
+|---|---|
+| lexical | illegal character, malformed number, unclosed string |
+| syntax | missing `)`, unexpected `else`, malformed declaration |
+| semantic | undeclared name, type mismatch, wrong arguments, invalid return |
+| link | unresolved external, duplicate global symbol |
+| runtime | division by zero, bounds/null failure, dynamic type error |
+| logical | program compiles/runs but computes wrong result |
+
+A diagnostic should include source span, clear primary message, relevant notes (previous declaration/type), and recovery that avoids cascades. Compilers cannot in general detect every runtime/logical error; Rice's theorem/undecidability explains broad limits.
+
+# 29. Current Source Ledger
+
+| Current source | Pages | Major blocks represented |
+|---|---:|---|
+| `AtifSir_Merged.pdf` | 703 | regular languages/FA/regex/minimization/pumping; CFG/PDA/CFL; TMs/decidability/reductions/complexity |
+| `MasroorSir_Merged.pdf` | 562 | alternate derivations, constructions, grammar/machine proofs and computation/complexity reinforcement |
+| `CSE309_KMS_Merged.pdf` | 509 | compiler phases, lexical/syntax/semantic analysis, IR, runtime, optimization and code generation |
+| `CSE309_Mashroor_Merged.pdf` | 893 | detailed top-down/LR parsing, SDD/SDT, TAC/backpatching, CFG/data-flow, target code/register allocation |
+| **Total** | **2667** | **1265 TOC + 1402 Compiler pages routed** |
+
+# 30. Compiler Board-Ready Self-Test
+
+- [ ] Distinguish token, lexeme and pattern; trace longest-match/priority.
+- [ ] Convert regex → NFA → DFA conceptually and explain scanner buffering.
+- [ ] Remove left recursion/left-factor; compute FIRST and FOLLOW to a fixed point.
+- [ ] Construct and trace an LL(1) table/parser with panic-mode recovery.
+- [ ] Compute LR closure/goto; build SLR actions and explain conflicts.
+- [ ] Compare LR(0), SLR, CLR/LR(1), and LALR without saying they are identical.
+- [ ] Build a symbol table for nested scopes and type-check a mixed expression/call.
+- [ ] Emit TAC/quadruples and backpatch an `if`/`while` Boolean expression.
+- [ ] Draw an activation record and distinguish static/dynamic links.
+- [ ] Identify basic-block leaders, draw CFG, dominators and a natural loop.
+- [ ] Solve reaching-definitions and liveness equations on a small CFG.
+- [ ] Apply constant/copy/CSE/dead/loop optimizations with semantic caveats.
+- [ ] Build an interference graph, color registers and identify a spill.
+- [ ] Account for all 2667 current TOC+Compiler pages using the source ledger.

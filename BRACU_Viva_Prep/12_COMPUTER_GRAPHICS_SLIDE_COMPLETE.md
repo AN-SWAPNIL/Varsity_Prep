@@ -4,9 +4,10 @@
 
 **Primary sources read page by page**
 
-- `Graphics/409/ARK_merged.pdf` — 473 physical PDF pages.
-- `Graphics/409/IJ_merged2.pdf` — 263 physical PDF pages.
-- Total audited coverage: **473 + 263 = 736 pages**. The exact, non-overlapping page-range matrix is at the end.
+- `ARK_merged.pdf` — 473 physical PDF pages.
+- `IJ_merged.pdf` — 263 physical PDF pages.
+- `CSE_409(Note).pdf` — 78 handwritten/image pages, visually reviewed as reinforcement for transformations, projection, viewing, clipping, lighting and curves.
+- Total current coverage: **473 + 263 + 78 = 814 pages**. The exact main-deck page-range matrix and handwritten-note routing are at the end.
 
 This is a reconstruction of concepts, not a list of memorized one-line answers. Equations are rewritten cleanly because several PDF text layers lose mathematical symbols. Source tags such as **[ARK 33–93]** and **[IJ 38–72]** refer to physical PDF pages.
 
@@ -2949,7 +2950,7 @@ Arithmetic check:
 31+62+37+15+7+6+10+38+7+37+13+42+24+17+17+8+22+9+15+7+12+8+13+8+8 = 473
 ```
 
-## IJ_merged2.pdf — exact 263-page partition
+## IJ_merged.pdf — exact 263-page partition
 
 | Physical PDF pages | Count | Slide block reconstructed here |
 |---:|---:|---|
@@ -2972,13 +2973,27 @@ Arithmetic check:
 36+36+12+23+30+19+14+20+8+26+39 = 263
 ```
 
+## Handwritten note routing
+
+`CSE_409(Note).pdf` contains 78 image-dominant pages. It was visually reviewed rather than treated as empty because its text layer is sparse. Its board calculations and diagrams reinforce:
+
+- vector/line/plane operations and intersections;
+- homogeneous transformations and composition order;
+- view and projection construction;
+- clipping, rasterization and visibility;
+- illumination/shading;
+- Bézier/parametric curves.
+
+These topics already have complete derivations and code in the corresponding chapters above, so the note is not duplicated line by line.
+
 ## Grand coverage check
 
 ```text
 ARK_merged.pdf     473 pages
-IJ_merged2.pdf     263 pages
+IJ_merged.pdf      263 pages
+CSE_409(Note).pdf   78 pages
                    ---------
-Audited total      736 pages
+Audited total      814 pages
 ```
 
 ---

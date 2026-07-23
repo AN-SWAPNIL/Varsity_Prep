@@ -2,12 +2,20 @@
 
 # Database Management Systems — Slide-Complete Viva Recall
 
-This chapter was rebuilt from the actual CSE 215/CSE 303 resources in this workspace: Ashikur Sir's 13 lecture PDFs, both practice PDFs, both database archives (schema scripts, SQL*Loader controls, readmes, test script, representative CSV data, and loader logs), and Toufik Sir's seven decks on storage, indexing, query processing, optimization, transactions, and concurrency control.
+This chapter was re-audited against the **current main DBMS slides only**:
+
+| Current source | Pages | Main coverage |
+|---|---:|---|
+| `DBMS_Ashik_Sir_merged.pdf` | 559 | DBMS foundations, relational model, SQL, relational algebra, ER/EER design, functional dependencies, normalization |
+| `DBMS_Toufiq_Sir_merged.pdf` | 337 | storage, records and files, indexing, query processing and optimization, transactions, concurrency control |
+| **Total** | **896** | **logical design through physical execution and transaction processing** |
+
+The merged PDFs supersede the old individual-deck/archive inventory. SQL examples below are retained as course-style recall exercises; they are not claimed to be outputs from files that are no longer in the academic folder.
 
 ## How to use this chapter
 
 - **[SLIDE]** means the point is directly taught in the supplied lecture material.
-- **[LAB]** means it comes from the supplied Movie/Product database archive.
+- **[COURSE EXAMPLE]** marks an executable example based on a schema used in the course material.
 - **[CORE SUPPLEMENT]** means it is standard DBMS knowledge added because it is viva-important but absent or only named in the supplied slides.
 - **[CORRECTION]** flags a slide-era, vendor-specific, ambiguous, or erroneous statement so that you do not repeat it uncritically.
 - Read the **30-second answer** first. Then expand only if the panel asks “why?”, “how?”, or asks for an example.
@@ -1030,9 +1038,9 @@ Other SQL*Plus commands in the starter deck:
 
 **Security correction:** never expose passwords in command history or scripts, and do not grant DBA to an ordinary application user. The broad GRANT DBA example is suitable only for a tightly controlled teaching setup.
 
-## 9.2 Product database—exact supplied schema
+## 9.2 Product database—course teaching schema
 
-**[LAB]**
+**[COURSE EXAMPLE]**
 
 ~~~sql
 CREATE TABLE PC (
@@ -1066,7 +1074,7 @@ CREATE TABLE Printer (
 );
 ~~~
 
-The archive loads PC, Laptop, Printer, and Product using APPEND. Representative rows:
+Representative rows for tracing queries:
 
 ~~~text
 PC:      1001,2.66,1024,250,2114
@@ -1075,14 +1083,7 @@ Printer: 3001,T,ink-jet,99
 Product: A,1001,pc
 ~~~
 
-Loader log results:
-
-- PC: 13 rows;
-- Laptop: 10 rows;
-- Printer: 7 rows;
-- Product: 30 rows, plus its CSV header rejected because the control file does not skip it.
-
-The supplied test script counts each table and unions PC/Laptop makers:
+Useful test queries count each table and union PC/Laptop makers:
 
 ~~~sql
 SELECT COUNT(*) AS Product FROM Product;
@@ -1099,11 +1100,11 @@ FROM Laptop x
 JOIN Product p ON p.model = x.model;
 ~~~
 
-**Schema-design observation:** Product.model logically describes the supertype of PC/Laptop/Printer models, but the supplied script declares no FKs from subtype tables or CHECK on Product.type. A stronger design would enforce those invariants.
+**Schema-design observation:** `Product.model` logically describes the supertype of PC/Laptop/Printer models. If subtype tables have no foreign keys to `Product` and `Product.type` has no `CHECK`, the DBMS cannot enforce that correspondence; a stronger design should enforce those invariants.
 
-## 9.3 Movie database—exact supplied schema
+## 9.3 Movie database—course teaching schema
 
-**[LAB]**
+**[COURSE EXAMPLE]**
 
 ~~~sql
 CREATE TABLE Movie (
@@ -1144,25 +1145,11 @@ CREATE TABLE MovieExec (
 );
 ~~~
 
-The control files use comma delimiters and optional double quotes. They do not state APPEND and do not skip headers.
-
-Loader logs show:
-
-| Table | Loaded | Rejected |
-|---|---:|---:|
-| Movie | 667 | 1 header |
-| MovieExec | 615 | 1 header |
-| MovieStar | 404 | 1 header |
-| StarsIn | 698 | 1 header |
-| Studio | 224 | 1 header |
-
-The header is rejected when text such as YEAR, CERTNO, or BIRTH is converted to a numeric/date column. A modernized control would explicitly skip the first record if supported.
-
 **Schema-design observations:**
 
 - StarsIn should normally have FKs (title,year) → Movie and name → MovieStar.
 - Movie.studio should normally reference Studio.name.
-- Movie.certno may represent an executive certificate and should reference a UNIQUE key in MovieExec, but MovieExec has no declared key in the supplied script.
+- Movie.certno may represent an executive certificate and should reference a UNIQUE key in MovieExec; if MovieExec has no declared key, that relationship cannot be enforced.
 - CHAR fields preserve padding behavior visible in the SQL lectures.
 
 ---
@@ -3318,7 +3305,7 @@ MVCC is a storage technique, not by itself an isolation level; it can implement 
 
 # 20. Recovery
 
-> **[CORE SUPPLEMENT—source boundary]** The supplied DBMS set ends at transactions/concurrency and does not include a recovery chapter. This section is standard viva-core material, not attributed to the local slides.
+> **[CORE SUPPLEMENT—source boundary]** The two current merged DBMS sources end their detailed sequence at transactions/concurrency and do not contain a full recovery chapter. This section is standard viva-core material, not attributed to a missing slide unit.
 
 ## 20.1 Failure classes
 
@@ -3449,7 +3436,7 @@ WAL cannot recreate a database whose data and log device are both destroyed with
 
 # 21. Database Security
 
-> **[CORE SUPPLEMENT—source boundary]** The local SQL lectures mention users/permissions and the starter lab uses Oracle credentials, but no standalone database-security deck was supplied. The deeper material below is standard viva preparation.
+> **[CORE SUPPLEMENT—source boundary]** The current logical DBMS merge mentions users/permissions and Oracle credentials, but it does not contain a standalone database-security unit. The deeper material below is standard viva preparation.
 
 ## 21.1 Defense layers
 
@@ -3550,7 +3537,7 @@ Encrypt high-impact secrets/PII where the threat warrants it; protect keys in a 
 
 # 22. Distributed Databases
 
-> **[CORE SUPPLEMENT—source boundary]** No distributed-database slides are present in this workspace. This is a compact but rigorous viva supplement.
+> **[CORE SUPPLEMENT—source boundary]** No distributed-database unit appears in the two current merged sources. This is a compact but rigorous viva supplement.
 
 ## 22.1 Distribution choices
 
@@ -3647,9 +3634,9 @@ while also tolerating the partition. CAP is not “pick any two forever,” and 
 
 ---
 
-# 23. SQL Capstone on the Supplied Product Data
+# 23. SQL Capstone on the Course Product Schema
 
-These examples are executable against the supplied Product/PC/Laptop/Printer schema. Expected outputs are derived from the archived CSV data after the header row in `Product.csv` is rejected, as recorded by its loader log.
+These examples are executable against the familiar `Product`/`PC`/`Laptop`/`Printer` teaching schema. Treat the displayed rows as a worked example: in a viva, derive the actual result from the instance the panel gives you.
 
 ## 23.1 Set operations
 
@@ -3910,75 +3897,22 @@ condition type -> cardinalities/pages -> memory -> indexes/order
 
 # 25. Exact Source-Coverage and Asset Audit
 
-## 25.1 Ashikur Sir PDF set
+## 25.1 Current merged-slide coverage
 
-Every extracted page of all 15 PDFs was reviewed for this chapter: **567/567 PDF pages**.
+The current academic folder contains two authoritative merged PDFs, and every extractable page was re-read:
 
-| Source | Pages | Material represented here |
+| Source | Pages | Chapters represented in this volume |
 |---|---:|---|
-| `CSE_303_Lec_0_GettingStarted.pdf` | 8 | SQL*Plus login/scripts, password and starter workflow |
-| `CSE_303_Lec_1_Introduction.pdf` | 56 | DBMS motivation, file-system problems, architecture, users/models |
-| `CSE_303_Lec_2_SQLIntro.pdf` | 42 | relational model, SQL history/types/schema/keys |
-| `CSE_303_Lec_3_SingleTableQuery.pdf` | 45 | SELECT, expressions, aliases, predicates, NULL, ordering |
-| `CSE_303_Lec_4_MultipleTableQuery (1).pdf` | 36 | product/company joins, Cartesian product, qualification, set operations |
-| `CSE_303_Lec_5_AggregationGrouping.pdf` | 37 | functions, aggregates, GROUP BY, HAVING, examples |
-| `CSE_303_Lec_6_SubQuery.pdf` | 22 | scalar/table/correlated subqueries, ALL/ANY, FROM subquery |
-| `CSE_303_Lec_7_InnerOuterJoins.pdf` | 19 | cross/natural/inner/left/right/full joins |
-| `CSE_303_Lec_8_DML.pdf` | 15 | INSERT, CTAS/bulk insert, UPDATE, DELETE |
-| `CSE_303_Lec_9_Constraints.pdf` | 52 | FK/check/tuple constraint/assertion/trigger concepts |
-| `CSE_303_Lec_10_DesignTheory.pdf` | 78 | FDs, closure, BCNF, decomposition examples |
-| `CSE_303_Lec_11_Relational_Algebra.pdf` | 52 | algebra operators, translation, optimization, triggers |
-| `CSE_303_Lec_12_ERDiagram.pdf` | 103 | ER/EER concepts, constraints, mapping and design examples |
-| `Practice/MovieDatabase.pdf` | 1 | movie archive creation/loader commands |
-| `Practice/ProductDatabase.pdf` | 1 | product archive creation/loader commands |
-| **Total** | **567** | **all pages accounted for** |
+| `DBMS_Ashik_Sir_merged.pdf` | 559 | Chapters 1–11 and the logical portions of 20: architecture, SQL, relational algebra, ER/EER, dependencies, keys, normalization, constraints and views |
+| `DBMS_Toufiq_Sir_merged.pdf` | 337 | Chapters 12–19 and the physical/transaction portions of 20: storage, file organization, indexes, query execution/optimization, transactions, schedules and concurrency control |
+| **Total** | **896** | **all current DBMS slide pages routed** |
 
-The PDF text extractor flagged five pages as visually heavy across the logical decks; their surrounding examples/figures were checked against the originals/extracted render rather than inferred from missing text.
+Important figures—ER mappings, B+ tree operations, record layouts, join plans, precedence graphs, lock schedules and snapshot-isolation anomalies—are explained in words and worked traces so they can be reproduced on a whiteboard.
 
-## 25.2 Toufik Sir PPTX set
+## 25.2 Scope boundary
 
-Every slide's text and notes-equivalent content was audited: **326/326 slides**, with key record-layout, multilevel/B+ tree, schedule, and snapshot/write-skew diagrams visually cross-checked.
-
-| Source | Slides | Material represented here |
-|---|---:|---|
-| `Section B - ch12 - Storage.pptx` | 36 | hierarchy, HDD/flash, metrics, RAID, scheduling |
-| `Section B - ch13 - Data Storage Structures.pptx` | 29 | record/page/file layout, buffer manager, row/column storage |
-| `Section B - ch14 - Indexing - V1.pptx` | 86 | ordered/B+/hash/LSM/bitmap/spatial/temporal indexes |
-| `Section B - ch15 - Query Processing - V1.pptx` | 64 | selection/sort/join algorithms, exact cost model, pipelines |
-| `Section B - ch16 - Query Optimization -V3.pptx` | 42 | rewrites, statistics, cardinality, materialized views |
-| `Section B - ch17 - Transactions-V1.pptx` | 42 | ACID, schedules, serializability, recoverability, isolation |
-| `Section B - ch18 - Concurrency Control - V2.pptx` | 27 | locks, 2PL, deadlock, lock table, SI/SSI |
-| **Total** | **326** | **all slides accounted for** |
-
-Combined instructional coverage is **567 PDF pages + 326 presentation slides = 893 source units**. “Core supplement” labels identify recovery, deeper security/distribution, and the subtopics that a deck only named in an outline.
-
-## 25.3 Product archive—21 files audited
-
-| Asset group | Exact files | Audit result |
-|---|---|---|
-| Schema | `productPLP.sql` | four tables and four primary keys reproduced; no cross-table FKs/checks |
-| Loader controls | `loadPC.ctr`, `loadLaptop.ctr`, `loadPrinter.ctr`, `loadProduct.ctr` | all use comma fields and APPEND; no header skip |
-| Data | `PC.csv`, `Laptop.csv`, `Printer.csv`, `Product.csv` | 13, 10, 7, and 31 physical lines respectively; Product's first line is a header |
-| Loader logs | `pc.log`, `Laptop.log`, `printer.log`, `product.log` | 13/10/7/30 rows loaded; Product header rejected with ORA-01722 |
-| Bad file | `product.bad` | contains rejected `maker,model,type` header |
-| Instructions/tests | `readme.txt`, `testScript.txt` | loader command sequence and four counts + maker UNION captured |
-| Generated documentation artifacts | `ProductDatabase.pdf`, `.tex`, `.aux`, `.log`, `.synctex.gz` | PDF/TeX repeat the one-page setup instructions; build artifacts add no schema concepts |
-
-The readme/log names mention `movieLaptop.bad`; no such bad file is present because Laptop loaded all ten rows. This odd name is recorded rather than “corrected” as if it existed.
-
-## 25.4 Movie archive—27 files audited
-
-| Asset group | Exact files | Audit result |
-|---|---|---|
-| Schema | `movie_dbase.sql` | five tables reproduced; only Movie, MovieStar, StarsIn, Studio have declared PKs; no FKs |
-| Loader controls | `loadMovie.ctr`, `loadMovieExec.ctr`, `loadMovieStar.ctr`, `loadStarsIn.ctr`, `loadStudio.ctr` | comma-delimited, optionally quoted, INSERT default, no header skip |
-| Data | `movie.csv`, `movieExec.csv`, `moviestar.csv`, `starsIn.csv`, `studio.csv` | 669, 617, 406, 700, 226 physical lines; each begins with a header and ends with an all-empty record |
-| Bad files | `movie.bad`, `movieExec.bad`, `movieStar.bad`, `starsIn.bad`, `studio.bad` | each contains its rejected header row |
-| Loader logs | `movie.log`, `movieExec.log`, `movieStar.log`, `starsIn.log`, `studio.log` | loaded 667/615/404/698/224; one header rejected and one all-NULL row discarded per file |
-| Instructions | `readme.txt` | schema script followed by all five SQL*Loader commands |
-| Generated documentation artifacts | `MovieDatabase.pdf`, `.tex`, `.aux`, `.log`, `.synctex.gz` | one-page instructions plus TeX build artifacts; no additional relational design |
-
-## 25.5 Corrections and supplements ledger
+The old folder contained individual decks, product/movie archives and loader logs; those are no longer the selected academic sources. Their stale file-by-file audit has therefore been removed. Recovery, database security and distributed-database material remain clearly labeled **[CORE SUPPLEMENT]** because they are standard viva topics even where the two merged decks give them little or no depth.
+## 25.3 Corrections and supplements ledger
 
 - SQL's conceptual result model in the lectures is related to mathematical relations, but ordinary SQL query blocks use bag semantics unless duplicate elimination is requested.
 - `PRIMARY KEY` is not synonymous with “primary/clustering index.”
@@ -3986,11 +3920,11 @@ The readme/log names mention `movieLaptop.bad`; no such bad file is present beca
 - `NOT IN` with a NULL-producing subquery can become UNKNOWN; correlated `NOT EXISTS` is often safer for anti-join logic.
 - Natural join is valid algebra/SQL but fragile when schemas evolve; explicit join predicates are safer in production.
 - The design deck centers 1NF/BCNF; 2NF, 3NF synthesis, canonical cover, 4NF/5NF were added and labeled.
-- The concurrency deck's outline names timestamps, validation, granularity, and multiversion schemes, but its supplied 27 slides deeply cover locks/2PL and snapshot isolation; missing mechanisms were added as labeled supplements.
-- Recovery, advanced database security, and distributed DBMS have no local slide decks and are explicitly marked standard-core supplements.
-- Product/version claims and hardware rates in old slides are historical examples; the enduring mechanism is stated separately.
+- The concurrency material emphasizes locks/2PL and snapshot isolation; timestamps, validation, granularity and other multiversion mechanisms are retained as labeled supplements where the merged slides give less depth.
+- Recovery, advanced database security and distributed DBMS are explicitly marked standard-core supplements where the current merged slides do not cover them deeply.
+- Product/version claims and hardware rates in slides are historical examples; the enduring mechanism is stated separately.
 
-## 25.6 Final self-test
+## 25.4 Final self-test
 
 Before the viva, you should be able to do these without looking:
 

@@ -2,29 +2,20 @@
 
 # Software Engineering — Slide-Complete Viva Recall
 
-> **Source basis:** all nine Elin-sir slide decks were read, including the rendered legacy requirements deck; all four Sahil-sir PDFs and the CT question were read. The 13 lecture sources contain 447 slides/pages, and the CT contributes one additional page, for **448 inspected instructional/question pages**. Books are reference texts and are not falsely counted as lecture slides.
+> **Current source basis:** the selected academic folder now contains `CSE307AllMerged.pdf` (603 pages) plus *Dive Into Design Patterns* (410 pages). The Information System Design folder contributes `CSE325_AI_Merged.pdf` (214 pages), `CSE325_JYK_Merged.pdf` (303 pages), and the 3-page formula sheet. All **1530 current pages** were routed: the merged CSE 307 sequence anchors software process, requirements, patterns, testing and project management; CSE 325 adds modeling, architecture, version control, DevOps, metrics, estimation and process maturity. The pattern book is used as a reference for intent/structure, not as a demand to memorize all 410 pages.
 
 ---
 
-# 1. Exact source coverage
+# 1. Exact current-source coverage
 
-| Source | Slides/pages | Main content |
+| Current source | Pages | Main content routed here |
 |---|---:|---|
-| `SDLC.pptx` | 24 | seven lifecycle phases, implementation strategies, maintenance |
-| `Requirement Analysis.ppt` → rendered PDF | 25 | customer/developer requirements, use cases, categorization, elicitation, quality |
-| `UML.pptx` | 25 | class diagram, members, relationships, multiplicity, association class |
-| `Design Pattern Intro.pptx` | 12 | pattern definition, GoF groups, elements, modularity |
-| `Creational Design Patterns.pptx` | 40 | factory method/factory, abstract factory, singleton, builder |
-| `5_Structural Design Patterns.pptx` | 37 | adapter, decorator, composite |
-| `Behavioural Design Patterns.pptx` | 53 | state, strategy, observer, template method, command |
-| `7_Software testing.pptx` | 22 | V&V, black/white box, levels/types, test plan |
-| `8_Testing-inputs.pptx` | 14 | equivalence partition, boundary values, positive/negative/session tests |
-| `Week8.pdf` | 35 | professional ethics, risks, people/participants/leadership |
-| `Week9-10.pdf` | 86 | framework activity, process models, agile/XP/Scrum |
-| `Week11-12.pdf` | 48 | scheduling, PERT/CPM, earned-value management |
-| `Week13.pdf` | 26 | code smells, review, documentation |
-| `CT2.pdf` | 1 | pattern-selection scenarios |
-| **Total** | **448** | complete provided lecture/question sequence |
+| `CSE307AllMerged.pdf` | 603 | SDLC/process/agile; requirements; UML class modeling; design principles/patterns; testing; scheduling/EVM; risk, people, ethics, reviews, documentation and maintenance |
+| `Alexander Shvets - Dive Into Design Patterns (2019).pdf` | 410 | pattern vocabulary, intent, structure, applicability, trade-offs and implementations |
+| `CSE325_AI_Merged.pdf` | 214 | information-system analysis, feasibility, use cases, BPMN, architecture, MVC/layers/microservices, sequence/collaboration/deployment modeling |
+| `CSE325_JYK_Merged.pdf` | 303 | VCS/Git, DevOps/CI/CD/containers, project planning, software metrics, function points, estimation/COCOMO, layered architecture, maintenance and CMMI |
+| `Formula_JYK Sir.pdf` | 3 | final formulas for function points, metrics and estimation |
+| **Total** | **1530** | **all current SWE + ISD source pages routed** |
 
 ---
 
@@ -991,7 +982,305 @@ Quality assurance is process-oriented prevention/improvement; quality control ev
 
 ---
 
-# 25. Final slide-and-viva self-test
+# 25. Information-System Analysis and Feasibility
+
+An information system combines people, process, data, software, hardware and communication to support operations or decisions. Before choosing technology, establish:
+
+1. the business problem and stakeholders;
+2. the current process and pain points;
+3. system boundary, inputs, outputs, data and interfaces;
+4. functional and quality requirements;
+5. alternatives, constraints, risks and measurable success criteria.
+
+Feasibility is often recalled as **TELOS**:
+
+| Dimension | Main question |
+|---|---|
+| Technical | Can available technology, skills, integration and performance satisfy it? |
+| Economic | Do expected benefits justify acquisition, development, operation and change costs? |
+| Legal | Does it comply with law, contract, licensing, privacy and regulation? |
+| Operational | Will people/processes adopt and operate it effectively? |
+| Schedule | Can a useful, safe scope be delivered by the required time? |
+
+Feasible does not mean guaranteed. State assumptions, uncertainty and the evidence used.
+
+# 26. BPMN and Behavioral UML
+
+## 26.1 BPMN essentials
+
+Business Process Model and Notation represents a process as a graph of:
+
+- **events** (circles): something starts, happens or ends;
+- **activities/tasks** (rounded rectangles): work performed;
+- **gateways** (diamonds): split/merge control;
+- **sequence flows**: order inside one process/pool;
+- **message flows**: communication between separate participants/pools;
+- **pools and lanes**: participants and responsibility partitions;
+- **data objects/stores and annotations**: information and explanation.
+
+Gateway semantics matter:
+
+| Gateway | Split meaning | Join meaning |
+|---|---|---|
+| Exclusive/XOR | exactly one satisfied branch | pass when one incoming branch arrives |
+| Parallel/AND | activate every branch | wait for every active incoming branch |
+| Inclusive/OR | activate one or more satisfied branches | synchronize the branches that were activated |
+| Event-based | next external event selects branch | selection is by event, not data condition |
+
+Example order-fulfilment recall:
+
+```mermaid
+flowchart LR
+    S((Start)) --> V[Validate order]
+    V --> G{In stock?}
+    G -- No --> R[Notify rejection]
+    R --> E((End))
+    G -- Yes --> P[Reserve item]
+    P --> F{{Parallel split}}
+    F --> C[Charge payment]
+    F --> K[Pack item]
+    C --> J{{Synchronize}}
+    K --> J
+    J --> H[Ship and notify]
+    H --> E2((End))
+```
+
+Do not use a sequence flow across pools; use a message flow. Do not draw an XOR join when later work must wait for all parallel branches.
+
+## 26.2 Use case, sequence, and communication diagrams
+
+A **use case** shows externally visible goals and actor–system interactions, not internal class calls. `include` factors mandatory reused behavior; `extend` adds conditional/optional behavior at extension points; actor/use-case generalization expresses specialization.
+
+A **sequence diagram** emphasizes time from top to bottom. It contains actors/objects, lifelines, activation bars, synchronous/asynchronous messages, returns, creation/destruction and combined fragments such as `alt`, `opt`, `loop` and `par`.
+
+```mermaid
+sequenceDiagram
+    actor User
+    participant UI
+    participant Service
+    participant DB
+    User->>UI: submit(credentials)
+    UI->>Service: authenticate(credentials)
+    Service->>DB: findUser(id)
+    DB-->>Service: passwordHash, status
+    alt valid
+        Service-->>UI: session/token
+        UI-->>User: dashboard
+    else invalid
+        Service-->>UI: error
+        UI-->>User: rejection
+    end
+```
+
+A **communication/collaboration diagram** can express the same interaction but emphasizes object links/topology; numbered messages express order. Use a sequence diagram when timing/order is central and a communication diagram when object collaboration structure is central.
+
+State-machine diagrams model state-dependent lifecycle behavior; activity diagrams model workflows/control/data flow; component diagrams show software components and provided/required interfaces; deployment diagrams map artifacts/components to execution nodes.
+
+# 27. Architecture Recall
+
+Architecture identifies major elements, responsibilities, interfaces, dependencies and decisions that determine quality attributes. A good architecture is not a box drawing alone; connect a choice to a scenario such as “under 1000 requests/s, 95% finish within 200 ms” or “one service failure must not corrupt an order.”
+
+## 27.1 Layered architecture
+
+```mermaid
+flowchart TB
+    P[Presentation / API] --> A[Application / Use Cases]
+    A --> D[Domain / Business Rules]
+    A --> I[Infrastructure adapters]
+    I --> DB[(Database)]
+    I --> X[External services]
+```
+
+- Benefits: separation of concerns, replaceable boundaries, testability, familiar organization.
+- Costs: pass-through boilerplate, hidden cross-layer coupling, extra latency, temptation to bypass layers.
+- A **closed** layer may call only the next layer; an **open** layer may be bypassed under stated rules.
+- Keep dependency direction deliberate; business rules should not become inseparable from frameworks/storage.
+
+## 27.2 MVC
+
+**Model** represents domain state/logic, **View** presents it, and **Controller** interprets input and coordinates actions. MVC separates presentation concerns, but web frameworks use the names differently; describe actual responsibilities rather than memorizing arrows.
+
+## 27.3 Monolith versus microservices
+
+| Concern | Modular monolith | Microservices |
+|---|---|---|
+| deployment | one deployable unit | independently deployable services |
+| calls | mostly in-process | network calls and partial failure |
+| data/transactions | easier local ACID | service-owned data; distributed consistency |
+| operations | simpler initial operation | discovery, observability, security, automation needed |
+| scaling | scale the application | scale selected services |
+| organizational fit | small/medium team, uncertain boundaries | mature teams and stable bounded contexts |
+
+Microservices are not “small classes over HTTP.” A service should own a cohesive business capability and data boundary. Benefits—independent deployment/scale/team autonomy—are bought with latency, retries, versioning, eventual consistency, duplicate messages, monitoring and deployment complexity. Start from need, not fashion.
+
+# 28. Version Control, DevOps, CI/CD, and Containers
+
+## 28.1 Version control and Git mental model
+
+A VCS records versions, authorship and branches so teams can compare, merge, restore and audit work. A centralized VCS relies on a central repository for most history operations; a distributed VCS gives each clone the repository history and supports local commits.
+
+Git's core path is:
+
+```text
+working tree -> git add -> staging/index -> git commit -> local repository
+local repository <-> git fetch/push <-> remote repository
+```
+
+```bash
+git status
+git switch -c feature/login
+git add src tests
+git commit -m "Add login validation"
+git fetch origin
+git rebase origin/main        # or merge, according to team policy
+git push -u origin feature/login
+```
+
+`fetch` downloads refs/objects without integrating; `pull` fetches then merges/rebases. `revert` creates a new inverse commit and is appropriate for shared history; resetting/rewriting published history requires coordination. A merge preserves both lines with a merge commit when necessary; rebase replays commits onto a new base and rewrites their identities.
+
+## 28.2 DevOps
+
+DevOps is a culture and set of engineering practices joining development and operations around fast, reliable feedback and shared responsibility. The **CALMS** mnemonic is Culture, Automation, Lean, Measurement, Sharing.
+
+```mermaid
+flowchart LR
+    C[Commit] --> B[Build]
+    B --> U[Unit/static/security checks]
+    U --> I[Integration tests]
+    I --> A[Immutable artifact]
+    A --> ST[Stage and acceptance]
+    ST --> D[Controlled deployment]
+    D --> O[Observe SLOs/logs/traces]
+    O --> C
+```
+
+- **CI:** integrate small changes frequently; automated checks quickly expose incompatibility.
+- **Continuous delivery:** each accepted artifact is deployable; production release may require a decision.
+- **Continuous deployment:** every accepted change automatically reaches production.
+
+Track outcomes such as deployment frequency, lead time for changes, change-failure rate and recovery time; do not reward raw commit count.
+
+## 28.3 Deployment strategies
+
+- **Blue–green:** keep old and new environments; switch traffic. Fast rollback, but doubles environment capacity and database compatibility is hard.
+- **Canary:** send a small representative fraction to the new version, compare health, then expand. Limits blast radius but needs observability and safe cohorting.
+- **Rolling/ramped:** replace instances gradually. Capacity-efficient, but mixed versions coexist.
+- **A/B:** route cohorts to variants to test product behavior; it is an experiment goal, not merely a safer rollout.
+
+Use backward/forward-compatible schema changes: expand schema, deploy compatible code, migrate/backfill, then contract later.
+
+## 28.4 Containers versus virtual machines
+
+A VM virtualizes hardware and normally runs its own guest kernel. A container isolates processes/filesystem/network while sharing the host kernel. Containers are usually lighter/faster to start, but are not “kernel-independent miniature VMs.”
+
+```dockerfile
+FROM python:3.12-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
+USER 10001
+CMD ["python", "app.py"]
+```
+
+Build an immutable image, externalize configuration/secrets, run least-privileged, scan dependencies, set resource limits and preserve state in managed volumes/services. An orchestrator such as Kubernetes schedules containers and supports health checks, service discovery, scaling and rollout; it does not automatically make a poorly designed application reliable.
+
+# 29. Size, Metrics, and Estimation
+
+## 29.1 Goal–Question–Metric
+
+Choose a **goal**, formulate questions whose answers reveal progress, then select metrics that answer them. A metric should be computable, consistently defined, empirically defensible, decision-relevant, hard to game and accompanied by context/uncertainty.
+
+## 29.2 Function points
+
+Count five externally visible function types:
+
+| Function type | Low | Average | High |
+|---|---:|---:|---:|
+| External Input (EI) | 3 | 4 | 6 |
+| External Output (EO) | 4 | 5 | 7 |
+| External Inquiry (EQ) | 3 | 4 | 6 |
+| Internal Logical File (ILF) | 7 | 10 | 15 |
+| External Interface File (EIF) | 5 | 7 | 10 |
+
+Multiply counts by weights and sum to get unadjusted function points `UFP`. In the slide-era adjustment model:
+
+$$FP=UFP\left(0.65+0.01\sum_{i=1}^{14}F_i\right),\qquad 0\le F_i\le5.$$
+
+Function points aim to measure delivered functionality more independently of programming language than LOC, but classification judgment and local productivity calibration still matter.
+
+## 29.3 COCOMO II
+
+For early application composition:
+
+$$PM=\frac{\text{new object points}}{\text{productivity in object points/PM}}.$$
+
+For early-design/post-architecture estimation, the central form is
+
+$$PM=A(\text{Size})^{E}\prod_i EM_i,$$
+
+where Size is normally measured in KSLOC (or converted equivalent), $E$ combines scale factors and each $EM_i$ is an effort multiplier. If $E>1$, effort grows superlinearly. The model is calibrated empirical estimation—not a law; show the assumed size, mode/model, multipliers and uncertainty.
+
+Triangulate at least two methods: analogous projects, decomposition/WBS, expert judgment/Wideband Delphi, LOC/function/use-case/object points, three-point estimates, and an empirical model. Reconcile differences rather than averaging blindly.
+
+For PERT task duration,
+
+$$t_e=\frac{o+4m+p}{6},\qquad
+\sigma^2=\left(\frac{p-o}{6}\right)^2.$$
+
+## 29.4 Code and quality metrics
+
+For a connected control-flow graph:
+
+$$M=E-N+2=\text{number of decision outcomes that add independence}+1.$$
+
+More generally, with $P$ connected components:
+
+$$M=E-N+2P.$$
+
+Cyclomatic complexity is the number of linearly independent paths and gives a lower-bound intuition for basis-path tests; it does not alone measure maintainability.
+
+Halstead measures:
+
+$$n=n_1+n_2,\quad N=N_1+N_2,\quad
+V=N\log_2n,\quad
+D=\frac{n_1}{2}\frac{N_2}{n_2},\quad
+E_{\text{Halstead}}=DV,$$
+
+where $n_1,n_2$ are distinct operators/operands and $N_1,N_2$ their total occurrences.
+
+CK OO recall:
+
+- **WMC:** sum of method complexities;
+- **DIT:** maximum inheritance depth;
+- **NOC:** immediate child count;
+- **CBO:** coupling between object classes;
+- **RFC:** methods potentially executed in response to a message;
+- **LCOM:** lack of cohesion among methods (definitions vary—state the chosen variant).
+
+Defect Removal Efficiency must be written in the correct direction:
+
+$$DRE=\frac{E}{E+D},$$
+
+where $E$ is defects found before delivery and $D$ defects found after delivery. A value near 1 is better. Do not repeat a fraction with numerator and denominator reversed because of slide-layout extraction.
+
+# 30. CMMI Process Maturity
+
+CMMI is a process-improvement framework. In the staged representation:
+
+| Level | Name | Meaning |
+|---:|---|---|
+| 1 | Initial | work is reactive/ad hoc; success depends heavily on individuals |
+| 2 | Managed | projects plan, monitor and control requirements, configuration, quality and suppliers |
+| 3 | Defined | organization-wide standard processes are documented, tailored and trained |
+| 4 | Quantitatively Managed | statistical/quantitative objectives control process performance |
+| 5 | Optimizing | causal analysis and innovation drive continuous improvement |
+
+The difference between levels 2 and 3 is a frequent viva trap: level 2 institutionalizes management **per project**; level 3 uses an organizational standard process tailored by projects. A maturity level indicates process capability, not that every product is defect-free.
+
+---
+
+# 31. Final slide-and-viva self-test
 
 - [ ] Explain the full SDLC and choose a conversion strategy for one system.
 - [ ] Compare waterfall, incremental, prototyping, spiral, V-model, XP, and Scrum by assumptions/tradeoffs.
@@ -1011,5 +1300,10 @@ Quality assurance is process-oriented prevention/improvement; quality control ev
 - [ ] Explain Brooks’s warning, team communication, leadership, and ethics.
 - [ ] Identify smells, plan behavior-preserving refactoring, and conduct review.
 - [ ] Defend documentation, maintenance, SCM, CI/CD, deployment, and metrics.
-- [ ] Account for all 448 pages using the source matrix.
-
+- [ ] Draw BPMN gateways and a UML sequence/communication diagram with correct semantics.
+- [ ] Compare layered/MVC/modular-monolith/microservice choices by quality attributes.
+- [ ] Explain Git working tree/index/commit/remote and merge versus rebase.
+- [ ] Draw a CI/CD pipeline; compare blue–green, canary and rolling deployment.
+- [ ] Calculate function points, COCOMO effort, cyclomatic complexity and DRE.
+- [ ] Recite CMMI levels 1–5 and distinguish project-managed from organization-defined.
+- [ ] Account for all 1530 current pages using the source matrix.
