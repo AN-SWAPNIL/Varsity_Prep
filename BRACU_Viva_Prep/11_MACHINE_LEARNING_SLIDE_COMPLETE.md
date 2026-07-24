@@ -262,6 +262,21 @@ Bias is signed; the error contribution is squared bias. Variance is not “how n
 - **Underfitting:** the fitted model fails to capture useful structure, commonly producing high training and validation error. Excessive statistical bias, insufficient features/capacity, too much regularization, or failed optimization can all produce this behavior.
 - **Overfitting:** the model fits training idiosyncrasies/noise so training performance is much better than unseen performance. High sampling variance is a common cause, but leakage, split shift, and validation over-tuning can create a similar observed gap.
 
+The classical picture is a memory aid, not the definition:
+
+```text
+expected
+test error
+    ^
+    |  bias² falls  \          /  variance rises
+    |                \__total_/
+    |---------------- noise floor ----------------
+    +------------------------------------------------> model complexity
+          underfit       useful trade-off       overfit
+```
+
+Bias and variance in the equation require repeated training sets; the plotted train/validation behavior is only a practical diagnostic. The curves are schematic, not a law of every modern model—optimization effects and double descent can change their shape.
+
 Thus a train/validation plot is evidence, not a mathematical measurement of the decomposition. Bias and variance ideally concern repetition over many possible training sets, which we rarely observe directly.
 
 ### Diagnostic patterns and remedies
@@ -296,9 +311,15 @@ Suppose we predict house price from floor area alone. A straight line misses loc
 
 ## 8. Regularization
 
-`L1: Ω(w)=||w||₁=Σ|w_j|` encourages exact zeros/sparsity but is nondifferentiable at zero; a subgradient or proximal method handles it.
+**Lasso** regression uses an L1 penalty: `Ω(w)=||w||₁=Σ|w_j|`. It encourages exact zeros/sparsity but is nondifferentiable at zero; a subgradient, coordinate-descent, or proximal method handles it. With strongly correlated features, it may select one and suppress another unstably.
 
-`L2: Ω(w)=||w||₂²=Σw_j²` smoothly shrinks weights. For objective `L+λ||w||²`, gradient adds `2λw` (or `λw` if the penalty is `λ||w||²/2`). Correlated features may be distributed across L2 weights, while L1 may select one unstably.
+**Ridge** regression uses an L2 penalty: `Ω(w)=||w||₂²=Σw_j²`. It smoothly shrinks weights but ordinarily does not make them exactly zero. For objective `L+λ||w||²`, the gradient adds `2λw` (or `λw` if the penalty is `λ||w||²/2`). Correlated features can share distributed L2 weights.
+
+**Elastic Net** combines them, for example
+
+`L(w)+λ[α||w||₁+(1-α)||w||₂²/2]`, with `0≤α≤1`.
+
+At `α=1` this parameterization is Lasso; at `α=0` it is Ridge. Intermediate values retain sparsity while often stabilizing groups of correlated features. Libraries use differing `λ/α` conventions, so state the implemented objective. In linear regression, the intercept is commonly left unpenalized after centering/scaling.
 
 Other regularizers include limited tree depth/pruning, dropout, early stopping, data augmentation, label smoothing, architectural constraints/weight sharing, and ensembling. `λ` is selected using validation, never the test set.
 
@@ -559,6 +580,19 @@ for _ in range(M):
 
 Small learning rate usually needs more trees. Depth controls interactions. Early stopping and subsampling regularize. Unlike bagging, boosting is sequential and primarily reduces residual bias, though it can overfit/noise-chase.
 
+### Where XGBoost fits
+
+**XGBoost** means *eXtreme Gradient Boosting*: a highly optimized, regularized gradient-boosted decision-tree system, not a separate family unrelated to gradient boosting. Its common formulation uses first- and second-order loss derivatives to score tree splits and leaf values, adds penalties on tree complexity/leaf weights, and supports shrinkage plus row/column subsampling, missing-value routing, and efficient parallelized split search. Trees are still added sequentially because each stage depends on current predictions.
+
+Quick contrast:
+
+| Method | Main distinction |
+|---|---|
+| Random forest | bootstrap/feature-randomized trees trained largely independently; average/vote; strong variance reduction |
+| AdaBoost | reweights examples according to mistakes and combines weighted weak learners |
+| Gradient boosting | fits new learners to the loss’s negative gradient/pseudo-residual |
+| XGBoost | engineered, regularized second-order GBDT implementation/system |
+
 ## 19. Stacking
 
 Train diverse base learners, then train a meta-learner on their predictions. To avoid leakage, the meta-learner must see **out-of-fold** base predictions for training examples. At inference, fit base models on all training data, obtain their predictions, and feed them to the meta-model. Simple voting/averaging has no learned meta-model.
@@ -781,6 +815,22 @@ Online learning updates as data arrive instead of repeatedly fitting a fixed bat
 ## 26. Why CNN instead of flattening an image?
 
 An image is a tensor, usually `(batch,channels,height,width)` in PyTorch. Flattening `224×224×3` gives 150,528 numbers and destroys explicit neighborhood layout. A dense layer then needs separate weights for the same edge at every position.
+
+```text
+image H×W×C
+     |
+ [convolution -> activation]  local features, shared kernels
+     |
+ [pool or strided convolution] spatial size down, channels often up
+     |
+ [deeper convolution blocks]  edges -> textures -> parts -> objects
+     |
+ global average pool / flatten
+     |
+ classifier or task head
+```
+
+The exact architecture may omit pooling, keep higher-resolution branches, or produce dense per-pixel outputs. The diagram expresses the common feature-hierarchy flow, not a mandatory recipe.
 
 CNN inductive biases:
 
@@ -1465,6 +1515,22 @@ Cross-entropy for a target token is `-log p(target|prefix)`. Perplexity is `exp(
 ## 52. Transformer overview
 
 Input token IDs index an embedding table. Add/encode position. A stack of Transformer blocks repeatedly applies attention and position-wise feedforward networks with residual connections and normalization. A language-model head maps final hidden states to vocabulary logits; weights may be tied to the input embedding table.
+
+```text
+token IDs
+   |
+token embeddings + positional information
+   |
+   +---- Transformer block repeated L times --------------------+
+   |  x -> LN -> masked/self-attention -> add residual          |
+   |      -> LN -> position-wise FFN/SwiGLU -> add residual     |
+   +------------------------------------------------------------+
+   |
+final normalization -> task/LM head -> logits
+
+Attention mixes information across permitted token positions.
+The FFN transforms each position independently with shared weights.
+```
 
 The slide analogy: CNNs chop a signal into patches and process patches with shared operations. Transformers also process tokens identically/in parallel, but each token can depend on all other permitted tokens through attention.
 
@@ -2379,12 +2445,12 @@ Explicit Fahim visual-review targets included pages `2,22,38,40–42,45,48,50–
 |---:|---|---|
 | 1–18 | Handwritten linear classification/regression | univariate OLS derivation, perceptron/logistic setup and gradients |
 | 19–43 | ML introduction and basic supervised learning | T/E/P, learning types, splits, hypothesis space, decision-tree entropy/gain, learning curves, metrics, preprocessing |
-| 44–97 | Linear models, ensembles, exams | multivariate GD/normal equation, bagging/RF/stacking/AdaBoost, L1/L2, perceptron/logistic, worked metric/model questions |
+| 44–97 | Linear models, ensembles, exams | multivariate GD/normal equation, bagging/RF/stacking/AdaBoost, Ridge/Lasso/Elastic-Net terminology for L2/L1/mixed regularization, perceptron/logistic, worked metric/model questions |
 | 98–148 | AIMA learning chapter and ML systems | supervised/hypothesis spaces, bias vs variance vs fitting, trees/pruning, validation/loss/regularization/tuning, linear classifiers, ensembles/online learning, data/feature/EDA/trust/deployment |
 | 149–206 | Neural-network lecture | FNN/MLP/CNN/RNN, activations, computation graph/backprop, softmax/CE, BN/LN/dropout, vanishing gradients, Xavier derivation/exercises |
 | 207–220 | AIMA deep-learning chapter | deep vs shallow/feedforward/recurrent, universal approximation caveats, auto-diff, encodings/output/loss, hidden representations/CNN/pooling/tensors |
 | 221–252 | Optimization lecture/article | batch/SGD/minibatch, momentum/NAG, AdaGrad/AdaDelta/RMSProp/Adam/AdaMax/Nadam, Hogwild/Downpour/delay/distributed systems/EASGD, shuffle/curriculum/BN/early stop/noise |
-| 253–309 | Trees and gradient boosting | classification/regression trees, continuous splits/pruning, gradient-boosted regression and logistic classification with residual/Newton leaf calculations |
+| 253–309 | Trees and gradient boosting | classification/regression trees, continuous splits/pruning, gradient-boosted regression and logistic classification with residual/Newton leaf calculations, XGBoost’s place in the GBDT family |
 | 310–359 | Probability and Bayesian learning | probability/Bayes, Bayesian networks/Markov blanket, ML/MAP/Bayesian prediction, Naive Bayes, generative vs discriminative, Beta conjugacy, GMM/EM |
 | 360–384 | Clustering | k-means objective/Lloyd proof/init/k-means++, limitations, soft k-means, coin/GMM-style EM intuition |
 | 385–417 | MDP and RL | returns, Bellman/value/policy iteration, passive utility/ADP/TD, active exploration, Q-learning |
@@ -2401,6 +2467,8 @@ Visual inspection was performed across the MDSR handwritten/image-heavy ranges `
 - [x] Bias and variance defined as statistical quantities, with expectation domains and squared-error derivation.
 - [x] Bias/variance explicitly distinguished from underfitting/overfitting.
 - [x] Worked numeric bias–variance example and learning-pattern remedies included.
+- [x] Bias–variance, CNN, and Transformer recall diagrams included without replacing their equations or caveats.
+- [x] Ridge/Lasso/Elastic Net and XGBoost terminology connected to the source-covered L1/L2 and gradient-boosting material.
 - [x] Slide equations, handwritten calculations, algorithms, assumptions, complexity, and traps retained.
 - [x] Executable/minimal code included for core linear, tree, ensemble, NN, convolution, clustering, RL, tokenization, VAE/GAN, and diffusion procedures.
 - [x] CNN, Transformer/tokenization, multimodality, post-training, RLVR, and diffusion slide sets covered.

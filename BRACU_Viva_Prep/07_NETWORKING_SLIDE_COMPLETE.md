@@ -214,7 +214,9 @@ x(t)=\int_{-\infty}^{\infty}X(f)e^{j2\pi ft}\,df.$$
 For a periodic signal with fundamental angular frequency $\omega_0=2\pi/T_0$,
 
 $$x(t)=\sum_{k=-\infty}^{\infty}C_ke^{jk\omega_0t},\qquad
-C_k=\frac1{T_0}\int_{T_0}x(t)e^{-jk\omega_0t}\,dt.$$
+C_k=\frac1{T_0}\int_{t_0}^{t_0+T_0}x(t)e^{-jk\omega_0t}\,dt.$$
+
+The coefficient integral is taken over **any one complete period**; choosing $t_0=0$ gives the equivalent limits $0$ to $T_0$.
 
 The spectrum tells which frequencies are present; **bandwidth** is the occupied/passed frequency range under the definition being used. A sharp rectangular pulse needs many harmonics, so a bandwidth-limited channel rounds its edges.
 
@@ -795,6 +797,17 @@ On receiving a frame at port $p$:
 4. if destination is unknown, broadcast, or multicast requiring flooding, send on all relevant ports except the incoming one.
 
 Loops are dangerous because Ethernet has no general hop count: flooded frames can circulate and multiply. Spanning Tree Protocol elects a root bridge and disables selected redundant links to form a loop-free spanning tree while retaining physical backup paths.
+
+Board-ready example:
+
+```mermaid
+flowchart LR
+    A["Switch A<br/>lowest bridge ID<br/>ROOT"] --- B["Switch B<br/>root port toward A"]
+    A --- C["Switch C<br/>root port toward A"]
+    B -.-|"alternate link<br/>one end blocking/discarding"| C
+```
+
+Election logic: choose the lowest bridge ID as root; every non-root switch chooses its lowest-cost path as its **root port**; each LAN segment chooses one **designated port**; remaining redundant ports block/discard. If the active path fails, STP reconverges and may activate a former alternate path. The blocked link is still a physical backup—it is removed only from the active forwarding tree.
 
 ## VLAN and IEEE 802.1Q
 

@@ -2,7 +2,7 @@
 
 # Software Engineering — Slide-Complete Viva Recall
 
-> **Current source basis:** the selected academic folder now contains `CSE307AllMerged.pdf` (603 pages) plus *Dive Into Design Patterns* (410 pages). The Information System Design folder contributes `CSE325_AI_Merged.pdf` (214 pages), `CSE325_JYK_Merged.pdf` (303 pages), and the 3-page formula sheet. All **1530 current pages** were routed: the merged CSE 307 sequence anchors software process, requirements, patterns, testing and project management; CSE 325 adds modeling, architecture, version control, DevOps, metrics, estimation and process maturity. The pattern book is used as a reference for intent/structure, not as a demand to memorize all 410 pages.
+> **Current source basis:** the selected academic folder now contains `CSE307AllMerged.pdf` (603 pages) plus *Dive Into Design Patterns* (410 pages). The Information System Design folder contributes `CSE325_AI_Merged.pdf` (214 pages), `CSE325_JYK_Merged.pdf` (303 pages), and the 3-page formula sheet: **1533 current pages in total**. The merged CSE 307 and CSE 325 decks are mapped to their taught concepts and calculations below. The 410-page pattern book is a reference source: all 22 included GoF patterns receive at least a recall card, while the patterns emphasized in the course deck receive the fuller code/scenario treatment.
 
 ---
 
@@ -15,7 +15,9 @@
 | `CSE325_AI_Merged.pdf` | 214 | information-system analysis, feasibility, use cases, BPMN, architecture, MVC/layers/microservices, sequence/collaboration/deployment modeling |
 | `CSE325_JYK_Merged.pdf` | 303 | VCS/Git, DevOps/CI/CD/containers, project planning, software metrics, function points, estimation/COCOMO, layered architecture, maintenance and CMMI |
 | `Formula_JYK Sir.pdf` | 3 | final formulas for function points, metrics and estimation |
-| **Total** | **1530** | **all current SWE + ISD source pages routed** |
+| **Total** | **1533** | **all current files inventoried; course decks mapped in detail and the pattern book mapped by pattern** |
+
+The page total is an inventory, not a claim that every repeated title, illustration, bibliography page, or book paragraph is reproduced. Coverage means that each taught course unit is represented and each reference-book pattern is routed to a named recall card; it does not mean the notes replace the original sources page for page.
 
 ---
 
@@ -121,18 +123,22 @@ Pairs development artifacts with corresponding test levels: requirements ↔ acc
 
 Agile values individuals/interactions, working software, customer collaboration, and responding to change, while still valuing the items on the other side. It uses short feedback loops and adaptive plans. The correct amount of documentation is the amount needed for value, safety, compliance, onboarding, maintenance, and coordination.
 
-Core principles in recall form:
+The slide sequence gives all twelve principles. Recall them by purpose rather than as disconnected slogans:
 
-- deliver valuable software early/frequently;
-- welcome useful change;
-- business and developers collaborate;
-- support motivated people;
-- prefer effective communication;
-- working software is primary progress evidence;
-- sustain pace;
-- maintain technical excellence/simplicity;
-- empower self-organizing teams;
-- inspect and adapt.
+1. satisfy the customer through early and continuous delivery of valuable software;
+2. welcome changing requirements, even late, when change gives the customer an advantage;
+3. deliver working software frequently, preferring shorter feedback intervals;
+4. business/client representatives and developers collaborate regularly throughout the project;
+5. build around motivated people, give them support and environment, and trust them;
+6. prefer the richest effective direct communication—the original principle names face-to-face conversation;
+7. use working software as the primary progress measure;
+8. maintain a sustainable pace rather than repeated burnout;
+9. continuously attend to technical excellence and good design;
+10. practice simplicity: maximize work deliberately not done;
+11. let strong architecture, requirements, and design emerge from self-organizing teams;
+12. reflect regularly, then tune behavior and process.
+
+These principles do not ban plans, documentation, architecture, or remote tools. They subordinate them to feedback, working outcomes, sustainable delivery, and the needs of the system and organization.
 
 ## 4.2 Extreme Programming (XP)
 
@@ -178,6 +184,42 @@ Then one active loan is created and inventory becomes unavailable.
 ```
 
 INVEST heuristic: independent, negotiable, valuable, estimable, small, testable.
+
+## 4.5 Kanban
+
+**Kanban** literally evokes a visible signboard; in software work it is a continuous-flow method that makes work and bottlenecks visible. A card represents a task/subtask and its relevant requirement or user story. Cards are **pulled** to the next state when downstream capacity exists rather than pushed into an already overloaded stage.
+
+```text
+Backlog -> Ready [WIP <= 3] -> Build [WIP <= 2]
+        -> Review/Test [WIP <= 2] -> Done
+```
+
+Core practices:
+
+1. visualize the workflow and current cards;
+2. limit work in progress (WIP);
+3. manage flow and blocked work;
+4. make entry/exit policies explicit;
+5. use feedback loops such as stand-ups and retrospectives;
+6. improve collaboratively and experimentally.
+
+A WIP limit exposes congestion: when Review is full, developers should help unblock/review/test rather than start unlimited new work. Important flow measures are:
+
+- **lead time:** request/commitment to delivery;
+- **cycle time:** active start to completion;
+- **throughput:** items completed per unit time;
+- **WIP:** items started but not completed.
+
+Under a stable system with consistent units, Little's Law gives $L=\lambda W$: average WIP equals average throughput times average flow time. It is a relationship for observing a stable flow, not permission to manipulate estimates mechanically.
+
+| Scrum | Kanban |
+|---|---|
+| timeboxed sprints and a sprint goal | continuous flow; no required sprint boundary |
+| defined accountabilities/events | roles/events may be retained or adapted |
+| sprint backlog is normally stabilized for the sprint | priorities/cards can change as capacity frees |
+| controls commitment through sprint planning | controls overload primarily through pull and WIP limits |
+
+Both can use visual boards, daily coordination, retrospectives, user stories, and incremental delivery. Kanban's strengths are transparency, flexibility, and bottleneck control; without explicit policies, WIP limits, service expectations, and active flow management, a board can degrade into a passive to-do list with unpredictable completion.
 
 ---
 
@@ -420,6 +462,25 @@ Request r = new Request.Builder("/incidents")
 
 Useful for many optional parameters, validation, immutability, and multiple representations. Cost: extra types/boilerplate.
 
+## 8.6 Prototype
+
+Prototype creates a new object by copying an existing, already configured object rather than invoking a concrete constructor from client code.
+
+```java
+interface Prototype<T> { T copy(); }
+
+final class ReportTemplate implements Prototype<ReportTemplate> {
+    private final String title;
+    private final List<String> sections;
+
+    public ReportTemplate copy() {
+        return new ReportTemplate(title, new ArrayList<>(sections));
+    }
+}
+```
+
+Use it when construction is expensive, runtime configuration determines concrete variants, or a registry of templates is natural. The hard part is copy semantics: a **shallow copy** shares referenced children; a **deep copy** duplicates the required mutable object graph and must handle cycles, identity, resources, and ownership. Immutable shared parts need not be duplicated. Copy constructors/factory methods are often clearer when there are only a few known types.
+
 ---
 
 # 9. Structural patterns from the slides
@@ -462,6 +523,52 @@ Component
 ```
 
 Examples: filesystem tree, GUI hierarchy, organization structure. Benefit: recursive uniform operations. Tradeoff: enforcing restrictions on which children are legal may become harder.
+
+## 9.4 Bridge
+
+Bridge separates an **abstraction hierarchy** from an **implementation hierarchy** so both axes can vary independently:
+
+```text
+Remote abstraction ---> Device implementation
+  BasicRemote             TV
+  AdvancedRemote          Radio
+```
+
+The remote delegates to a `Device` interface instead of inheriting one class for every remote-device combination. Use Bridge when two dimensions would otherwise produce a subclass explosion. Adapter usually makes an existing incompatible type fit after design; Bridge deliberately separates variation axes during design. Cost: another indirection and up-front abstraction.
+
+## 9.5 Facade
+
+A Facade exposes a small, coherent entry point to a complicated subsystem:
+
+```java
+final class VideoConverter {
+    File convert(File input, Format target) {
+        // coordinate codec, demuxer, audio, metadata, and writer subsystems
+        return output;
+    }
+}
+```
+
+It reduces client coupling and supplies a common workflow, but it does not have to hide or prohibit lower-level APIs. Keep business logic from accumulating into a “god facade”; the facade should coordinate the subsystem, not become the entire subsystem.
+
+## 9.6 Flyweight
+
+Flyweight shares reusable **intrinsic state** and supplies changing **extrinsic state** per use. A text editor can share one immutable glyph/font object for many character positions while each position stores coordinates, color, or selection externally. It can dramatically reduce memory when there are huge numbers of nearly identical objects. Trade-offs are split state, lookup/cache management, and the requirement that shared intrinsic state be immutable or safely shared.
+
+## 9.7 Proxy
+
+Proxy implements the same interface as a real subject but controls access to it:
+
+- virtual/lazy proxy delays expensive creation;
+- protection proxy checks authorization;
+- remote proxy represents an object in another process;
+- caching/logging proxy controls calls and results.
+
+```text
+Client -> Subject interface <- Proxy -> RealSubject
+```
+
+Decorator primarily adds composable responsibility; Proxy primarily controls access, lifecycle, location, or creation. Their class shapes can look alike, so justify by intent. A remote proxy cannot erase network latency, serialization, timeout, or partial-failure semantics.
 
 ---
 
@@ -528,6 +635,57 @@ Invoker -> Command.execute()
 ```
 
 Supports queues, logging, retry, macro commands, undo when inverse/state exists. The stock-trade CT scenario uses Buy/Sell Command objects, an agent as invoker with queue, and StockTrade as receiver. A queued command should capture immutable required data and define failure/idempotency semantics.
+
+## 10.6 Chain of Responsibility
+
+Chain of Responsibility passes a request through ordered handlers until one handles it or the chain ends. GUI event bubbling, middleware, authentication/authorization filters, and validation pipelines are common examples.
+
+```java
+interface Handler {
+    boolean handle(Request request); // true means handled; stop the chain
+}
+
+for (Handler h : handlers) {
+    if (h.handle(request)) return;
+}
+throw new UnhandledRequestException();
+```
+
+All handlers share an interface, so a chain can be composed at runtime without coupling the sender to a concrete receiver. State the policy for order, errors, multiple handlers, and an unhandled request; invisible order dependence is the main trap.
+
+## 10.7 Iterator
+
+Iterator traverses a collection without exposing its internal representation. It separates traversal state (`hasNext/next`) from the collection and permits different traversals. Language `for-each` constructs usually rely on this idea. Define behavior under concurrent modification: snapshot, fail-fast, weakly consistent, or externally synchronized. An iterator does not make traversal automatically thread-safe.
+
+## 10.8 Mediator
+
+Mediator centralizes collaboration among components that would otherwise refer to one another in a dense many-to-many graph:
+
+```mermaid
+flowchart LR
+    A[Text field] --> M[Dialog mediator]
+    B[Checkbox] --> M
+    C[Submit button] --> M
+    M --> A
+    M --> B
+    M --> C
+```
+
+For example, a dialog mediator enables/disables controls and reacts to changes without every widget knowing every other widget. It reduces peer coupling and makes interaction policy explicit. The trade-off is that an undisciplined mediator becomes a complex god object; split mediators by coherent workflow.
+
+## 10.9 Memento
+
+Memento captures an object's state for later restoration without exposing representation to the caretaker. It supports undo/checkpoints: the originator creates/restores the memento; a history stack stores it. Snapshots can be expensive, may retain sensitive data, and can become incompatible as object schemas change. Incremental commands or event logs may be better when full snapshots are large.
+
+## 10.10 Visitor
+
+Visitor moves an operation out of a stable element hierarchy and uses **double dispatch**:
+
+```text
+element.accept(visitor) -> visitor.visitConcreteElement(element)
+```
+
+Adding a new visitor/operation is easy and related operation logic stays together; adding a new element type is costly because every visitor needs a new method. Use it when element types are stable and operations change frequently, such as AST checking/printing/code generation. It can weaken encapsulation by requiring visitor access to element data.
 
 ---
 
@@ -933,6 +1091,31 @@ Useful metrics are tied to a decision:
 - code-review latency/size;
 - performance/security SLOs.
 
+## 22.1 Metric versus KPI
+
+A **metric** is any consistently defined measurement. A **key performance indicator (KPI)** is a deliberately selected metric tied to an important objective and decision. Therefore every KPI is a metric, but most available metrics should not become KPIs.
+
+The KPI slides use SMART-like selection:
+
+- **Specific:** targets a defined outcome or process aspect;
+- **Measurable:** has a data source, unit, formula, and reporting rule;
+- **Attainable:** challenging but feasible under stated resources;
+- **Relevant:** aligned with business/customer/project objectives;
+- **Time-bound:** has a review period or target date.
+
+Example: “improve delivery” is vague. A defensible KPI is “by the end of Q3, reduce the 85th-percentile cycle time for normal-priority changes from 8 working days to 5 without increasing the 30-day change-failure rate above 10%.” It states outcome, population, statistic, deadline, baseline, target, and a guardrail.
+
+Use a balanced set:
+
+| Objective | Candidate KPI | Balancing/diagnostic measure |
+|---|---|---|
+| faster useful delivery | lead/cycle-time percentile, deployment frequency | change-failure rate, review queue time |
+| quality | escaped high-severity defect rate, DRE | test effectiveness/flakiness, defect mix |
+| reliability | SLO attainment, availability, recovery time | error-budget burn, incident severity |
+| predictability | forecast/commitment reliability | scope change and blocked time |
+
+Leading indicators suggest future risk (for example growing review queue); lagging indicators report outcomes already observed (escaped defects). Never optimize one number in isolation: a team can reduce cycle time by splitting work deceptively or skipping tests. Define ownership, data quality, segmentation, review cadence, and the decision that changes when the KPI changes.
+
 Lines of code, commits, story points, and coverage can be gamed. Goodhart’s law: when a measure becomes a target, it can cease to be a good measure. Never use one raw productivity metric to rank developers.
 
 Quality assurance is process-oriented prevention/improvement; quality control evaluates products/artifacts to detect defects. They overlap in practice but are not synonyms.
@@ -1113,6 +1296,27 @@ flowchart TB
 
 Microservices are not “small classes over HTTP.” A service should own a cohesive business capability and data boundary. Benefits—independent deployment/scale/team autonomy—are bought with latency, retries, versioning, eventual consistency, duplicate messages, monitoring and deployment complexity. Start from need, not fashion.
 
+## 27.4 Federated identity
+
+Federated identity lets an application—the **relying party/service provider**—use an external **identity provider (IdP)** to authenticate a user. “Login with Google” is a familiar example; modern web login commonly uses OpenID Connect over OAuth 2.0, while enterprise federation may use SAML. OAuth authorization alone is not proof of user identity unless an identity layer/protocol defines it.
+
+```mermaid
+sequenceDiagram
+    participant U as User/browser
+    participant R as Relying application
+    participant I as Identity provider
+    U->>R: Choose federated login
+    R-->>U: Redirect with state, nonce, client, return URI
+    U->>I: Authenticate and consent
+    I-->>U: Return authorization response
+    U->>R: Deliver response/code
+    R->>I: Validate/exchange through trusted channel
+    I-->>R: Signed identity claims/token
+    R->>R: Validate claims and map local authorization
+```
+
+Benefits are fewer application-held passwords, single sign-on, centralized MFA/account policy, and easier account lifecycle. Trade-offs are dependence on IdP availability, concentration of compromise, privacy/tracking, recovery/lockout, claim-mapping mistakes, and vendor/protocol integration. Federation authenticates an identity; the relying application must still enforce its own authorization and local business policy.
+
 # 28. Version Control, DevOps, CI/CD, and Containers
 
 ## 28.1 Version control and Git mental model
@@ -1284,13 +1488,14 @@ The difference between levels 2 and 3 is a frequent viva trap: level 2 instituti
 
 - [ ] Explain the full SDLC and choose a conversion strategy for one system.
 - [ ] Compare waterfall, incremental, prototyping, spiral, V-model, XP, and Scrum by assumptions/tradeoffs.
+- [ ] Recite the twelve Agile principles and explain Kanban pull, WIP limits, lead/cycle time, and Scrum differences.
 - [ ] Write measurable functional/nonfunctional requirements and acceptance criteria.
 - [ ] Elicit/prioritize/validate a requirement and trace it to design/test.
 - [ ] Draw a UML class diagram with inheritance, association, composition, multiplicity, and association class.
 - [ ] Define a design pattern and justify selection instead of only naming it.
 - [ ] Draw/code Factory Method, Abstract Factory, Singleton, Builder.
-- [ ] Draw/code Adapter, Decorator, Composite.
-- [ ] Draw/code State, Strategy, Observer, Template Method, Command.
+- [ ] Explain Prototype copy semantics; draw/code Adapter, Bridge, Composite, Decorator, Facade, Flyweight, and Proxy.
+- [ ] Draw/code Chain of Responsibility, Command, Iterator, Mediator, Memento, Observer, State, Strategy, Template Method, and Visitor.
 - [ ] Solve all three supplied CT scenarios with justification and tradeoffs.
 - [ ] Design black-/white-box tests at unit/integration/system/acceptance levels.
 - [ ] Derive equivalence partitions and boundary/negative cases.
@@ -1302,8 +1507,10 @@ The difference between levels 2 and 3 is a frequent viva trap: level 2 instituti
 - [ ] Defend documentation, maintenance, SCM, CI/CD, deployment, and metrics.
 - [ ] Draw BPMN gateways and a UML sequence/communication diagram with correct semantics.
 - [ ] Compare layered/MVC/modular-monolith/microservice choices by quality attributes.
+- [ ] Explain federated identity flow, benefit, failure/trust boundaries, and why authentication is not authorization.
 - [ ] Explain Git working tree/index/commit/remote and merge versus rebase.
 - [ ] Draw a CI/CD pipeline; compare blue–green, canary and rolling deployment.
 - [ ] Calculate function points, COCOMO effort, cyclomatic complexity and DRE.
+- [ ] Turn one vague objective into a SMART KPI with a baseline, target, deadline, and guardrail.
 - [ ] Recite CMMI levels 1–5 and distinguish project-managed from organization-defined.
-- [ ] Account for all 1530 current pages using the source matrix.
+- [ ] Account for all 1533 current pages using the source inventory and state the pattern-book scope honestly.

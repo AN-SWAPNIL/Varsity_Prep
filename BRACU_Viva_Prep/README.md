@@ -64,32 +64,57 @@ The aim is not to transcribe every administrative or repeated slide. The aim is 
 17. `16_NUMERICAL_METHODS_CORE_COMPLETE.md`
 18. `17_THESIS_RESEARCH_INDUSTRY_COMPLETE.md`
 19. `18_LAST_DAY_RECALL_AND_MOCKS.md`
+20. `19_CORE_COURSES_COMMON_INTERVIEW_QA.md` — cross-university, source-mapped oral question bank for DSA, ML, Discrete, OOP, Networking, SWE, Security, DBMS, AI, and OS
 
 The combined printable file is `BRACU_CSE_Viva_Slide_Based_Detailed_Ahmmad_Nur_Swapnil.pdf`.
+
+## Final ten-core-course audit
+
+The ten courses below received a final source-to-note audit on **24 July 2026**.
+“Detailed” means the note covers definitions and mechanisms plus the relevant
+equations, worked traces, correctness/assumptions, complexity or trade-offs,
+code/pseudocode, and high-yield board diagrams. It does **not** mean every
+decorative or repeated slide image was copied.
+
+| Requested course | Active detailed volume(s) | Local source routing | Final audit result |
+|---|---|---|---|
+| DSA | 01 and 02 | `203-DSA1`, `207-DSA2`, selected `461-AE` | detailed; includes heap build, BST/RBT/rotations, graph algorithms, max flow, push–relabel, paradigms, hardness, proofs, code, and diagrams |
+| ML | 11 | `471-ML` plus notebook | detailed; includes the correct bias–variance decomposition, classical ML, deep learning, ViT/Mamba, generative models, equations, code, and architecture diagrams |
+| Discrete Mathematics | 10 | `103-DM` | detailed lecture-by-lecture recall; includes proof, counting, pigeonhole with concrete applications, recurrence/generating functions, graph theory, and board diagrams |
+| OOP | 03 | `107-OOP` C++ and Java | detailed; includes ownership/copying, inheritance/dispatch diagrams, equality, exceptions, generics, collections, sorting, STL, and code |
+| Networking | 07 | `311-DC`, `321-Networking` | detailed; includes data communication, ARQ/MAC, IPv4/IPv6, routing, TCP/UDP, DHCP/DNS/TLS, sockets, equations, code, and protocol diagrams |
+| SWE | 08 | `307-SWE`, `325-ISD` (1,533 pages total) | detailed; includes process, Agile/Scrum/Kanban, requirements/UML/BPMN, all routed patterns, architecture, testing, metrics/KPIs, estimation, DevOps, identity, diagrams, and code |
+| Security | 13 | `405-Security` | detailed; includes CIA/file/database confidentiality, formal crypto notions, modes/toy calculations, TLS, web/memory/network attacks, phishing/2FA/Spectre/DNS, defenses, code, and diagrams |
+| DBMS | 05 | `215-DBMS` | detailed; includes SQL/RA/ER, FDs/normalization, storage/indexes, query processing/optimization, transactions/concurrency/recovery, worked SQL, algorithms, and diagrams |
+| AI | 09 | `317-AI` | detailed; includes agent/search/A*, local/adversarial search, CSP, probability/BN/HMM, MDP/RL, learning, equations, code, and diagrams |
+| Operating Systems | 06 | `313-OS` | detailed; includes processes/scheduling, Peterson/synchronization, deadlock, memory/page-table/TLB/replacement traces, storage/files, shell, equations, code, and diagrams |
+
+The cross-course oral layer is volume 19. Its web research uses official
+university curricula/qualifying-exam maps and authoritative documentation for
+answer validation; it does not claim that any finite list contains literally
+every question an interviewer can invent.
 
 ## Study priority
 
 ### Tier 1 — must be defensible deeply
 
 1. DSA I, DSA II, and the Algorithm Engineering additions
-2. Thesis/research, self-introduction, and teaching demonstrations
+2. Thesis/research, ML, self-introduction, and teaching demonstrations
 3. DBMS and Operating Systems
 4. Networking/Data Communication and Security
 5. OOP in C++ and Java
 
 ### Tier 2 — strong core breadth
 
-1. Computer Architecture, DLD, Microprocessor/Microcontroller
-2. AI and ML
-3. SWE/ISD
-4. TOC and Compiler
+1. SWE/ISD, AI, and Discrete Mathematics
+2. Computer Architecture, DLD, Microprocessor/Microcontroller
+3. TOC and Compiler
 
 ### Tier 3 — recall breadth
 
-1. Discrete Mathematics
-2. C
-3. Computer Graphics
-4. Numerical Methods
+1. C
+2. Computer Graphics
+3. Numerical Methods
 
 Bioinformatics is intentionally not given equal study time unless the panel follows it from your transcript or asks about the elective directly.
 

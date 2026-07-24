@@ -18,7 +18,7 @@ The reduced source set was re-audited on 24 July 2026. The current DSA-II folder
 | Current DSA-II source | Pages | Main material |
 |---|---:|---|
 | `DSA II.pdf` | 29 | compact syllabus/summary cross-check |
-| `Part1merged.pdf` | 630 | graph foundations, MST, shortest paths, APSP, network flow, AVL, red-black, and splay trees |
+| `Part1merged.pdf` | 630 | graph foundations, MST, shortest paths, APSP, augmenting-path and preflow/push–relabel views of network flow, AVL, red-black, and splay trees |
 | `Part2merged.pdf` | 419 | amortized analysis, heaps, hashing, intractability, approximation/exact methods, backtracking, and branch-and-bound |
 | **DSA-II total** | **1,078** | **39 low-text/image-heavy pages visually routed** |
 
@@ -836,6 +836,27 @@ Traversing a reverse residual edge subtracts previously sent flow on its corresp
 
 An **augmenting path** is an $s$-to-$t$ path in the residual graph. Its bottleneck is the minimum residual capacity on it. Augment every path edge by that bottleneck—adding on forward edges, subtracting on reverse edges.
 
+### Residual cancellation: the picture to draw
+
+Suppose the five original edges all have capacity 1 and an early choice sends one unit along $s\to a\to b\to t$:
+
+~~~text
+Current original flow f/c:
+
+    s --1/1--> a --1/1--> b --1/1--> t
+    s --0/1--> b
+    a --0/1--> t
+
+Positive residual edges include:
+
+        s --1--> b --1--> a --1--> t
+                    ^
+                    |
+              reverse of a->b
+~~~
+
+The residual path $s\to b\to a\to t$ has bottleneck 1. Its middle edge is reverse, so augmentation cancels the old $a\to b$ unit. The final flow consists of $s\to a\to t$ and $s\to b\to t$, value 2. This is the smallest convincing demonstration that a residual reverse edge is an **undo operation**, not an extra original edge.
+
 ## 6.3 Ford–Fulkerson and the max-flow/min-cut theorem
 
 Ford–Fulkerson is a method rather than one fixed path-selection algorithm:
@@ -1032,7 +1053,53 @@ The lecture’s advance–retreat presentation constructs the same blocking-flow
 
 General bound in the slides: at most $V-1$ phases, $O(EV)$ per phase in the basic analysis, hence $O(EV^2)$. The standard current-edge DFS implementation above has the familiar $O(V^2E)$ general bound. In a simple unit-capacity network, the Even–Tarjan analysis gives $O(E\sqrt V)$, which yields the same bound for bipartite matching networks.
 
-## 6.7 Bipartite matching and Hall’s theorem
+## 6.7 Preflow and push–relabel
+
+The current Part-I flow source closes its algorithm survey with the practical **push–relabel** viewpoint. Augmenting-path algorithms move flow along a complete $s$-$t$ path. Push–relabel instead moves excess locally, one admissible edge at a time.
+
+A **preflow** obeys capacity constraints but relaxes conservation:
+
+$$
+e(v)=\operatorname{inflow}(v)-\operatorname{outflow}(v)\ge0
+\qquad(v\ne s).
+$$
+
+An internal vertex is **active** when $e(v)>0$. Maintain integer height labels with
+
+$$
+h(s)=|V|,\qquad h(t)=0,\qquad
+h(u)\le h(v)+1
+$$
+
+for every residual edge $u\to v$. A residual edge is **admissible** when $h(u)=h(v)+1$.
+
+~~~text
+initialize:
+    h[s] = |V|; all other heights = 0
+    saturate every edge s->v
+    this creates excess at s's neighbors
+
+while an active vertex u != s,t exists:
+    if residual edge u->v is admissible:
+        delta = min(excess[u], residual_capacity(u,v))
+        PUSH delta from u to v
+    else:
+        RELABEL u to 1 + min{h[v] : residual_capacity(u,v) > 0}
+~~~
+
+**Why the operations are valid.**
+
+- A push respects residual capacity and transfers excess; a reverse push can cancel earlier flow.
+- Relabel is used only when no admissible outgoing edge exists, and the minimum formula preserves the valid-label inequality while creating at least one admissible edge.
+- Heights only increase. Each vertex is relabeled at most $O(V)$ times.
+- When no active internal vertex remains, the preflow satisfies ordinary conservation and is a feasible flow.
+- There cannot then be a residual $s$-$t$ path: along every residual edge height can fall by at most 1, but a simple path has at most $V-1$ edges while $h(s)-h(t)=V$. Therefore max-flow/min-cut proves optimality.
+
+The generic push–relabel method has a standard $O(V^2E)$ bound; the relabel-to-front organization has $O(V^3)$. Practical implementations use choices such as highest-label active vertices, global relabeling, and the gap heuristic. The source’s historical/practice slides emphasize an important viva distinction: better worst-case bounds and better observed implementations are related but not identical comparisons.
+
+**Augmenting path versus push–relabel:** Edmonds–Karp/Dinic repeatedly organize complete source-to-sink routes. Push–relabel permits temporary excess and repairs conservation locally. Both terminate with a feasible maximum flow and can expose a minimum cut through the final residual graph.
+
+## 6.8 Bipartite matching and Hall’s theorem
 
 For bipartite $G=(L\cup R,E)$:
 
@@ -1055,7 +1122,7 @@ Running times:
 - repeated ordinary augmenting paths: $O(EV)$;
 - unit-network Dinic / Hopcroft–Karp idea: $O(E\sqrt V)$.
 
-## 6.8 Disjoint paths and Menger
+## 6.9 Disjoint paths and Menger
 
 Give every original edge unit capacity. An integral flow of value $k$ decomposes into $k$ edge-disjoint $s$-$t$ paths (cycles can be discarded), and $k$ edge-disjoint paths give a value-$k$ flow.
 
@@ -1068,7 +1135,7 @@ $$
 
 This is the edge version of Menger’s theorem and is directly max-flow/min-cut. For internally vertex-disjoint paths, split each vertex $v\ne s,t$ into $v_{in}\to v_{out}$ of capacity 1.
 
-## 6.9 Circulation, demands, and lower bounds
+## 6.10 Circulation, demands, and lower bounds
 
 For circulation with vertex demand $d(v)$, use the slide convention:
 
@@ -1091,7 +1158,7 @@ For an edge lower bound $\ell(u,v)\le f(u,v)\le c(u,v)$, first commit $\ell(u,v)
 
 Then solve the induced demand-circulation instance. Integer data give an integer feasible circulation by max-flow integrality.
 
-## 6.10 Flow applications from the slides
+## 6.11 Flow applications from the slides
 
 ### Survey design
 
@@ -1131,7 +1198,7 @@ Team $z$ is not eliminated iff all source/game edges can be saturated. A minimum
 - Every $k$-regular bipartite graph has a perfect matching: send $1/k$ on every middle edge to obtain a value-$n$ fractional flow; integrality guarantees an integral matching.
 - Feasible rounding of a real matrix and its row/column sums is modeled as circulation with floor/ceiling lower and upper bounds. The original real matrix is feasible; integrality supplies consistent integer rounding.
 
-## 6.11 Flow viva traps
+## 6.12 Flow viva traps
 
 - A cut’s capacity counts edges $A\to B$, not $B\to A$.
 - Flow value is net source outflow, not the sum over all edges.
@@ -1426,6 +1493,21 @@ The tree is less rigidly balanced than AVL but still guarantees $O(\log n)$ oper
 Left rotation at $x$ promotes its right child $y$; $y.left$ becomes $x.right$, then $x$ becomes $y.left$. Right rotation is symmetric. Rotations preserve BST order but not colors automatically.
 
 ~~~text
+Before LEFT-ROTATE(x)                 After
+
+        x                                y
+       / \                              / \
+      A   y                            x   C
+         / \                          / \
+        B   C                        A   B
+
+In-order before = A, x, B, y, C = in-order after.
+RIGHT-ROTATE(y) is exactly the mirror operation.
+~~~
+
+Only the three links around $x,y,B$ and the former parent link change, so rotation is $O(1)$. The subtrees keep their internal contents and in-order ranges. In a red–black repair, pointer rotation and recoloring are separate steps: rotating without the prescribed color changes need not restore black-height.
+
+~~~text
 LEFT-ROTATE(T,x)
     y = x.right
     x.right = y.left
@@ -1449,6 +1531,22 @@ While parent is red, let $g$ be grandparent and $u$ the uncle. Assume parent is 
 3. **Uncle black, line (LL):** color parent black, grandparent red, right-rotate grandparent.
 
 Finally color root black. There are at most two rotations; recoloring can travel $O(\log n)$.
+
+The line case is worth drawing once. `(B)` and `(R)` denote colors; `A,B,C,D` are unchanged ordered subtrees:
+
+~~~text
+Before: red-red LL                    Recolor + RIGHT-ROTATE(g)
+
+          g(B)                                  p(B)
+         /    \                                /    \
+       p(R)    D                              z(R)   g(R)
+      /   \                                          / \
+    z(R)   C                                        C   D
+   /   \
+  A     B
+
+The black count on every path is preserved and the red-red edge disappears.
+~~~
 
 ~~~text
 RB-INSERT-FIXUP(T,z)
@@ -4130,7 +4228,8 @@ The key viva lesson is not to say “linear programming means simplex” or “L
 - [ ] State graph representations and trace BFS/DFS with exact `O(V+E)` assumptions.
 - [ ] Prove cut/cycle properties and trace Kruskal/Prim with DSU or heap costs.
 - [ ] Distinguish Dijkstra, Bellman–Ford, DAG shortest paths, Floyd–Warshall, and Johnson by assumptions and complexity.
-- [ ] Construct a residual graph, augment flow, and derive Edmonds–Karp `O(VE^2)`.
+- [ ] Construct a residual graph, use a reverse edge to cancel flow, and derive Edmonds–Karp `O(VE^2)`.
+- [ ] Distinguish augmenting-path flow from preflow/push–relabel; state excess, valid height labels, push, and relabel.
 - [ ] Trace APSP predecessor reconstruction and identify a negative cycle.
 - [ ] Perform AVL and red–black rotations; state every invariant before repair cases.
 - [ ] Explain splay amortized—not worst-case per operation—and skip-list expected bounds.

@@ -1234,6 +1234,22 @@ Before calculating, say all four items aloud:
 3. **Mapping:** which box receives each object?
 4. **Cardinality comparison:** why is the domain large enough?
 
+The diagrammatic/function view keeps a real-world answer precise:
+
+```text
+objects/domain A                           boxes/codomain B
+
+x1 ─┐
+x2 ─┼────────────── f ──────────────────>  y1   fiber f^(-1)({y1})
+x3 ─┤                                      y2   fiber f^(-1)({y2})
+ .  │                                       .
+xN ─┘                                      ym   fiber f^(-1)({ym})
+
+|A|=N, |B|=m  ==>  some fiber has size at least ceil(N/m).
+```
+
+For servers, `f(request)=assigned server`; for hashing, `f(key)=bucket`; for birthdays, `f(person)=birthday`. Naming the function prevents a vague “resources and programs” analogy from masquerading as an application.
+
 The principle proves existence, not the identities of the colliding objects.
 
 ## 56. Worked pigeonhole examples from the slides
@@ -3023,6 +3039,22 @@ Each color class is an **independent set**—a set containing no adjacent pair. 
 
 For a nonempty edgeless graph, `chi(G)=1`. If a graph has at least one edge, at least two colors are necessary. “The coloring I found uses `k` colors” proves only `chi(G)<=k`; optimality also needs a lower bound.
 
+One complete coloring certificate:
+
+```text
+               A(red) -------- B(green)
+                  \             /
+                   \           /
+                    C(blue) -------- D(red)
+
+Edges: AB, AC, BC, CD.
+Lower bound: A,B,C form a 3-clique, so chi(G) >= 3.
+Upper bound: the displayed red/green/blue assignment is proper, so chi(G) <= 3.
+Conclusion: chi(G)=3.
+```
+
+The diagram demonstrates the two obligations in an optimality answer: exhibit a valid coloring and prove that fewer colors are impossible.
+
 Useful bounds are
 
 ```text
@@ -3377,9 +3409,9 @@ Hide the explanation, answer each heading aloud, reproduce the formula/proof/cod
 
 Final source-specific checks:
 
-- state the pigeonhole objects, boxes and forced lower bound;
+- draw the object-to-box function, state its fibers, and give the forced pigeonhole lower bound;
 - distinguish converse/inverse/contrapositive and necessary/sufficient conditions;
 - give bases, hypothesis and inductive step without circularity;
 - justify a recurrence from disjoint exhaustive cases;
 - distinguish Euler (edges) from Hamilton (vertices);
-- prove a chromatic number with both a lower bound and a matching coloring.
+- prove a chromatic number with both a clique/other lower bound and a matching displayed coloring.

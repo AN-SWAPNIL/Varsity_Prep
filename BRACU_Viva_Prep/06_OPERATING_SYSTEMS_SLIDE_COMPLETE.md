@@ -187,6 +187,33 @@ Hardware instructions such as test-and-set or compare-and-swap allow an atomic s
 
 Locks protect **invariants**, not merely lines of code. Define which shared data and relationship the lock protects. Keep a consistent lock order to reduce deadlock risk.
 
+### P1 — Peterson's two-process mutual exclusion
+
+Peterson's algorithm is a software-only teaching solution for **exactly two participants**. Each participant announces interest through `flag`, then gives the other participant priority through `turn`:
+
+```c
+/* Shared: atomic reads/writes, sequentially consistent memory model */
+bool flag[2] = {false, false};
+int turn;
+
+void enter(int i) {
+    int j = 1 - i;
+    flag[i] = true;          /* I want to enter */
+    turn = j;                /* let the other go first if both want it */
+    while (flag[j] && turn == j) {
+        /* busy wait */
+    }
+}
+
+void leave(int i) {
+    flag[i] = false;
+}
+```
+
+If only one process wants the critical section, the other flag is false and it enters. If both want it, the final value of `turn` makes at most one wait, providing mutual exclusion; the leaving process clears its flag, providing progress and bounded waiting under the model.
+
+Do not present Peterson as a production lock. It assumes two participants, atomic shared-variable access, and a sufficiently strong memory-order model. Optimizing compilers and weakly ordered multiprocessors may reorder/cache ordinary accesses; real code uses language atomics with specified ordering or tested mutex primitives. It also busy-waits.
+
 ### P0 — Semaphore
 
 A semaphore is an integer synchronization object changed only through atomic operations:
@@ -580,6 +607,21 @@ At each arrival/completion choose the smallest remaining time. Recalculate caref
 
 Round Robin with quantum `q` maintains a FIFO ready queue. New arrivals join according to the stated event convention; ambiguity at an exact quantum boundary can change the trace, so state the convention. Small `q` improves response but raises context-switch overhead; as `q→∞`, RR approaches FCFS.
 
+For the same processes, Round Robin with `q=2` gives the following trace. Assume arrivals at an exact quantum boundary join before the expired process is requeued:
+
+```text
+0      2      4   5      7   8   9
+|  P1  |  P2  |P3|  P1  |P2 |P1 |
+```
+
+| Process | First run | Completion | Turnaround `C-A` | Waiting `T-B` | Response `first-A` |
+|---|---:|---:|---:|---:|---:|
+| P1 | 0 | 9 | 9 | 4 | 0 |
+| P2 | 2 | 8 | 7 | 4 | 1 |
+| P3 | 4 | 5 | 3 | 2 | 2 |
+
+Trace the ready queue to justify it: after P1's first slice the queue is `P2,P3,P1`; after P2 it is `P3,P1,P2`; after P3 it is `P1,P2`. Round Robin is fair by time slices, but the quantum and arrival-boundary convention affect the exact schedule.
+
 ## 15.2 MLFQ as an explicit algorithm
 
 An implementable policy follows five rules:
@@ -726,6 +768,41 @@ PA = 0xA7345
 
 The TLB caches the mapping/permissions. On a TLB miss, hardware/software walks the page table; a valid PTE produces a TLB fill. A **page fault** means the translation requires OS handling (not-present, protection, copy-on-write, etc.), which is distinct from a mere TLB miss.
 
+### Two-level page-table bit walk
+
+With a 32-bit virtual address, 4 KiB pages, and 4-byte entries in 4 KiB page-table pages, each table holds $4096/4=1024=2^{10}$ entries. A common two-level teaching split is therefore:
+
+```text
+31                    22 21                    12 11             0
++-----------------------+------------------------+----------------+
+| directory index: 10 b | table index: 10 b     | offset: 12 b   |
++-----------------------+------------------------+----------------+
+```
+
+For `VA = 0x12345345`:
+
+```text
+directory index = VA[31:22] = 0x048 = 72
+table index     = VA[21:12] = 0x345 = 837
+offset          = VA[11:0]  = 0x345
+
+PDE = page_directory[72]       -> address of a second-level table
+PTE = second_level_table[837]  -> PFN plus valid/protection bits
+PA  = (PFN << 12) | 0x345
+```
+
+```mermaid
+flowchart LR
+    V["Virtual address<br/>10 | 10 | 12 bits"] --> D["Page directory<br/>select PDE"]
+    D --> T["Second-level table<br/>select PTE"]
+    T --> F["Physical frame number"]
+    V --> O["Unchanged 12-bit offset"]
+    F --> P["Physical address<br/>PFN | offset"]
+    O --> P
+```
+
+The gain is sparsity: a process needs second-level tables only for virtual regions it actually uses. The cost of a TLB miss is a longer walk; more levels trade smaller sparse tables for more dependent memory references. If the PDE/PTE is invalid, distinguish an unmapped/protection fault from a valid but nonresident page that can be brought into memory.
+
 ## 15.11 TLB effective access time
 
 For a simplified single-level table where TLB lookup overlaps/negligibly costs and memory access is `M`, hit ratio `h`:
@@ -764,6 +841,35 @@ This cost is orders of magnitude above a normal memory access, motivating locali
 - **Clock/second chance:** circular hand checks reference bit; referenced pages get a second chance by clearing bit.
 
 For a reference string, show the frame contents after **every** reference and mark hits/faults. Do not conflate number of distinct pages with number of frames. Working-set/clock-like policies approximate recency to avoid thrashing.
+
+Worked comparison with three initially empty frames:
+
+```text
+Reference: 7 0 1 2 0 3 0 4 2 3 0 3 2
+FIFO:      F F F F H F F F F F F H H   -> 10 faults
+LRU:       F F F F H F H F F F F H H   ->  9 faults
+OPT:       F F F F H F H F H H F H H   ->  7 faults
+```
+
+The full frame trace below shows physical frame slots; slot order is not FIFO/LRU priority order:
+
+| Step/reference | FIFO | LRU | OPT |
+|---:|---|---|---|
+| 1 / 7 | `[7,-,-] F` | `[7,-,-] F` | `[7,-,-] F` |
+| 2 / 0 | `[7,0,-] F` | `[7,0,-] F` | `[7,0,-] F` |
+| 3 / 1 | `[7,0,1] F` | `[7,0,1] F` | `[7,0,1] F` |
+| 4 / 2 | `[2,0,1] F` | `[2,0,1] F` | `[2,0,1] F` |
+| 5 / 0 | `[2,0,1] H` | `[2,0,1] H` | `[2,0,1] H` |
+| 6 / 3 | `[2,3,1] F` | `[2,0,3] F` | `[2,0,3] F` |
+| 7 / 0 | `[2,3,0] F` | `[2,0,3] H` | `[2,0,3] H` |
+| 8 / 4 | `[4,3,0] F` | `[4,0,3] F` | `[2,4,3] F` |
+| 9 / 2 | `[4,2,0] F` | `[4,0,2] F` | `[2,4,3] H` |
+| 10 / 3 | `[4,2,3] F` | `[4,3,2] F` | `[2,4,3] H` |
+| 11 / 0 | `[0,2,3] F` | `[0,3,2] F` | `[2,0,3] F` |
+| 12 / 3 | `[0,2,3] H` | `[0,3,2] H` | `[2,0,3] H` |
+| 13 / 2 | `[0,2,3] H` | `[0,3,2] H` | `[2,0,3] H` |
+
+For FIFO, after loading `7,0,1`, reference `2` evicts the oldest page `7`; a hit does not change FIFO arrival order. LRU updates recency on every hit, so the hit on `0` changes its next victim. OPT looks ahead and evicts the resident page whose next use is farthest away or nonexistent; it is the unattainable lower-bound benchmark. The comparison is for this reference string only—LRU does not have a universal fixed fault advantage over FIFO, though unlike FIFO it is a stack algorithm and cannot show Belady's anomaly.
 
 ## 15.14 Free-space allocator
 

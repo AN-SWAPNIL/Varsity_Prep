@@ -345,6 +345,17 @@ The TCP three-way handshake (`SYN`, `SYN-ACK`, `ACK`) establishes transport stat
 - IDS detects suspicious activity and alerts.
 - IPS sits inline and can block, creating false-positive/availability trade-offs.
 
+### 10.1.1 Stateless versus stateful packet filtering
+
+| Filter | Decision uses | Strength | Main limitation |
+|---|---|---|---|
+| Stateless | current packet headers/rule only | fast, simple, low per-flow memory | cannot reliably tell whether inbound traffic belongs to a permitted conversation |
+| Stateful | packet plus connection/flow history | can allow established/related return traffic and reject unsolicited inbound traffic | consumes state; tables can be exhausted; unusual protocols, fragmentation and encryption complicate inspection |
+
+For the policy “allow outbound connections and their replies, deny other inbound traffic,” a stateful filter records the outbound flow and admits matching return packets. A stateless TCP approximation such as “allow inbound packets with ACK set” is only a heuristic: flags can be forged and it does not establish that the firewall observed a valid connection. UDP has no transport handshake, so return-flow policy especially needs timed state or application knowledge.
+
+Stateful does not mean application-secure. A permitted connection can carry an attack, and end-to-end encryption hides application payload from a network filter unless traffic is explicitly terminated/inspected at a trusted proxy.
+
 ## 10.2 Segmentation
 
 Separate user, application, database, management, and sensitive workloads; allow only necessary flows. Segmentation limits lateral movement after one component is compromised.
@@ -515,7 +526,7 @@ For bit strings, OTP uses:
 
 $$C=M\oplus K,\qquad M=C\oplus K.$$
 
-If $K$ is uniformly random, as long as $M$, used exactly once, and kept secret, then for every $m,c$:
+For an $\ell$-bit message, sample $K$ uniformly from $\{0,1\}^{\ell}$, independently of $M$. If this same-length key is kept secret and used for exactly one message, then for every $m,c$:
 
 $$P(M=m\mid C=c)=P(M=m).$$
 
@@ -528,7 +539,51 @@ The requirements are also why OTP is rarely a general storage/network solution:
 - reuse is catastrophic: $C_1\oplus C_2=M_1\oplus M_2$;
 - OTP provides no integrity—an attacker can flip chosen plaintext bits by flipping ciphertext bits.
 
-## 14.4 Block cipher model, DES, and AES
+The independence condition matters: a key chosen from, derived from or correlated with the message is not an OTP proof. “Random-looking” is also insufficient for perfect secrecy; the key must actually be uniform over the whole key space. Computational stream ciphers deliberately replace this information-theoretic guarantee with a practical CSPRNG-based guarantee.
+
+## 14.4 Security games: IND-CPA and EU-CPA
+
+Security is defined against an attacker capability, not by saying ciphertext “looks scrambled.”
+
+### IND-CPA: confidentiality under chosen-plaintext attack
+
+```text
+Adversary                         Challenger
+    |---- encryption queries M ----->|
+    |<--------- Enc(K,M) -------------|
+    |---- equal-length M0, M1 -------->|
+    |                       choose b <- {0,1}
+    |<---------- C* = Enc(K,Mb) -------|
+    |---- guess b' ------------------->|
+```
+
+The scheme is IND-CPA secure if every feasible adversary has only negligible advantage:
+
+$$
+\operatorname{Adv}^{\mathrm{ind\text{-}cpa}}
+=\left|\Pr[b'=b]-\frac12\right|.
+$$
+
+The equal-length rule prevents winning merely from ciphertext length. Encryption must be randomized or nonce-based: deterministic encryption leaks equality and is normally not IND-CPA secure.
+
+### EU-CPA: integrity/authenticity under chosen-message queries
+
+The slides call the MAC/signature goal **EU-CPA** (“existential unforgeability under chosen-plaintext attack”). The standard name is usually **EUF-CMA** (“existential unforgeability under chosen-message attack”):
+
+1. the attacker requests valid tags/signatures for messages of its choice;
+2. it outputs a new pair $(M^*,T^*)$;
+3. it wins only if verification accepts and $M^*$ was not previously queried.
+
+“Existential” means producing *any* new valid message-tag pair is already a break; the attacker need not forge a chosen meaningful sentence.
+
+| Property | Attacker's challenge | What it does **not** imply |
+|---|---|---|
+| IND-CPA | distinguish encryption of $M_0$ from $M_1$ | ciphertext integrity |
+| EU-CPA / EUF-CMA | forge a valid tag/signature for a fresh message | confidentiality |
+
+AEAD is used because confidentiality alone permits malleability, while a MAC alone leaves the plaintext visible.
+
+## 14.5 Block cipher model, DES, and AES
 
 A block cipher is a keyed pseudorandom permutation on fixed-size blocks:
 
@@ -559,6 +614,7 @@ For blocks $P_i,C_i$ and block cipher $E_K$:
 |---|---|---|---|
 | ECB | $C_i=E_K(P_i)$ | none | equal blocks leak patterns; do not use for structured messages |
 | CBC | $C_i=E_K(P_i\oplus C_{i-1}),\ C_0=IV$ | unpredictable fresh IV | padding, sequential encryption, malleable without MAC |
+| CFB | $C_i=P_i\oplus E_K(C_{i-1}),\ C_0=IV$ for full blocks | unpredictable fresh IV | sequential encryption; reuse leaks first-segment relations; no integrity |
 | CTR | $C_i=P_i\oplus E_K(N\|counter_i)$ | never repeat nonce/counter under a key | reuse exposes XOR of plaintexts; no integrity alone |
 | GCM | CTR encryption plus polynomial authenticator | unique nonce, normally 96 bits | nonce reuse can break confidentiality and authentication |
 
@@ -567,6 +623,25 @@ CBC decryption is
 $$P_i=D_K(C_i)\oplus C_{i-1}.$$
 
 Changing one ciphertext block predictably flips bits in the next plaintext block, showing why encryption alone does not authenticate. A padding oracle occurs when a system reveals whether decrypted CBC padding is valid; the response becomes a decryption side channel. Authenticate before exposing parsing differences, or use a well-designed AEAD.
+
+## 15.1 CFB mode viva trace
+
+Cipher Feedback turns a block cipher into a self-synchronizing stream-like mode. For full-block CFB:
+
+$$
+C_0=IV,\qquad C_i=P_i\oplus E_K(C_{i-1}),
+$$
+
+$$
+P_i=C_i\oplus E_K(C_{i-1}).
+$$
+
+- It can process data in segments and therefore does not require message padding.
+- Encryption is sequential because $C_i$ is needed for the next segment. Decryption can be parallelized when all ciphertext segments are available.
+- With an unpredictable fresh IV, the first keystream segment is fresh. Reusing the IV under one key leaks whether/equates relationships in the first plaintext segment.
+- A flipped ciphertext bit flips the corresponding plaintext bit and also disrupts following feedback output before recovery; this is error propagation, not integrity protection.
+
+**Viva choice:** CFB is historically useful for streaming/feedback behavior, but new application protocols should normally choose a standard AEAD such as AES-GCM or ChaCha20-Poly1305.
 
 AEAD interface:
 
@@ -582,7 +657,7 @@ Nonce, IV, salt, and key are different:
 - an **IV** is an initialization value whose unpredictability/uniqueness rule depends on the mode;
 - a **salt** separates password/KDF instances and is normally public.
 
-# 16. Randomness, Key Derivation, Diffie–Hellman, and RSA
+# 16. Randomness, Key Derivation, DH, RSA, ElGamal, and DSA
 
 ## 16.1 PRG/CSPRNG and entropy
 
@@ -599,6 +674,14 @@ OKM=\operatorname{Expand}(PRK,info,L).$$
 
 `info` binds purpose/protocol/context so the same input secret does not silently reuse one key across encryption, MAC and unrelated protocols.
 
+### 16.1.1 Historical caution: Dual_EC_DRBG
+
+> **Do not use Dual_EC_DRBG.** This is a historical design/provenance lesson, not a current algorithm choice.
+
+Dual_EC used public elliptic-curve points $P$ and $Q$. If someone knows a hidden scalar relation between them, observing enough generator output can reveal internal state and permit prediction of later—and under the discussed construction, earlier—output. The slides also emphasize that it was slow, had detectable bias, and used unexplained parameters whose generation could not be independently trusted.
+
+**Viva lesson:** a named or standardized algorithm is not automatically safe. Prefer reviewed current constructions, transparent parameter generation, the operating-system CSPRNG, explicit dependency inventory and the ability to replace a primitive. “Nothing-up-my-sleeve” parameters reduce suspicion because their selection process is reproducible.
+
 ## 16.2 Diffie–Hellman
 
 In a group generated by $g$:
@@ -610,6 +693,22 @@ In a group generated by $g$:
 An eavesdropper sees $g,g^a,g^b$ but should not feasibly recover $g^{ab}$ under the computational Diffie–Hellman assumption for the chosen group.
 
 DH establishes a secret but not identity. An active attacker can form separate secrets with Alice and Bob. Authenticate the transcript with signatures/certificates, a PSK, or another trusted mechanism. Ephemeral DH (`DHE`/`ECDHE`) gives forward secrecy when ephemeral secrets are erased.
+
+### Worked toy DH calculation
+
+Let $p=23$, $g=5$, Alice choose $a=6$, and Bob choose $b=15$:
+
+$$
+A=5^6\bmod23=8,\qquad B=5^{15}\bmod23=19.
+$$
+
+Both derive the same secret:
+
+$$
+s_A=19^6\bmod23=2,\qquad s_B=8^{15}\bmod23=2.
+$$
+
+The transmitted values are $p,g,A,B$; the private exponents are not sent. These tiny values are only arithmetic practice and provide no real security.
 
 ## 16.3 RSA
 
@@ -625,6 +724,87 @@ Then:
 $$c=m^e\bmod n,\qquad m=c^d\bmod n.$$
 
 Textbook RSA is deterministic and insecure. Encryption needs randomized OAEP; signatures need a signature encoding such as PSS. Encryption and signing are not simply interchangeable “private-key encryption.” Modern protocols generally use RSA/ECDSA/EdDSA for authentication and ephemeral (EC)DH for key agreement, then symmetric AEAD for data.
+
+### Worked toy RSA calculation
+
+Choose $p=5$, $q=11$:
+
+$$
+n=55,\qquad \phi(n)=4\cdot10=40.
+$$
+
+Choose $e=3$. Since $3\cdot27=81\equiv1\pmod{40}$, $d=27$. For $m=7$:
+
+$$
+c=7^3\bmod55=343\bmod55=13.
+$$
+
+Using repeated squaring,
+
+$$
+13^2\equiv4,\quad13^4\equiv16,\quad13^8\equiv36,\quad13^{16}\equiv31\pmod{55},
+$$
+
+so
+
+$$
+13^{27}=13^{16+8+2+1}\equiv31\cdot36\cdot4\cdot13\equiv7\pmod{55}.
+$$
+
+The arithmetic demonstrates correctness only. Real RSA needs large approved parameters, safe key generation, OAEP/PSS, side-channel-resistant implementation and validation.
+
+## 16.4 ElGamal encryption
+
+For group generator $g$, Bob chooses private $b$ and publishes $B=g^b$. To encrypt group message $M$, Alice chooses a fresh random $r$:
+
+$$
+C_1=g^r,\qquad C_2=M\cdot B^r.
+$$
+
+Bob recovers:
+
+$$
+M=C_2\cdot(C_1^b)^{-1}.
+$$
+
+Using the slide exercise $p=11$, $g=2$, $b=4$, $M=7$, $r=3$:
+
+$$
+B=2^4\bmod11=5,\quad C_1=2^3\bmod11=8,
+$$
+
+$$
+C_2=7\cdot5^3\bmod11=6.
+$$
+
+Because $C_1^b=8^4\bmod11=4$ and $4^{-1}\equiv3\pmod{11}$:
+
+$$
+M=6\cdot3\bmod11=7.
+$$
+
+**Security nuance:** ElGamal over the intended nonzero group is randomized and can be IND-CPA secure under the Decisional Diffie–Hellman assumption. A naive encoding that admits $M=0$ is immediately distinguishable because $C_2=0$, matching the slide warning. Textbook ElGamal is also multiplicatively malleable—changing $C_2$ predictably changes $M$—so it is not CCA-secure/authenticated. Practical designs use a standardized KEM/DEM or hybrid authenticated-encryption construction.
+
+## 16.5 DSA/ECDSA and the per-signature secret
+
+For DSA—with analogous group arithmetic in ECDSA—use private key $x$, public key $y=g^x$, message hash $h$, and per-signature secret $k$:
+
+$$
+r=(g^k\bmod p)\bmod q,\qquad
+s=k^{-1}(h+xr)\bmod q.
+$$
+
+The crucial implementation rule is that $k$ must never repeat and must not be exposed or biased. If the same $k$ gives signatures $(r,s_1)$ and $(r,s_2)$ on hashes $h_1,h_2$:
+
+$$
+k=(h_1-h_2)(s_1-s_2)^{-1}\bmod q,
+$$
+
+$$
+x=(s_1k-h_1)r^{-1}\bmod q.
+$$
+
+Thus nonce reuse reveals the long-term private key. Although $k$ is often called a nonce, unlike a public AEAD nonce it must also remain secret/unpredictable—or be derived deterministically by an approved deterministic-signature procedure. DSA/ECDSA provides signatures, not encryption.
 
 # 17. Hashes, MACs, Signatures, and Certificates
 
@@ -683,6 +863,8 @@ A TLS client must:
 A certificate does not mean the site is benevolent; it means the validated key is authorized for the stated name under the CA trust model.
 
 # 18. TLS 1.3 in Enough Detail for a Viva
+
+> **Current external validation—not a replacement for the slides (checked 24 July 2026):** [RFC 9846, *The Transport Layer Security (TLS) Protocol Version 1.3*](https://www.rfc-editor.org/info/rfc9846/) is now the current core TLS 1.3 specification and obsoletes RFC 8446. It keeps the protocol version TLS 1.3 and is backward compatible with RFC 8446, while tightening/clarifying requirements—for example, forbidding `KeyShare` reuse between connections and forbidding negotiation of deprecated TLS 1.0/1.1. The slide-grounded handshake explanation below remains conceptually valid.
 
 ```mermaid
 sequenceDiagram
@@ -765,6 +947,58 @@ Stored procedures are safe only if they avoid unsafe dynamic SQL. Input escaping
 
 CAPTCHA attempts to distinguish automated abuse from human use. It raises attacker cost but can harm accessibility/privacy and is vulnerable to solver services, ML and session/token replay. Bind challenges to action/session, expire them, rate-limit verification and use risk-based layered controls; CAPTCHA is not authentication or authorization.
 
+## 19.6 Clickjacking: stealing a trusted user gesture
+
+Clickjacking, or UI redressing, places a sensitive page/control where the victim does not realize it is being clicked:
+
+```text
+what victim sees:       [ Play video ]
+transparent top layer:  [ Delete account ]  <- framed legitimate site
+user click:                      X
+```
+
+The same-origin policy may stop the attacker page from *reading* the framed page, but it does not by itself stop the user from interacting with that frame. Variants include an invisible iframe over bait, malicious overlays over a visible legitimate frame, cursorjacking, and changing the target immediately before a click.
+
+Defenses:
+
+- send CSP `frame-ancestors 'none'` or a narrow origin allow-list;
+- use `X-Frame-Options: DENY`/`SAMEORIGIN` for legacy coverage;
+- require clear confirmation or recent reauthentication for high-impact actions;
+- preserve visual/temporal integrity so security dialogs cannot be imitated or swapped at the click instant.
+
+JavaScript “frame-busting” alone is weaker than browser-enforced response headers.
+
+## 19.7 Phishing and real-time 2FA relay
+
+Phishing makes an attacker-controlled interaction look legitimate. A padlock only says TLS authenticated the domain in the address bar; it does not say the domain is the one the user intended or that its content is honest. Warning signs include deceptive subdomains, Unicode homographs, look-alike domains and browser-in-browser pages that draw a fake address bar.
+
+```text
+Victim -> phishing proxy: password + OTP
+             |
+             +---- immediately relays ----> real service
+Victim <- phishing proxy <- real service: authenticated session
+             |
+             +---- attacker steals/uses session
+```
+
+Password plus SMS/TOTP is better than password alone, but a real-time phishing proxy can relay both factors. SMS additionally faces SIM-swap and recovery-channel attacks. Rate limiting helps guessing but does not stop a correctly relayed one-time code.
+
+Phishing-resistant security keys/WebAuthn bind a signed challenge to the legitimate relying-party identity/origin. On an attacker origin, the authenticator will not produce a signature valid for the real site. Combine this with secure recovery, transaction details/confirmation, short sessions and user-visible domain controls; do not make the user the only defense.
+
+## 19.8 Spectre: transient execution and a side channel
+
+Spectre mistrains branch prediction so the CPU transiently executes a path that should not architecturally run. The processor later discards the architectural result, but microarchitectural traces—especially cache state—may remain. Timing accesses to probe data can reveal which cache line was touched and therefore leak a secret.
+
+```text
+train predictor -> transient secret-dependent access
+                        |
+                 cache line changes
+                        |
+              time probe accesses -> infer secret
+```
+
+This crosses abstractions: a language/JavaScript bounds check can be architecturally correct while speculative execution still leaves a measurable trace. Browser site isolation separates sites—and selected stronger isolation boundaries—into different OS processes, reducing cross-origin memory exposure; it is an important containment measure, not a universal “CPU fixed” claim. Complete mitigation is layered—hardware/microcode and compiler techniques, process isolation, reduced timer/shared-memory attack surfaces and keeping secrets out of attacker-co-resident contexts—with security/performance costs.
+
 # 20. Tor and Anonymity
 
 Tor routes traffic through a circuit—typically guard, middle and exit—and layers encryption so each relay learns only adjacent hops:
@@ -842,6 +1076,53 @@ size_t bytes = count * element_size;
 ```
 
 A use-after-free may become exploitable when the freed slot is reallocated with attacker-controlled data. Ownership/borrowing discipline, RAII, smart pointers, garbage collection or memory-safe languages reduce lifetime errors, but logic-level resource leaks and races still exist.
+
+## 21.4 Format-string vulnerability
+
+`printf(user_input)` treats attacker data as a *program in the format-string grammar*, not merely as text:
+
+- `%x`/`%p` can disclose machine words or pointers;
+- `%s` treats a fetched value as a pointer and reads memory until a NUL;
+- `%n` treats a fetched value as a pointer and writes the number of characters printed so far.
+
+```c
+printf(user_input);        // vulnerable: user controls directives
+printf("%s", user_input);  // data is consumed only as a string value
+```
+
+With layout knowledge and positional/padding directives, `%n` can become an attacker-influenced write primitive. Defend with constant format strings, compiler format warnings/hardening, safe logging APIs and removal of any secret-dependent memory disclosure. This is distinct from a buffer overflow even though both may lead to memory compromise.
+
+## 21.5 Heap overflow
+
+Moving a buffer from the stack to `malloc` does not make an unbounded copy safe:
+
+```c
+char *name = malloc(20);
+gets(name);                 // still unbounded: now a heap overflow
+```
+
+A heap overflow can corrupt an adjacent object, length, pointer, callback/vtable-like target or allocator metadata; the useful target depends on allocator and object layout. Validate lengths before allocation/copy, check arithmetic overflow, carry explicit `(pointer, length)` information, and prefer memory-safe abstractions. Stack canaries specifically protect selected stack frames and do not stop heap corruption.
+
+## 21.6 Why one off-by-one byte can matter
+
+```c
+void read_name(void) {
+    char name[20];
+    fread(name, 1, 21, stdin);   // writes one byte past name
+}
+```
+
+The 21st byte may change a terminator, adjacent length/flag, pointer byte or—in a layout like the slide walkthrough—the low byte of a saved frame pointer. Later function epilogues or pointer use can turn that one-byte corruption into a redirected memory/control-flow operation. The exact target is compiler/ABI/layout-dependent, but “only one byte” is not a safety argument.
+
+```c
+void read_name_safely(void) {
+    char name[20];
+    size_t n = fread(name, 1, sizeof(name) - 1, stdin);
+    name[n] = '\0';
+}
+```
+
+Always reason about the boundary: capacity $N$ permits indexes $0$ through $N-1$, and a C string also needs space for `'\0'`.
 
 # 22. Low-Level Network and Routing Attacks
 
@@ -937,6 +1218,27 @@ A recursive resolver follows referrals from root to TLD to authoritative servers
 
 DNS cache poisoning redirects future clients even if their own machines were not directly attacked. TLS hostname/certificate validation can still stop transparent HTTPS impersonation, but DNS manipulation can deny service or redirect users to convincing different names.
 
+### 25.1.1 Kaminsky DNS cache-poisoning attack
+
+Older off-path poisoning gave the attacker roughly one race per cached name: after the legitimate response arrived, the attacker had to wait for its TTL to expire. Kaminsky's technique created repeated cache misses with random, nonexistent subdomains:
+
+```text
+1. Trigger query for r1.victim.com  -> resolver sends upstream query
+2. Flood forged replies guessing transaction ID + source port
+3. Wrong/late guess? Trigger r2.victim.com and race again immediately
+4. Correct forged reply first? Cache malicious victim.com delegation/glue
+```
+
+The important insight is not merely “guess a 16-bit ID.” Each random label forces a fresh outstanding query, giving many independent races while the forged authority/additional data attempts to replace the parent zone's name-server path. A resolver should accept a response only when query/response attributes match and only cache authority/additional records allowed by bailiwick rules.
+
+Defenses are layered:
+
+- unpredictable transaction IDs **and** randomized UDP source ports enlarge the guessing space;
+- strict response matching, bailiwick checking and limiting outstanding duplicate queries reduce acceptance opportunities;
+- DNSSEC validation authenticates signed DNS data and defeats forged unsigned answers for properly signed/validated zones.
+
+DoT/DoH protects the client-to-recursive-resolver transport but does not make a malicious or non-validating resolver's cache trustworthy.
+
 ## 25.2 DNSSEC chain of trust
 
 ```mermaid
@@ -969,6 +1271,29 @@ Both encrypt client-to-resolver queries and authenticate the resolver under TLS,
 | `ABS_Sir(Note).pdf` | 35 | image-dominant handwritten reinforcement, visually reviewed and routed into cryptography/web/memory topics |
 | **Total** | **1572** | **all current Security folder pages routed** |
 
+### Focused audit mapping added in this revision
+
+| Note topic | Local slide grounding |
+|---|---|
+| OTP independence; IND-CPA | `ABS_Merged_taky.pdf`, pp. 86–102 |
+| CFB mode | `ABS_Merged_taky.pdf`, pp. 225–226 |
+| EU-CPA / MAC and signature unforgeability | `ABS_Merged_taky.pdf`, pp. 266–268 and 377–379 |
+| DH and toy modular arithmetic | `ABS_Merged_taky.pdf`, pp. 323–346 |
+| ElGamal and its exercise | `ABS_Merged_taky.pdf`, pp. 352–358 |
+| RSA construction/walkthrough | `ABS_Merged_taky.pdf`, pp. 360–368 |
+| DSA/ECDSA per-signature secret failures | `ABS_Merged_taky.pdf`, pp. 383–387 |
+| Dual_EC_DRBG sabotage caution | `ABS_Merged_taky.pdf`, pp. 425–428 |
+| Spectre/browser isolation | `ABS_Merged_taky.pdf`, pp. 540–545 |
+| Clickjacking | `ABS_Merged_taky.pdf`, pp. 614–633 |
+| Phishing and 2FA relay/security keys | `ABS_Merged_taky.pdf`, pp. 634–657 |
+| Heap overflow | `ART_merged_taky.pdf`, pp. 105–115 |
+| Format-string read/write primitives | `ART_merged_taky.pdf`, pp. 123–147 |
+| Off-by-one exploit | `ART_merged_taky.pdf`, pp. 159–171 |
+| Stateless/stateful packet filters | `ART_merged_taky.pdf`, pp. 416–419 |
+| Kaminsky DNS cache poisoning | `ART_merged_taky.pdf`, pp. 615–637 |
+
+The RFC 9846 callout in Section 18 is explicitly marked **current external validation**. It updates the normative reference only; it does not replace or masquerade as local slide grounding.
+
 ---
 
 # 26. Final security self-test
@@ -985,15 +1310,26 @@ Both encrypt client-to-resolver queries and authenticate the resolver under TLS,
 - [ ] Defend SQLi, XSS, CSRF, IDOR, SSRF, command injection, traversal, upload, and CORS controls.
 - [ ] Explain why NAT, TLS, a WAF, or encryption alone is never the complete security story.
 - [ ] Prove OTP secrecy intuitively and state every condition; explain two-time-pad failure.
+- [ ] Run the IND-CPA and EU-CPA/EUF-CMA games and state their different win conditions.
 - [ ] Compare ECB/CBC/CTR/GCM and state exact IV/nonce/authentication requirements.
+- [ ] Trace CFB encryption/decryption, padding, parallelism, IV reuse and error propagation.
 - [ ] Draw AES round structure and a Feistel round; explain why DES is obsolete.
 - [ ] Calculate DH/RSA toy steps and explain why authentication/padding are mandatory.
+- [ ] Compute the toy ElGamal example; explain zero-message encoding, malleability and hybrid AEAD.
+- [ ] Derive why repeated DSA/ECDSA $k$ reveals the private key.
+- [ ] Explain the Dual_EC lesson about parameter provenance and replaceable primitives.
 - [ ] Distinguish hash, HMAC, signature and certificate-chain validation.
 - [ ] Draw the TLS 1.3 transcript and explain `CertificateVerify`, `Finished`, forward secrecy and 0-RTT replay.
+- [ ] State why RFC 9846 updates the TLS 1.3 reference without changing the version number.
 - [ ] Explain SOP/cookies, CSRF request flow, contextual XSS encoding and prepared SQL.
+- [ ] Defend clickjacking; distinguish phishing from a real-time 2FA relay; explain WebAuthn origin binding.
+- [ ] Explain Spectre's transient execution/cache channel and why site isolation is containment, not a universal CPU fix.
 - [ ] Explain Tor's guard/middle/exit knowledge and its endpoint/correlation limits.
 - [ ] Trace buffer overflow/code reuse and compare canary, NX, ASLR, PIE and CFI.
+- [ ] Explain format-string reads/`%n` writes, heap-overflow targets and one-byte off-by-one impact.
 - [ ] Defend against SYN flood, UDP amplification, ARP poisoning and BGP hijack.
+- [ ] Compare stateless and stateful packet filtering using the “outbound plus replies” policy.
 - [ ] Use Bayes's rule to explain IDS false-alert base-rate problems.
 - [ ] Distinguish virus, worm, Trojan, bot, ransomware and rootkit.
 - [ ] Draw DNSSEC's DS/DNSKEY/RRSIG chain and distinguish DNSSEC from DoT/DoH.
+- [ ] Trace the Kaminsky attack's random-subdomain retries and transaction-ID/source-port race.

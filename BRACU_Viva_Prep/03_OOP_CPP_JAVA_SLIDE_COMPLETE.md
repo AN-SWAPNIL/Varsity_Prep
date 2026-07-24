@@ -567,6 +567,21 @@ public:
 
 In the diamond, non-virtual inheritance gives the most-derived object two copies of the common base. Virtual inheritance makes it share one common base subobject:
 
+```text
+Type relationship:
+
+             B
+            / \
+          D1   D2
+            \ /
+           Final
+
+Object subobjects:
+
+non-virtual Final = [D1 [B]] + [D2 [B]]   -> two B objects; B member is ambiguous
+virtual Final     = [shared B] + [D1] + [D2] -> one B object
+```
+
 ```cpp
 struct B { int value{}; };
 struct D1 : virtual B {};
@@ -670,6 +685,24 @@ Raw binary dumping of a class is unsafe when it contains pointers, virtual funct
 - **Late/dynamic binding:** target resolved at runtime from the actual object; implemented in C++ with virtual functions.
 
 A base pointer/reference can point/refer to a derived object. The reverse conversion is not automatically safe.
+
+The dispatch picture:
+
+```text
+source expression:       Shape* p = pointer to a Triangle object
+                                  |
+call:                     p->area()
+                                  |
+compile time:             verify Shape declares area(); choose virtual slot
+                                  |
+runtime object/vptr:      select Triangle's final overrider
+                                  |
+executed function:        Triangle::area()
+
+If area() were non-virtual, the static type Shape* would select Shape::area().
+```
+
+Dynamic dispatch therefore needs both facts: the call is through a pointer/reference (not a sliced base value), and the member is virtual. Java ordinary overridable instance methods follow the same runtime-object idea by default; overload resolution and static-method hiding remain compile-time.
 
 ### Complete runnable runtime-polymorphism example
 

@@ -129,6 +129,20 @@ Abstraction discards irrelevant details while retaining solution validity. Too m
 
 Tree search can regenerate states and loop. Graph search uses explored/frontier records, but duplicates are cost-sensitive: BFS with unit costs can mark on first discovery; UCS/A* must replace a state when a cheaper $g$ is found; A* with an inconsistent heuristic may need to reopen an expanded state. Failure to detect repeats can turn a small state space into an exponential/infinite tree.
 
+```text
+State graph:                         Tree-search nodes:
+
+      S                                   S
+     / \                                 / \
+    A   B                               A   B
+     \ /                                 \ /
+      C                              C(copy 1) C(copy 2)
+
+The world has one state C. Tree search may create two node records for it.
+Graph search keeps a state-keyed best record, but may replace/reopen it when
+a cheaper path is discovered.
+```
+
 ## 9. Generic best-first graph search
 
 Invariant: `best_g[s]` is the cheapest discovered cost to `s`; stale queue entries are ignored and improvements reopen states.
@@ -427,6 +441,20 @@ Selection alone destroys diversity; selection+crossover can prematurely converge
 
 Related excerpt methods: evolutionary programming emphasizes mutation/survivor selection; evolution strategies often use real vectors and self-adaptive mutation; genetic programming evolves program trees. GAs/metaheuristics are broad derivative-free search, not automatic global-optimum machines.
 
+### Mapping alternative search to neural-network training
+
+The source’s alternative-learning excerpt is not a separate neural-network architecture lesson; it maps the search algorithms above onto weight optimization:
+
+```text
+search state / chromosome     = all trainable weights (and sometimes architecture)
+objective / energy            = training loss L(w)
+neighbor or mutation          = perturb selected weights: w' = w + delta
+fitness                       = a monotone transformation of validation/training quality
+best-seen state               = lowest-loss parameter vector encountered
+```
+
+Simulated annealing accepts an improving weight vector and may accept a worse one with probability $e^{-[L(w')-L(w)]/T}$. A genetic algorithm keeps a population of encoded weight vectors, then selects, crosses, and mutates them. These methods do not require a differentiable activation/loss and may escape some local basins, but high-dimensional neural weights make blind proposals expensive. Ordinary backpropagation exploits gradient structure and is usually far more sample/compute efficient. Neither finite SA nor an ordinary GA guarantees the global neural-network optimum.
+
 ---
 
 # Part VI — Adversarial search
@@ -447,6 +475,18 @@ def minimax_decision(state, actions, result, terminal, utility):
 ```
 
 If root MIN children have leaves A=`[3,12,8]`, B=`[2,4,6]`, C=`[14,5,2]`, their values are 3,2,2 and MAX chooses A—not visible leaf 14. Full minimax is complete for a finite tree, optimal against optimal play, $O(b^m)$ time and depth-first $O(bm)$ space.
+
+```text
+                         MAX = 3
+                         /     \
+                    MIN A=3   MIN B<=2
+                     /  \       / | \
+                    3    5     2  ×  ×
+
+Search A first: root alpha becomes 3.
+At B, the first leaf makes beta=2. Since beta <= alpha, the remaining
+B leaves cannot make MAX prefer B, so alpha-beta prunes them.
+```
 
 A minimax strategy guarantees the game value against every legal response. A weak opponent may allow better, but pure minimax does not explicitly model or maximally exploit their mistake pattern.
 
@@ -644,6 +684,16 @@ For alarm, restrict J/M factors, eliminate E, eliminate A, multiply by P(B), nor
 ## 37. Model and queries
 
 $X_t$ is hidden state; $E_t$ observed emission. First-order transition $P(X_t\mid X_{t-1})$, sensor $P(E_t\mid X_t)$, stationary parameters when unchanged over time. Joint:
+
+```text
+hidden chain:       X1  --->  X2  --->  X3  ---> ... ---> XT
+                     |         |         |               |
+observations:        v         v         v               v
+                    E1        E2        E3              ET
+
+Each Xt depends on Xt-1; each Et depends on Xt.
+The observed evidence does not make the hidden states independent.
+```
 
 $$P(x_{1:T},e_{1:T})=P(x_1)P(e_1\mid x_1)\prod_{t=2}^TP(x_t\mid x_{t-1})P(e_t\mid x_t).$$
 
@@ -1187,7 +1237,7 @@ Training/test leakage includes choosing hyperparameters on the test set. Use tra
 - [ ] Problem formulation without state/node confusion.
 - [ ] Trace all uninformed searches with conditions/complexities.
 - [ ] Trace/prove A*, test consistency/reopening, explain $h=0$.
-- [ ] RBFS/SMA*, hill, SA equation/schedule, GA operators.
+- [ ] RBFS/SMA*, hill, SA equation/schedule, GA operators, and the weight-vector/loss mapping for alternative neural training.
 - [ ] Minimax/alpha–beta and exact infinite-depth-human answer.
 - [ ] CSP with MRV/degree/LCV, forward checking, AC-3.
 - [ ] BN factorization, alarm joint/posterior, VE steps.
