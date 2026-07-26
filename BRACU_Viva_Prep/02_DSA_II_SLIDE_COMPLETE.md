@@ -1,6 +1,6 @@
 # Bismillah.
 
-# CSE 207 — Data Structures and Algorithms II: Slide-Complete Viva Recall
+# Data Structures and Algorithms II: Slide-Complete Viva Recall
 
 This is a reconstruction of the CSE 207 material from the course slides and notes in this workspace. It is meant to restore the concepts, proofs, invariants, traces, and implementation details—not merely supply one-line interview answers. Administrative, repeated title, animation-only, and reference slides are represented in the source matrix rather than repeated as content.
 

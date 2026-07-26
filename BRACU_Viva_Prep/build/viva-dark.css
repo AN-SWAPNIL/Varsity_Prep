@@ -1,0 +1,252 @@
+:root {
+  color-scheme: dark;
+  --paper: #2b2e34;
+  --paper-alt: #25282e;
+  --panel: #32363d;
+  --text: #e6e3db;
+  --muted: #b9bec7;
+  --heading: #9bc2df;
+  --heading-2: #b6cde0;
+  --accent: #83b6d6;
+  --line: #4c535e;
+  --code: #24272d;
+  --quote: #303943;
+}
+
+@page {
+  size: A4;
+  margin: 17mm 15mm 19mm;
+}
+
+html,
+body {
+  background: var(--paper) !important;
+  color: var(--text) !important;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+html {
+  font-size: 10.25pt;
+}
+
+body {
+  box-sizing: border-box;
+  max-width: none;
+  margin: 0;
+  font-family: "Segoe UI", "Noto Sans", "Arial", sans-serif;
+  line-height: 1.48;
+  overflow-wrap: anywhere;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--heading);
+  line-height: 1.2;
+  break-after: avoid-page;
+  page-break-after: avoid;
+}
+
+h1 {
+  margin: 1.15em 0 0.55em;
+  padding-bottom: 0.22em;
+  font-size: 1.72rem;
+  border-bottom: 1px solid var(--line);
+}
+
+h2 {
+  margin: 1em 0 0.42em;
+  font-size: 1.38rem;
+  color: var(--heading-2);
+}
+
+h3 {
+  margin: 0.9em 0 0.35em;
+  font-size: 1.16rem;
+}
+
+h4 {
+  margin: 0.75em 0 0.3em;
+  font-size: 1.04rem;
+}
+
+p,
+ul,
+ol,
+dl,
+table,
+pre,
+blockquote {
+  margin-top: 0.42em;
+  margin-bottom: 0.72em;
+}
+
+li {
+  margin: 0.16em 0;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+strong {
+  color: #f0ede6;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 1.3em 0;
+}
+
+blockquote {
+  margin-left: 0;
+  padding: 0.55em 0.85em;
+  color: #d7dbe0;
+  background: var(--quote);
+  border-left: 4px solid #6f9cba;
+  border-radius: 0 5px 5px 0;
+  break-inside: avoid-page;
+}
+
+code,
+kbd,
+samp {
+  font-family: "Cascadia Mono", "Consolas", "Noto Sans Mono", monospace;
+}
+
+code {
+  padding: 0.08em 0.28em;
+  color: #f0d9ae;
+  background: var(--code);
+  border-radius: 3px;
+}
+
+pre {
+  padding: 0.72em 0.85em;
+  overflow: hidden;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  color: #e8e5de;
+  background: var(--code);
+  border: 1px solid #424852;
+  border-radius: 6px;
+  break-inside: auto;
+}
+
+pre code {
+  padding: 0;
+  color: inherit;
+  background: transparent;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.93em;
+}
+
+thead {
+  display: table-header-group;
+}
+
+tr {
+  break-inside: avoid-page;
+}
+
+th,
+td {
+  padding: 0.36em 0.48em;
+  vertical-align: top;
+  border: 1px solid var(--line);
+}
+
+th {
+  color: #edf0f2;
+  background: #39404a;
+}
+
+tbody tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.018);
+}
+
+img,
+svg {
+  max-width: 100%;
+  height: auto;
+}
+
+figure {
+  margin: 0.8em auto;
+  text-align: center;
+  break-inside: avoid-page;
+}
+
+.mermaid-figure {
+  padding: 0.65em;
+  background: var(--paper-alt);
+  border: 1px solid var(--line);
+  border-radius: 7px;
+}
+
+.mermaid-image {
+  max-height: 205mm;
+  object-fit: contain;
+}
+
+math {
+  color: #f1eee7;
+  font-size: 1.02em;
+}
+
+.display.math {
+  display: block;
+  margin: 0.72em 0;
+  overflow-wrap: normal;
+  text-align: center;
+  break-inside: avoid-page;
+}
+
+nav#TOC {
+  padding: 0.75em 1em;
+  background: var(--paper-alt);
+  border: 1px solid var(--line);
+  border-radius: 7px;
+}
+
+nav#TOC ul {
+  margin: 0.2em 0;
+}
+
+.volume-break {
+  display: block;
+  break-before: page;
+  page-break-before: always;
+}
+
+body > h1:first-of-type {
+  margin-top: 0;
+}
+
+@media print {
+  a[href]::after {
+    content: "";
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  table,
+  pre,
+  blockquote,
+  figure {
+    orphans: 3;
+    widows: 3;
+  }
+}

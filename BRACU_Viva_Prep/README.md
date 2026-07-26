@@ -153,10 +153,22 @@ Requirements:
 - Chrome or Edge
 - Mermaid CLI (`mmdc`) for Mermaid diagrams
 
-From `BRACU_Viva_Prep`:
+From the workspace root (`Varsity_Prep`):
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\BRACU_Viva_Prep\build\build_viva_pdf.ps1
+```
+
+Or, after entering `BRACU_Viva_Prep`:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\build\build_viva_pdf.ps1
+```
+
+The generated file is:
+
+```text
+BRACU_Viva_Prep\BRACU_CSE_Viva_Slide_Based_Detailed_Ahmmad_Nur_Swapnil.pdf
 ```
 
 The stylesheet uses a comfortable charcoal background (`#2b2e34`), soft off-white text, muted blue headings, and low-contrast panels. The build renders Mermaid diagrams, embeds all resources, generates bookmarks and links, validates the PDF, and removes temporary browser/rendering files after success.
