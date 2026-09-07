@@ -8,7 +8,7 @@ filters:
 ---
 
 <!-- Edit prose, equations, tables and notes here. Run build_editable.py: its
-Quarto filter and native-shape composer expand 16 frames into 44 reveals.
+Quarto filter and native-shape composer expand 17 frames into 42 reveals.
 A reveal div's from attribute controls
 when it appears. TikZ image labels remain part of the original drawing. -->
 
@@ -26,7 +26,7 @@ Department of Computer Science and Engineering
 Green University of Bangladesh
 
 ::: {.notes}
-Frame 1/16, 0:00–0:10. Introduce yourself and the learning objective. This is a rehearsed overview for students familiar with basic graphs, Boolean logic and polynomial time. The main text, tables and equations in this version are editable PowerPoint objects. Text inside the original TikZ figures is part of those images.
+Frame 1/17. Introduce yourself and the learning objective. This is a rehearsed overview for students familiar with basic graphs, Boolean logic and polynomial time. The main text, tables and equations in this version are editable PowerPoint objects. Text inside the original TikZ figures is part of those images.
 :::
 
 ## Why Do We Need NP-Completeness? {steps="3"}
@@ -46,7 +46,7 @@ The dotted arrows show the learning sequence, not set containment.
 :::
 
 ::: {.notes}
-Frame 2/16, 0:10–0:30 across all reveals. Distinguish solving, verifying and comparing. Preview the direction: a known hard problem reduces to the new target.
+Frame 2/17. Distinguish solving, verifying and comparing. Preview the direction: a known hard problem reduces to the new target.
 :::
 
 ## Start with P and NP {steps="3"}
@@ -84,7 +84,7 @@ NP means **nondeterministic polynomial time**, not “non-polynomial.” Whether
 ::::
 
 ::: {.notes}
-Frame 3/16, 0:30–1:05. Explain the formula verbally: a YES instance has a short accepting certificate, and a NO instance has none. A verifier checks the color domain as well as the edges. The solver can ignore a certificate, proving P is contained in NP.
+Frame 3/17. Explain the formula verbally: a YES instance has a short accepting certificate, and a NO instance has none. A verifier checks the color domain as well as the edges. The solver can ignore a certificate, proving P is contained in NP.
 :::
 
 ## From NP-Hard to NP-Complete {steps="2"}
@@ -117,7 +117,7 @@ $P\subseteq NP$ is known. The exact boundary of $P$ is not drawn because whether
 ::::
 
 ::: {.notes}
-Frame 4/16, 1:05–1:40. Point at the intersection. NP-hardness does not imply membership in NP. NP-completeness does not prove that a polynomial algorithm is impossible; P versus NP remains open.
+Frame 4/17. Point at the intersection. NP-hardness does not imply membership in NP. NP-completeness does not prove that a polynomial algorithm is impossible; P versus NP remains open.
 :::
 
 ## Polynomial-Time Reduction: an Answer-Preserving Translator {steps="3"}
@@ -157,7 +157,7 @@ This illustrates the mechanics; a hardness proof starts from a known hard proble
 ::::
 
 ::: {.notes}
-Frame 5/16, 1:40–2:20. Demonstrate both a YES and a NO instance. Doubling a binary integer is linear in its bit length. The reduction transforms instances without solving the hard source instance.
+Frame 5/17. Demonstrate both a YES and a NO instance. Doubling a binary integer is linear in its bit length. The reduction transforms instances without solving the hard source instance.
 :::
 
 ## Reusable Recipe: Proving a Problem NP-Complete {steps="3"}
@@ -191,7 +191,7 @@ If $A$ is NP-hard and $A\le_p B$, then $B$ is NP-hard.
 :::
 
 ::: {.notes}
-Frame 6/16, 2:20–2:45. Both obligations are necessary. Reducing an easy problem to B alone does not establish NP-hardness. The displayed implication requires A to be NP-hard.
+Frame 6/17. Both obligations are necessary. Reducing an easy problem to B alone does not establish NP-hardness. The displayed implication requires A to be NP-hard.
 :::
 
 ## Worked Reduction: 3-SAT reduces to 3-COLOR {steps="3"}
@@ -224,7 +224,7 @@ This illustrates the general proof recipe; it is not the definition of reduction
 :::
 
 ::: {.notes}
-Frame 7/16, 2:45–3:10. State the two decision questions before showing the construction. The translator builds the graph without knowing a satisfying assignment.
+Frame 7/17. State the two decision questions before showing the construction. The translator builds the graph without knowing a satisfying assignment.
 :::
 
 ## Encoding Truth with Colors {steps="2"}
@@ -251,7 +251,7 @@ Connect $x_i$ and $\neg x_i$ to each other and to $B$.
 ::::
 
 ::: {.notes}
-Frame 8/16, 3:10–3:40. Ask which color the negated variable must take once xi=T. The names T/F/B are relative to the palette; the physical paint colors can be permuted.
+Frame 8/17. Ask which color the negated variable must take once xi=T. The names T/F/B are relative to the palette; the physical paint colors can be permuted.
 :::
 
 ## Constructing the Exact Clause Gadget {steps="4"}
@@ -287,54 +287,79 @@ All lines are ordinary edges. White/gray vertices are unassigned, not extra colo
 ::::
 
 ::: {.notes}
-Frame 9/16, 3:40–4:20 across four reveals. Show the vertices, literal arms, T links, and forcing path in order. Literal vertices already connect to B, so their fixed colors are T/F. Line crossings without a vertex circle are not junctions. The fixed palette edges still exist even when omitted here. The gadget's result is extendability, not an output vertex color.
+Frame 9/17. Show the vertices, literal arms, T links, and forcing path in order. Literal vertices already connect to B, so their fixed colors are T/F. Line crossings without a vertex circle are not junctions. The fixed palette edges still exist even when omitted here. The gadget's result is extendability, not an output vertex color.
 :::
 
-## Why the Clause Gadget Encodes OR {steps="3"}
+## Why the Clause Gadget Encodes OR: Impossible Case {steps="2"}
 
 :::: {.columns}
-::: {.column width="48%"}
-**All inputs are $F$: impossible**
+::: {.column width="35%"}
+**All inputs are $F$**
 
-Each $a_i$ is forced to $B$. Each $b_i$ can therefore use only $T$ or $F$.
+If every $\ell_i=F$, the edges $(\ell_i,a_i)$ and $(T,a_i)$ force every $a_i$ to color $B$.
 
-![](editable_assets/diagram-12-1.png){diagram="12" width="4.1in" height="0.8in"}
-
-From $T$, the first three edges force $F,T,F$. The last edge then joins two $F$ vertices.
-
-::: {.reveal from="3"}
-**$F,F,F$: no extension.**  
-All seven other input patterns have an extension.
-:::
-:::
-::: {.column width="48%"}
 ::: {.reveal from="2"}
-**At least one input is $T$: possible**
+**Then the path breaks**
 
-Choose one true input $\ell_i$. Set $a_i=F$, $b_i=B$ and every other $a_j=B$.
+Each $b_i$ can use only $T$ or $F$. Along
 
-![](editable_assets/diagram-13-1.png){diagram="13" width="3.65in" height="2.1in"}
+$$T-b_1-b_2-b_3-F,$$
 
-| Chosen true position | (b₁, b₂, b₃) |
-|:---|:---|
-| i = 1 | (B, F, T) |
-| i = 2 | (F, B, T) |
-| i = 3 (shown) | (F, T, B) |
+the colors must alternate $F,T,F$. The final edge joins two $F$ vertices. That is illegal.
 :::
+:::
+::: {.column width="62%"}
+![](editable_assets/diagram-12-1.png){diagram="12"}
+
+Full clause gadget plus palette.
 :::
 ::::
 
 ::: {.notes}
-Frame 10/16, 4:20–4:55. Trace the all-false conflict before the successful case. Choose only one true input to supply the B-colored b vertex. The other a vertices can all be B even if their literals are also true. The three witness rows cover every satisfying pattern. The image on the left is a forced failed coloring, not a legal coloring.
+Frame 10/17. The crossed white b3 means no legal color remains: its neighbors a3, b2, and F already use B, T, and F. White is unassigned, not a fourth color. Equivalently the forced path would demand b3=F and clash with the palette F. The drawing shows a failed partial coloring, not a valid coloring. Line crossings without vertex circles are not junctions.
 :::
 
-## Evaluating One Complete Formula {steps="3"}
+## Why the Clause Gadget Encodes OR: Possible Case {steps="2"}
+
+:::: {.columns}
+::: {.column width="35%"}
+**At least one input is $T$**
+
+Suppose $\ell_3=T$. Choose
+
+$$a_3=F,\qquad b_3=B.$$
+
+For the other two false inputs, keep $a_1=a_2=B$.
+
+::: {.reveal from="2"}
+**Legal completion exists**
+
+$$b_1=F,\quad b_2=T,\quad b_3=B.$$
+
+Every edge joins differently colored endpoints.
+:::
+:::
+::: {.column width="62%"}
+![](editable_assets/diagram-13-1.png){diagram="13"}
+
+Full clause gadget plus palette.
+:::
+::::
+
+::: {.reveal from="2"}
+**$F,F,F$: no extension; any pattern with at least one $T$: some extension exists.**
+:::
+
+::: {.notes}
+Frame 11/17. The picture is the FFT example. To justify all satisfying patterns, choose any true input i, set ai=F and bi=B, and every other aj=B (legal even when another literal is true). Complete (b1,b2,b3) as (B,F,T) for i=1, (F,B,T) for i=2, or (F,T,B) for i=3. Verify the literal arms, T-links and path edges. Thus the example supports a general construction, not merely an assertion based on one truth pattern.
+:::
+
+## Evaluating One Complete Formula {steps="2"}
 
 $$\phi=(x_1\vee\neg x_2\vee x_3)\land(\neg x_1\vee x_2\vee\neg x_3).$$
 
 :::: {.columns}
-::: {.column width="48%"}
-::: {.reveal from="2"}
+::: {.column width="45%"}
 **Clause input ports**
 
 $$C_1:(x_1,\neg x_2,x_3),$$
@@ -342,9 +367,7 @@ $$C_2:(\neg x_1,x_2,\neg x_3).$$
 
 Each clause receives its own six fresh internal vertices.
 :::
-:::
-::: {.column width="48%"}
-::: {.reveal from="3"}
+::: {.column width="50%"}
 **One satisfying assignment**
 
 $$x_1=T,\quad x_2=T,\quad x_3=F.$$
@@ -354,12 +377,17 @@ Thus
 $$C_1=(T,F,F),\quad C_2=(F,T,T).$$
 
 Both clause gadgets can be extended.
+
+::: {.reveal from="2"}
+**Why it works**
+
+Each clause has at least one true input, so each clause gadget admits a legal 3-coloring extension.
 :::
 :::
 ::::
 
 ::: {.notes}
-Frame 11/16, 4:55–5:15. Evaluate both clauses. This assignment is a demonstration after graph construction; the reduction does not need to find it.
+Frame 12/17. Evaluate both clauses under the displayed assignment. This assignment illustrates satisfiability after construction; the reduction need not discover it to build the graph.
 :::
 
 ## Assembling the Formula Graph {steps="3"}
@@ -371,7 +399,19 @@ The palette and literal vertices are shared; each clause has fresh internal vert
 :::
 
 ::: {.notes}
-Frame 12/16, 5:15–5:40. This is an assembly schematic: the boxes represent copies of the exact gadget already proved. Shared literals enforce a consistent assignment across clauses. Each copy also uses palette T and F. No edges between distinct clauses' internal vertices are needed.
+Frame 13/17. This is an assembly schematic: the boxes represent copies of the exact gadget already proved. Shared literals enforce a consistent assignment across clauses. Each copy also uses palette T and F. No edges between distinct clauses' internal vertices are needed.
+:::
+
+## Full Construction for the Two Clauses {steps="1"}
+
+![](editable_assets/diagram-15-1.png){diagram="15"}
+
+Existing literal vertices are reused directly. Only $a_i,b_i$ are new for each clause.
+
+Blue edges are $T$-links; red edges are links to $F$.
+
+::: {.notes}
+Frame 14/17. Trace C1 ports x1, not-x2, x3 and C2 ports not-x1, x2, not-x3. Palette and variable vertices are shared, while each clause has six private internal vertices. There are 21 vertices and 38 edges for n=3,m=2. Crossings without circles are not vertices; repeated a/b labels are local to each dashed clause box. This full graph is uncolored at its variable/internal vertices, not a claim that gray is a fourth color.
 :::
 
 ## Correctness and Complexity of the Reduction {steps="3"}
@@ -396,7 +436,7 @@ Frame 12/16, 5:15–5:40. This is an assembly schematic: the boxes represent cop
 ::::
 
 ::: {.reveal from="3"}
-![](editable_assets/diagram-15-1.png){diagram="15" width="8.6in" height="1.7in"}
+![](editable_assets/diagram-16-1.png){diagram="16" width="8.6in" height="1.7in"}
 
 For $n$ variables and $m$ clauses:
 
@@ -406,38 +446,7 @@ Enumerating the vertices and edges takes polynomial time.
 :::
 
 ::: {.notes}
-Frame 13/16, 5:40–6:20. State both directions, then the counts. Palette: three vertices/edges. Each variable: two vertices and three edges. Each clause: six vertices and thirteen edges. Verification is O(V+E); with NP-hardness this proves 3-COLOR NP-complete. Linear many graph records can require logarithmic-size vertex indices in a bit encoding.
-:::
-
-## A Second Reduction Pattern: 3-SAT reduces to CLIQUE {steps="3"}
-
-$$\begin{aligned}\phi'={}&(x_1\vee\neg x_2\vee x_3)\land(\neg x_1\vee x_2\vee x_3)\\&\land(x_1\vee x_2\vee\neg x_3).\end{aligned}$$
-
-:::: {.columns}
-::: {.column width="48%"}
-- Create one vertex per literal occurrence.
-- Put vertices in clause groups.
-- Connect different-clause vertices when their literals are not contradictory.
-- Ask for $m$ pairwise adjacent vertices: an $m$-clique.
-
-::: {.reveal from="3"}
-One pairwise noncontradictory literal occurrence from each clause forms a clique.
-:::
-:::
-::: {.column width="48%"}
-::: {.reveal from="2"}
-![](editable_assets/diagram-16-1.png){diagram="16" width="3.8in" height="2.6in"}
-:::
-::: {.reveal from="3"}
-Conversely, an $m$-clique chooses one occurrence per clause with no complementary pair. Set them true.
-
-Construction: $3m$ vertices and $O(m^2)$ edges.
-:::
-:::
-::::
-
-::: {.notes}
-Frame 14/16, 6:20–6:40. Give this only a brief explanation. No intraclause edges means an m-clique must contain exactly one vertex from each clause. The highlighted clique chooses x1 from C1, x2 from C2 and x1 from C3. The two x1 occurrences are distinct vertices and compatible. In the reverse direction choose one true literal per satisfied clause. CLIQUE membership in NP follows by checking the selected vertices' pairwise edges.
+Frame 15/17. State both directions, then the counts. Palette: three vertices/edges. Each variable: two vertices and three edges. Each clause: six vertices and thirteen edges. Verification is O(V+E); with NP-hardness this proves 3-COLOR NP-complete. Linear many graph records can require logarithmic-size vertex indices in a bit encoding.
 :::
 
 ## Takeaway {steps="4"}
@@ -455,7 +464,7 @@ Core references: Sipser; Cormen–Leiserson–Rivest–Stein; Princeton COS 423 
 :::
 
 ::: {.notes}
-Frame 15/16, 6:40–6:55. End with the proof recipe. If time permits, ask students which reduction direction proves B hard: A to B or B to A? Answer: known-hard A to target B.
+Frame 16/17. End with the proof recipe. If time permits, ask students which reduction direction proves B hard: A to B or B to A? Answer: known-hard A to target B.
 :::
 
 ## References {steps="1"}
@@ -470,5 +479,5 @@ Frame 15/16, 6:40–6:55. End with the proof recipe. If time permits, ask studen
 The exact six-vertex clause gadget and its 13-edge construction follow the [Princeton reduction notes](https://www.cs.princeton.edu/~wayne/cs423/lectures/reductions-poly-4up.pdf).
 
 ::: {.notes}
-Frame 16/16, 6:55–7:00. Acknowledge the sources; do not read the bibliography aloud. Timing is across all reveals within each frame and leaves no discussion time. Allow substantially longer for a full first lesson.
+Frame 17/17. Acknowledge the sources; do not read the bibliography aloud. Timing is across all reveals within each frame and leaves no discussion time. Allow substantially longer for a full first lesson.
 :::

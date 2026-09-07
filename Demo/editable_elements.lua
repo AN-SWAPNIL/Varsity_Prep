@@ -1,6 +1,6 @@
 -- Export native elements through Quarto/Pandoc. build_editable.py positions
--- those elements and assembles the original 44 reveal slides.
-local counts={1,1,1,1,1,1,1,1,1,1,4,1,1,3,1,3,3}
+-- those elements and assembles the current reveal slides.
+local counts={1,1,1,1,1,1,1,1,1,1,4,1,1,3,1,1,3}
 function Pandoc(doc)
   local output=pandoc.Blocks({})
   local manifest={}

@@ -46,6 +46,15 @@ LAYOUT = {
 16:{'F0':(.55,1.6,8.9,4.9,21)},
 }
 
+# September 8: split the two clause cases, add full construction, remove CLIQUE.
+LAYOUT.update({
+ 17:LAYOUT[16], 16:LAYOUT[15], 15:LAYOUT[13], 13:LAYOUT[12],
+ 12:{'F0':(.5,1.2,9,.8,21),'L0':(.4,2.35,4.45,3.8,19),'R0':(5.15,2.35,4.45,4.7,18)},
+ 14:{'F0':(.45,1.02,9.1,5.55,18),'F1':(.45,6.65,9.1,.75,15)},
+ 10:{'L0':(.4,1.15,3.15,5.8,18),'R0':(3.85,1.2,5.75,4.9,18),'R1':(3.85,6.3,5.75,.45,14)},
+ 11:{'L0':(.4,1.15,3.15,5.5,17),'R0':(3.85,1.2,5.75,4.9,18),'R1':(3.85,6.3,5.75,.45,14),'F0':(.4,6.95,9.2,.42,14)},
+})
+
 def diagram_crops():
     """One visible-content crop for all reveals of a drawing; source PNGs stay intact.
 
@@ -55,7 +64,9 @@ def diagram_crops():
     """
     result = {}
     groups = {}
-    for path in ASSETS.glob('diagram-*.png'):
+    figure_counts=json.loads((ASSETS/'figure-counts.json').read_text())
+    active=[ASSETS/f'diagram-{i:02d}-{phase}.png' for i,count in enumerate(figure_counts,1) for phase in range(1,count+1)]
+    for path in active:
         groups.setdefault(path.stem.rsplit('-', 1)[0], []).append(path)
     for paths in groups.values():
         boxes = []
@@ -240,7 +251,7 @@ def compose():
                     if name not in used_notes:continue
                 dst.writestr(item,src.read(name))
             for name,data in output.items():dst.writestr(name,data)
-    print('Assembled 44 slides with native editable text, equations and tables.')
+    print(f'Assembled {len(new_ids)} slides with native editable text, equations and tables.')
 
 def run(args):
     p = subprocess.run([str(a) for a in args], cwd=ROOT, text=True,
@@ -265,6 +276,7 @@ def figures():
         run(['xelatex','-interaction=nonstopmode','-halt-on-error',f'-output-directory={BUILD}',path])
     ranges = [(int(a),int(b)) for a,b in re.findall(r'\\beamer@framepages\s*\{(\d+)\}\{(\d+)\}',(BUILD/'figures.nav').read_text())]
     assert len(ranges)==17
+    (ASSETS/'figure-counts.json').write_text(json.dumps([last-first+1 for first,last in ranges]))
     pdf=fitz.open(BUILD/'figures.pdf')
     for diagram,(first,last) in enumerate(ranges,1):
         bbox=fitz.Rect()
@@ -350,7 +362,8 @@ def template():
 def verify():
     with zipfile.ZipFile(ROOT/f'{STEM}.pptx') as z:
         slides=sorted((n for n in z.namelist() if re.fullmatch(r'ppt/slides/slide\d+\.xml',n)),key=lambda n:int(re.search(r'(\d+)\.xml',n).group(1)))
-        assert len(slides)==44, len(slides)
+        expected=len(json.loads((BUILD/'elements.json').read_text())['slides'])
+        assert len(slides)==expected==42, len(slides)
         counts={'slides':len(slides),'text_runs':0,'native_equations':0,'pictures':0,'tables':0}
         for f in slides:
             r=ET.fromstring(z.read(f))
