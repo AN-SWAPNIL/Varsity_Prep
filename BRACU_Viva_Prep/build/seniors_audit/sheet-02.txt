@@ -1,0 +1,78 @@
+# 2. Useful Links  (visible)
+
+C4: Useful Links
+F7: Last Minute Notes by me
+I7: Shamlao Tejas
+K7: CSE19 list of job circulars
+D8: GATE notes for CSE
+I9: Chaldal and Iqvia
+D10: OS, OOP, DS, Networking Notes
+F10: Digital Logic Design
+K11: 19 batch drive links:
+D12: CS Engineering Gyan (CSE GYAN)
+F12: OS Part 1 Summary
+I13: Therap Interview 17
+D15: https://seanprashad.com/leetcode-patterns/
+F15: Security Sohrab Sir Slides Summary
+F17: Basics of Computer Networks
+I17: https://github.com/s-kachroo/SamsungPractice/tree/master
+F19: OS Part 1 questions from slides
+K19: Good Prompt for ChatGPT in order to study off notes?
+F21: Software Engineering
+F23: Machine Learning
+E28: My interview Experiences
+D32: Therap Intewview
+F32: Synesis interview
+H32: Samsung Interview
+J32: My UIU Interview
+L32: BRAC Interview Experience
+E45: Useful Resources From Seniors and Recruitment Ques.
+D48: Fahmid Vai's Doc about UIU
+F48: Farhan Vai(18)'s Doc about Samsung
+H48: Swargo Vai's Chaldal Practise Problems
+J48: Hisham Vai(18)'s Industry guideline
+L48: Muntaka Apu's UIU Prep Doc
+D50: Tamim Vai(18)'s SW Interview Question Website
+F50: 18 Batch's Podcast Chotha
+H50: Farhan Vai(18)'s "Last Piece of Me"
+J50: Ajwad Vai's UIU Prep Sheet
+L50: Ehsanul Vai's Interview Experiences
+D52: Zarif Vai's OP Github Repo
+F52: View BUET CSE19 Recruitment Questions
+
+LINKS
+I7: https://docs.google.com/document/d/1aubNJJs_RN6vW9FO9JY4Y5Bky0z5lnKC6CuekBmLucc/edit?tab=t.0
+K7: https://docs.google.com/spreadsheets/d/106fpuQ8LUw4YCSiABrYCPe6z-IWNJYkmfQ0VH-vVtxk/edit?gid=0
+D8: https://byjus.com/gate/gate-notes-for-cse/
+I9: https://docs.google.com/document/d/1g3Ga4ff4YHFCmFPX7ygyF67eHHmAVUL5sx-hN-vsWek/edit?usp=sharing
+D10: https://drive.google.com/drive/folders/1XGI3YnWEviwJ3MryCH2f7dhlN9tnYTzh
+F10: https://docs.google.com/document/d/1GAFidRBnAyUC303vgkNuVu6qVrt_8TFGSbi_LbFSipI/edit?usp=sharing
+K11: https://docs.google.com/document/d/1nf0bugqUYhd3J3MKyr2RHBoH_maz514ycuqCnIL61T0/edit?tab=t.0
+D12: https://csegyan.com/
+F12: https://docs.google.com/document/d/1evMgktJNbSYfQyq7KoKFpjuklup8JUgShBGcej1kZi4/edit?usp=sharing
+I13: https://docs.google.com/document/d/1fHt6839QK96B3qv75Vr8oDctPyG1PF0_Z_bmL8SOdM0/edit?tab=t.0
+D15: https://seanprashad.com/leetcode-patterns/
+F15: https://docs.google.com/document/d/12MArjW0O_SqTdYY_gzWQQF6cw985zXH-3SrXhgcm6ug/edit?usp=sharing
+F17: https://docs.google.com/document/d/1wzK1o1dpdDGx6pEbStfcfsFnwb_1tIaKvmQquPzO8bM/edit?usp=sharing
+I17: https://github.com/s-kachroo/SamsungPractice/tree/master
+F19: https://docs.google.com/document/d/1RtaI1e4yvSbA04SgMvJoIRFH93utoGasBAd1rKgeFvo/edit?usp=sharing
+K19: https://www.reddit.com/r/ChatGPT/comments/1fu7ryy/good_prompt_for_chatgpt_in_order_to_study_off/
+F21: https://docs.google.com/document/d/151gS47-_NLDMLDexxNu5qwSzurBqpkHU2XfBP4kR78s/edit?tab=t.0
+F23: https://docs.google.com/document/d/1u8tCysMWDdiwPyIas4Nm3DwtOHVWcGTCwGM8MFHrU1U/edit?usp=sharing
+D32: https://docs.google.com/document/d/1ZHVtholGCiQZss4hCz44YambHxKqn20o7mRmHMOD06I/edit?usp=sharing
+J32: https://docs.google.com/document/d/1hljFzttTNT1w3nmSWZ17xHPRHmyKPm31iGm-CJD3opg/edit?usp=sharing
+L32: https://docs.google.com/document/d/1N45Y85X9hZ58W1duqc03b2Ibq3EWpG3ENGTA09rP2V8/edit?usp=sharing
+D48: https://docs.google.com/document/d/1klGoTB9WDUklhCsriIxEC6hZfu_bxnP5OmSjGJzkKnE/edit?tab=t.0
+F48: https://docs.google.com/document/d/1R5yFpGWKwxecFFbsumWNEPqGw-p8hZ2bfrFhiTYIdFM/edit?tab=t.0
+H48: https://drive.google.com/drive/folders/174qNBlO9-bVdV_rEWiIi3OsH153DadmB?usp=drive_link
+J48: https://docs.google.com/document/d/18X6ARhk0YopuVxzifvJd8XD8gH7iZAsAYVtA2eMMkJ0/edit?tab=t.0
+L48: https://docs.google.com/document/d/1Y3JrYGUxGX7zMeh2xa2Ye-jCt78_851q9gaCOvDo2pc/mobilebasic
+D50: https://tamimehsan.github.io/interview-questions-bangladesh/
+F50: https://docs.google.com/document/d/1lVgs-aMGDKcnguKP-jrr7Gq7FeGaTuU8tCcw-gmZ4dA/edit?tab=t.0
+H50: https://drive.google.com/drive/folders/13128-QAkj3jiJvZBUdhwgYq1V-T4U-ea
+J50: https://docs.google.com/spreadsheets/d/1vQyGF-aIGsRVgjKsymuAVNUygmuQ_jJbWOiTlRV-29A/edit?gid=0
+L50: https://docs.google.com/document/d/17tJAVzisu1rRoqqw2YO3zUfSdmYnoe89FDwkmNX6y3E/edit?usp=sharing
+D52: https://github.com/zarif98sjs
+F52: https://docs.google.com/document/d/1sT9f7ID4k_F5VWnat9Yu5xdcG_wwckrAaQNmBeBmirc/edit?tab=t.0
+
+IMAGES

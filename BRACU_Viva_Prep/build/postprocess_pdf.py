@@ -42,9 +42,23 @@ def normalized(text: str) -> str:
 def headings_from_markdown(paths: list[Path]) -> list[Heading]:
     result: list[Heading] = []
     for path in paths:
+        source = path.read_text(encoding="utf-8")
+        visible = []
+        fence = None
+        for line in source.splitlines():
+            marker = re.match(r"^\s*(`{3,}|~{3,})", line)
+            if marker:
+                run = marker.group(1)
+                if fence is None:
+                    fence = run
+                elif run[0] == fence[0] and len(run) >= len(fence):
+                    fence = None
+                continue
+            if fence is None:
+                visible.append(line)
         titles = [
             display_title(item)
-            for item in H1.findall(path.read_text(encoding="utf-8"))
+            for item in H1.findall("\n".join(visible))
             if normalized(display_title(item)) not in {"bismillah", ""}
         ]
         if not titles:
@@ -55,7 +69,15 @@ def headings_from_markdown(paths: list[Path]) -> list[Heading]:
 
 
 def find_heading_pages(doc: fitz.Document, headings: list[Heading]) -> list[list[object]]:
-    page_text = [normalized(page.get_text("text")) for page in doc]
+    # Exclude small-font table-of-contents entries, which duplicate titles.
+    page_text = []
+    for page in doc:
+        blocks = []
+        for block in page.get_text("dict")["blocks"]:
+            spans = [s for line in block.get("lines", []) for s in line["spans"]]
+            if any(s["size"] >= 16.5 for s in spans):
+                blocks.append(" ".join(s["text"] for s in spans))
+        page_text.append(normalized(" ".join(blocks)))
     toc: list[list[object]] = []
     cursor = 0
 
@@ -79,9 +101,7 @@ def find_heading_pages(doc: fitz.Document, headings: list[Heading]) -> list[list
                 break
 
         if found is None:
-            # A bookmark with a conservative current-page fallback is still more useful
-            # than dropping the section completely.
-            found = min(cursor, len(page_text) - 1)
+            raise RuntimeError(f"Cannot locate body heading for bookmark: {heading.title}")
         else:
             cursor = found
 

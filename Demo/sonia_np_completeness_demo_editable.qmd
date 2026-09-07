@@ -1,0 +1,474 @@
+---
+format:
+  pptx:
+    reference-doc: editable_assets/editable-reference.pptx
+slide-level: 2
+filters:
+  - editable_elements.lua
+---
+
+<!-- Edit prose, equations, tables and notes here. Run build_editable.py: its
+Quarto filter and native-shape composer expand 16 frames into 44 reveals.
+A reveal div's from attribute controls
+when it appears. TikZ image labels remain part of the original drawing. -->
+
+## NP-Completeness and Reduction Techniques {steps="1"}
+
+**How Efficient Transformations Prove Computational Hardness**
+
+Most. Sonia Khatun
+
+BSc in Department of Computer Science and Engineering  
+Bangladesh University of Engineering and Technology (BUET)
+
+**Demo Lecture for the Position of Lecturer**  
+Department of Computer Science and Engineering  
+Green University of Bangladesh
+
+::: {.notes}
+Frame 1/16, 0:00–0:10. Introduce yourself and the learning objective. This is a rehearsed overview for students familiar with basic graphs, Boolean logic and polynomial time. The main text, tables and equations in this version are editable PowerPoint objects. Text inside the original TikZ figures is part of those images.
+:::
+
+## Why Do We Need NP-Completeness? {steps="3"}
+
+![](editable_assets/diagram-01-1.png){diagram="1" width="8.8in" height="1.45in"}
+
+::: {.reveal from="2"}
+**The central proof question**
+
+How can we transfer the known hardness of one problem to a new problem?
+:::
+
+::: {.reveal from="3"}
+![](editable_assets/diagram-02-1.png){diagram="2" width="7.4in" height="1in"}
+
+The dotted arrows show the learning sequence, not set containment.
+:::
+
+::: {.notes}
+Frame 2/16, 0:10–0:30 across all reveals. Distinguish solving, verifying and comparing. Preview the direction: a known hard problem reduces to the new target.
+:::
+
+## Start with P and NP {steps="3"}
+
+:::: {.columns}
+::: {.column width="48%"}
+**P: solve efficiently**
+
+Decision problems solvable by a deterministic algorithm in polynomial time.
+
+![](editable_assets/diagram-03-1.png){diagram="3" width="2.5in" height="1.5in"}
+
+Example: reachability can be solved by BFS or DFS.
+
+::: {.reveal from="3"}
+$P\subseteq NP$: a polynomial-time solver can serve as a verifier and ignore the certificate.
+:::
+:::
+::: {.column width="48%"}
+::: {.reveal from="2"}
+**NP: verify efficiently**
+
+There are a polynomial-time verifier $V$ and polynomial $p$ such that
+
+$$x\in L\iff\exists c:\quad\begin{array}{l}|c|\le p(|x|),\\V(x,c)=1.\end{array}$$
+
+![](editable_assets/diagram-04-1.png){diagram="4" width="2.8in" height="1.5in"}
+
+For 3-COLOR, $c$ assigns one of three colors to every vertex; check every edge.
+:::
+::: {.reveal from="3"}
+NP means **nondeterministic polynomial time**, not “non-polynomial.” Whether $P=NP$ is open.
+:::
+:::
+::::
+
+::: {.notes}
+Frame 3/16, 0:30–1:05. Explain the formula verbally: a YES instance has a short accepting certificate, and a NO instance has none. A verifier checks the color domain as well as the edges. The solver can ignore a certificate, proving P is contained in NP.
+:::
+
+## From NP-Hard to NP-Complete {steps="2"}
+
+:::: {.columns}
+::: {.column width="48%"}
+**NP-hard: hard for all of NP**
+
+A problem $H$ is NP-hard if
+
+$$\forall L\in NP,\qquad L\le_p H.$$
+
+$L\le_p H$ means an efficient, answer-preserving translation from $L$ to $H$. An NP-hard problem need not itself belong to NP.
+
+**NP-complete: both properties**
+
+$$H\in NP\quad\text{and}\quad H\text{ is NP-hard}.$$
+
+These are the hardest efficiently verifiable decision problems.
+:::
+::: {.column width="48%"}
+::: {.reveal from="2"}
+![](editable_assets/diagram-05-1.png){diagram="5" width="4.2in" height="2.8in"}
+
+$P\subseteq NP$ is known. The exact boundary of $P$ is not drawn because whether $P=NP$ is open.
+
+**If one NP-complete problem is in $P$, then $P=NP$.**
+:::
+:::
+::::
+
+::: {.notes}
+Frame 4/16, 1:05–1:40. Point at the intersection. NP-hardness does not imply membership in NP. NP-completeness does not prove that a polynomial algorithm is impossible; P versus NP remains open.
+:::
+
+## Polynomial-Time Reduction: an Answer-Preserving Translator {steps="3"}
+
+![](editable_assets/diagram-06-1.png){diagram="6" width="8.8in" height="0.8in"}
+
+:::: {.columns}
+::: {.column width="48%"}
+::: {.reveal from="2"}
+**Formal meaning**
+
+$A\le_p B$: there exists a polynomial-time computable function $f$ such that
+
+$$\forall x,\qquad x\in A\iff f(x)\in B.$$
+
+A solver for $B$ would also solve $A$: $B$ is at least as hard as $A$.
+
+**To prove $B$ hard:** known hard $A\longrightarrow$ target $B$.
+:::
+:::
+::: {.column width="48%"}
+::: {.reveal from="3"}
+**Tiny example: EVEN reduces to MULTIPLE-OF-4**
+
+Use $f(n)=2n$. Then
+
+$$n\text{ is even}\iff 4\mid 2n.$$
+
+| n | f(n) | Preserved? |
+|:---|:---|:---|
+| 6: YES | 12: YES | YES |
+| 7: NO | 14: NO | YES |
+
+This illustrates the mechanics; a hardness proof starts from a known hard problem.
+:::
+:::
+::::
+
+::: {.notes}
+Frame 5/16, 1:40–2:20. Demonstrate both a YES and a NO instance. Doubling a binary integer is linear in its bit length. The reduction transforms instances without solving the hard source instance.
+:::
+
+## Reusable Recipe: Proving a Problem NP-Complete {steps="3"}
+
+:::: {.columns}
+::: {.column width="48%"}
+**1. Membership in NP**
+
+- State a polynomial-size certificate.
+- Give a polynomial-time verifier.
+
+$$B\in NP.$$
+:::
+::: {.column width="48%"}
+::: {.reveal from="2"}
+**2. NP-hardness**
+
+1. Choose a known NP-complete problem $A$.
+2. Construct $f$ in polynomial time.
+3. Prove $x\in A\iff f(x)\in B$.
+
+If $A$ is NP-hard and $A\le_p B$, then $B$ is NP-hard.
+:::
+:::
+::::
+
+::: {.reveal from="3"}
+![](editable_assets/diagram-07-1.png){diagram="7" width="6.6in" height="1.55in"}
+
+**Direction mnemonic:** the known hard problem goes *into* the target problem.
+:::
+
+::: {.notes}
+Frame 6/16, 2:20–2:45. Both obligations are necessary. Reducing an easy problem to B alone does not establish NP-hardness. The displayed implication requires A to be NP-hard.
+:::
+
+## Worked Reduction: 3-SAT reduces to 3-COLOR {steps="3"}
+
+:::: {.columns}
+::: {.column width="48%"}
+**Source: 3-SAT**
+
+A 3-CNF formula is an AND of clauses, each an OR of three literals:
+
+$$\phi=C_1\land\cdots\land C_m.$$
+
+Can a truth assignment satisfy every clause? A literal is a variable or its negation.
+:::
+::: {.column width="48%"}
+**Target: 3-COLOR**
+
+Can the graph’s vertices be colored with three colors so that adjacent vertices have different colors?
+:::
+::::
+
+::: {.reveal from="2"}
+![](editable_assets/diagram-08-1.png){diagram="8" width="7.8in" height="1.55in"}
+:::
+
+::: {.reveal from="3"}
+**Design invariant:** $\phi$ is satisfiable if and only if $G_\phi$ is 3-colorable.
+
+This illustrates the general proof recipe; it is not the definition of reduction.
+:::
+
+::: {.notes}
+Frame 7/16, 2:45–3:10. State the two decision questions before showing the construction. The translator builds the graph without knowing a satisfying assignment.
+:::
+
+## Encoding Truth with Colors {steps="2"}
+
+:::: {.columns}
+::: {.column width="48%"}
+**Palette gadget**
+
+A triangle forces three distinct colors. Name them $T$, $F$ and $B$ (base/helper).
+
+![](editable_assets/diagram-09-1.png){diagram="9" width="3.4in" height="2.7in"}
+:::
+::: {.column width="48%"}
+::: {.reveal from="2"}
+**Variable gadget**
+
+Connect $x_i$ and $\neg x_i$ to each other and to $B$.
+
+![](editable_assets/diagram-10-1.png){diagram="10" width="4.25in" height="2.1in"}
+
+**Exactly one of $x_i$ and $\neg x_i$ receives color $T$.**
+:::
+:::
+::::
+
+::: {.notes}
+Frame 8/16, 3:10–3:40. Ask which color the negated variable must take once xi=T. The names T/F/B are relative to the palette; the physical paint colors can be permuted.
+:::
+
+## Constructing the Exact Clause Gadget {steps="4"}
+
+:::: {.columns}
+::: {.column width="48%"}
+For $C=(\ell_1\vee\ell_2\vee\ell_3)$, add six fresh vertices $a_i,b_i$ and 13 edges:
+
+$$\begin{aligned}
+&(\ell_i,a_i),(a_i,b_i),(T,a_i)\\
+&\qquad\text{for }i=1,2,3,\\
+&(T,b_1),(b_1,b_2),\\
+&(b_2,b_3),(b_3,F).
+\end{aligned}$$
+
+::: {.reveal from="4"}
+**Result: can we complete the coloring?**
+
+With inputs fixed in $\{T,F\}$, the internal coloring extends exactly when at least one input is $T$.
+
+**There is no output vertex.**
+:::
+:::
+::: {.column width="48%"}
+![](editable_assets/diagram-11-1.png){diagram="11" width="4.15in" height="3.5in"}
+
+::: {.reveal from="4"}
+Black: literal arms. Blue: $T$ links. Red: forcing path. Dotted gray: existing edges.
+
+All lines are ordinary edges. White/gray vertices are unassigned, not extra colors.
+:::
+:::
+::::
+
+::: {.notes}
+Frame 9/16, 3:40–4:20 across four reveals. Show the vertices, literal arms, T links, and forcing path in order. Literal vertices already connect to B, so their fixed colors are T/F. Line crossings without a vertex circle are not junctions. The fixed palette edges still exist even when omitted here. The gadget's result is extendability, not an output vertex color.
+:::
+
+## Why the Clause Gadget Encodes OR {steps="3"}
+
+:::: {.columns}
+::: {.column width="48%"}
+**All inputs are $F$: impossible**
+
+Each $a_i$ is forced to $B$. Each $b_i$ can therefore use only $T$ or $F$.
+
+![](editable_assets/diagram-12-1.png){diagram="12" width="4.1in" height="0.8in"}
+
+From $T$, the first three edges force $F,T,F$. The last edge then joins two $F$ vertices.
+
+::: {.reveal from="3"}
+**$F,F,F$: no extension.**  
+All seven other input patterns have an extension.
+:::
+:::
+::: {.column width="48%"}
+::: {.reveal from="2"}
+**At least one input is $T$: possible**
+
+Choose one true input $\ell_i$. Set $a_i=F$, $b_i=B$ and every other $a_j=B$.
+
+![](editable_assets/diagram-13-1.png){diagram="13" width="3.65in" height="2.1in"}
+
+| Chosen true position | (b₁, b₂, b₃) |
+|:---|:---|
+| i = 1 | (B, F, T) |
+| i = 2 | (F, B, T) |
+| i = 3 (shown) | (F, T, B) |
+:::
+:::
+::::
+
+::: {.notes}
+Frame 10/16, 4:20–4:55. Trace the all-false conflict before the successful case. Choose only one true input to supply the B-colored b vertex. The other a vertices can all be B even if their literals are also true. The three witness rows cover every satisfying pattern. The image on the left is a forced failed coloring, not a legal coloring.
+:::
+
+## Evaluating One Complete Formula {steps="3"}
+
+$$\phi=(x_1\vee\neg x_2\vee x_3)\land(\neg x_1\vee x_2\vee\neg x_3).$$
+
+:::: {.columns}
+::: {.column width="48%"}
+::: {.reveal from="2"}
+**Clause input ports**
+
+$$C_1:(x_1,\neg x_2,x_3),$$
+$$C_2:(\neg x_1,x_2,\neg x_3).$$
+
+Each clause receives its own six fresh internal vertices.
+:::
+:::
+::: {.column width="48%"}
+::: {.reveal from="3"}
+**One satisfying assignment**
+
+$$x_1=T,\quad x_2=T,\quad x_3=F.$$
+
+Thus
+
+$$C_1=(T,F,F),\quad C_2=(F,T,T).$$
+
+Both clause gadgets can be extended.
+:::
+:::
+::::
+
+::: {.notes}
+Frame 11/16, 4:55–5:15. Evaluate both clauses. This assignment is a demonstration after graph construction; the reduction does not need to find it.
+:::
+
+## Assembling the Formula Graph {steps="3"}
+
+![](editable_assets/diagram-14-1.png){diagram="14" width="7.8in" height="4.9in"}
+
+::: {.reveal from="3"}
+The palette and literal vertices are shared; each clause has fresh internal vertices.
+:::
+
+::: {.notes}
+Frame 12/16, 5:15–5:40. This is an assembly schematic: the boxes represent copies of the exact gadget already proved. Shared literals enforce a consistent assignment across clauses. Each copy also uses palette T and F. No edges between distinct clauses' internal vertices are needed.
+:::
+
+## Correctness and Complexity of the Reduction {steps="3"}
+
+:::: {.columns}
+::: {.column width="48%"}
+**$\phi$ satisfiable $\Rightarrow G_\phi$ 3-colorable**
+
+- Give each literal its truth color.
+- Every clause has a true literal.
+- Every clause gadget therefore extends to a legal coloring.
+:::
+::: {.column width="48%"}
+::: {.reveal from="2"}
+**$G_\phi$ 3-colorable $\Rightarrow\phi$ satisfiable**
+
+- Read $x_i=true$ exactly when vertex $x_i$ has color $T$.
+- Every colorable clause has a $T$ input.
+- Every clause is therefore satisfied.
+:::
+:::
+::::
+
+::: {.reveal from="3"}
+![](editable_assets/diagram-15-1.png){diagram="15" width="8.6in" height="1.7in"}
+
+For $n$ variables and $m$ clauses:
+
+$$|V|=3+2n+6m,\qquad |E|=3+3n+13m.$$
+
+Enumerating the vertices and edges takes polynomial time.
+:::
+
+::: {.notes}
+Frame 13/16, 5:40–6:20. State both directions, then the counts. Palette: three vertices/edges. Each variable: two vertices and three edges. Each clause: six vertices and thirteen edges. Verification is O(V+E); with NP-hardness this proves 3-COLOR NP-complete. Linear many graph records can require logarithmic-size vertex indices in a bit encoding.
+:::
+
+## A Second Reduction Pattern: 3-SAT reduces to CLIQUE {steps="3"}
+
+$$\begin{aligned}\phi'={}&(x_1\vee\neg x_2\vee x_3)\land(\neg x_1\vee x_2\vee x_3)\\&\land(x_1\vee x_2\vee\neg x_3).\end{aligned}$$
+
+:::: {.columns}
+::: {.column width="48%"}
+- Create one vertex per literal occurrence.
+- Put vertices in clause groups.
+- Connect different-clause vertices when their literals are not contradictory.
+- Ask for $m$ pairwise adjacent vertices: an $m$-clique.
+
+::: {.reveal from="3"}
+One pairwise noncontradictory literal occurrence from each clause forms a clique.
+:::
+:::
+::: {.column width="48%"}
+::: {.reveal from="2"}
+![](editable_assets/diagram-16-1.png){diagram="16" width="3.8in" height="2.6in"}
+:::
+::: {.reveal from="3"}
+Conversely, an $m$-clique chooses one occurrence per clause with no complementary pair. Set them true.
+
+Construction: $3m$ vertices and $O(m^2)$ edges.
+:::
+:::
+::::
+
+::: {.notes}
+Frame 14/16, 6:20–6:40. Give this only a brief explanation. No intraclause edges means an m-clique must contain exactly one vertex from each clause. The highlighted clique chooses x1 from C1, x2 from C2 and x1 from C3. The two x1 occurrences are distinct vertices and compatible. In the reverse direction choose one true literal per satisfied clause. CLIQUE membership in NP follows by checking the selected vertices' pairwise edges.
+:::
+
+## Takeaway {steps="4"}
+
+![](editable_assets/diagram-17-1.png){diagram="17" width="8.8in" height="1.5in"}
+
+::: {.reveal from="4"}
+**One reusable sentence**
+
+To prove a target $B$ NP-complete, show $B\in NP$ and reduce a known NP-complete problem $A$ to $B$ in polynomial time while preserving YES/NO answers.
+
+**Questions?**
+
+Core references: Sipser; Cormen–Leiserson–Rivest–Stein; Princeton COS 423 reduction notes.
+:::
+
+::: {.notes}
+Frame 15/16, 6:40–6:55. End with the proof recipe. If time permits, ask students which reduction direction proves B hard: A to B or B to A? Answer: known-hard A to target B.
+:::
+
+## References {steps="1"}
+
+**Primary references**
+
+- Michael Sipser, *Introduction to the Theory of Computation*.
+- Cormen, Leiserson, Rivest and Stein, *Introduction to Algorithms*.
+- CMU 15-451/651 lecture notes on NP-completeness.
+- Princeton COS 423 lecture notes, *Polynomial-Time Reductions*.
+
+The exact six-vertex clause gadget and its 13-edge construction follow the [Princeton reduction notes](https://www.cs.princeton.edu/~wayne/cs423/lectures/reductions-poly-4up.pdf).
+
+::: {.notes}
+Frame 16/16, 6:55–7:00. Acknowledge the sources; do not read the bibliography aloud. Timing is across all reveals within each frame and leaves no discussion time. Allow substantially longer for a full first lesson.
+:::

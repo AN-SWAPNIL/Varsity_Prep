@@ -1,0 +1,726 @@
+\documentclass[aspectratio=43,8pt]{beamer}
+
+% -------------------------------------------------
+% Minimal Beamer style: preserve the original look
+% -------------------------------------------------
+\usetheme{default}
+\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamercovered{invisible}
+\setbeamertemplate{footline}{%
+    \begin{beamercolorbox}[wd=\paperwidth,ht=2.4ex,dp=1.0ex,right]{page number in head/foot}%
+        \insertframenumber\,/\,16\hspace*{0.30cm}%
+    \end{beamercolorbox}%
+}
+
+\usepackage{fontspec}
+\usefonttheme{serif}
+% Keep the chosen serif appearance on machines without Tinos installed.
+\IfFontExistsTF{Tinos}{
+    \setmainfont{Tinos}\setsansfont{Tinos}\setmonofont{Tinos}
+}{
+    \setmainfont{Times New Roman}\setsansfont{Times New Roman}\setmonofont{Times New Roman}
+}
+\usepackage{unicode-math}
+\IfFontExistsTF{STIX Math}{\setmathfont{STIX Math}}{\setmathfont{Cambria Math}}
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{array}
+\usepackage{booktabs}
+\usetikzlibrary{arrows.meta,positioning,calc,fit,backgrounds}
+
+% Small refinements only
+\setbeamerfont{title}{size=\Large,series=\bfseries}
+\setbeamerfont{subtitle}{size=\normalsize}
+\setbeamerfont{institute}{size=\small}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\setbeamertemplate{itemize item}{$\blacktriangleright$}
+\setbeamertemplate{itemize subitem}{$\circ$}
+
+% Reusable diagram styles
+\tikzset{
+    dot/.style={circle,draw,thick,minimum size=6.2mm,inner sep=0pt,font=\scriptsize},
+    smalldot/.style={circle,draw,thick,minimum size=5.1mm,inner sep=0pt,font=\scriptsize},
+    box/.style={draw,rounded corners,thick,align=center,font=\scriptsize,inner sep=5pt},
+    arrow/.style={-{Latex[length=2mm]},thick}
+}
+
+\title{NP-Completeness and Reduction Techniques}
+\subtitle{How Efficient Transformations Prove Computational Hardness}
+\author[Most. Sonia Khatun]{Most. Sonia Khatun\texorpdfstring{\\[1mm]\small BSc in Department of Computer Science and Engineering\\[-0.5mm]
+\small Bangladesh University of Engineering and Technology (BUET)}{, BSc in Department of Computer Science and Engineering, Bangladesh University of Engineering and Technology (BUET)}}
+\institute[Green University of Bangladesh]{Demo Lecture for the Position of Lecturer\\
+Department of Computer Science and Engineering\\
+Green University of Bangladesh}
+\date{}
+
+\begin{document}
+
+% Suggested seven-minute timing for all 16 slides:
+% 1 0:10 | 2 0:20 | 3 0:35 | 4 0:35 | 5 0:40 | 6 0:25
+% 7 0:25 | 8 0:30 | 9 0:40 | 10 0:35 | 11 0:20 | 12 0:25
+% 13 0:40 | 14 0:20 | 15 0:15 | 16 0:05
+
+% 1
+\begin{frame}[plain]
+    \titlepage
+\end{frame}
+
+% 2
+\begin{frame}{Why Do We Need NP-Completeness?}
+\begin{center}
+\begin{tikzpicture}[node distance=0.20cm,every node/.style={font=\scriptsize}]
+    \node[box,text width=2.12cm,minimum height=1.25cm] (p)
+        {\textbf{1. Solve}\\Can we compute the answer efficiently?\\[1mm]$\Downarrow\;P$};
+    \node[box,text width=2.12cm,minimum height=1.25cm,right=of p] (np)
+        {\textbf{2. Verify}\\Can we check a proposed YES solution efficiently?\\[1mm]$\Downarrow\;NP$};
+    \node[box,text width=2.12cm,minimum height=1.25cm,right=of np] (hard)
+        {\textbf{3. Compare}\\Can every NP problem be reduced to it?\\[1mm]$\Downarrow\;NP\text{-hard}$};
+    \node[box,text width=2.12cm,minimum height=1.25cm,right=of hard,fill=yellow!18] (npc)
+        {\textbf{4. Combine}\\Verifiable \emph{and} NP-hard\\[1mm]$\Downarrow\;NP\text{-complete}$};
+    \draw[-{Latex[length=1.6mm]},densely dotted] (p)--(np);
+    \draw[-{Latex[length=1.6mm]},densely dotted] (np)--(hard);
+    \draw[-{Latex[length=1.6mm]},densely dotted] (hard)--(npc);
+\end{tikzpicture}
+\end{center}
+\vspace{0.25cm}
+\uncover<2->{
+\begin{block}{The central proof question}
+How can we transfer the known hardness of one problem to a new problem?
+\end{block}}
+\uncover<3->{
+\begin{center}
+\begin{tikzpicture}[node distance=0.45cm]
+    \node[box,minimum width=3.1cm] (known) {known hard problem $A$};
+    \node[box,minimum width=3.1cm,right=of known] (target) {new target problem $B$};
+    \draw[arrow] (known)--(target);
+    \node[font=\scriptsize,fill=white,inner sep=1pt]
+        at ($(known.north)!0.5!(target.north)+(0,0.28)$)
+        {polynomial-time reduction};
+\end{tikzpicture}
+
+\tiny The dotted arrows show the learning sequence, not set containment.
+\end{center}}
+\end{frame}
+
+% 3
+\begin{frame}{Start with P and NP}
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+\begin{block}{P: solve efficiently}
+Decision problems solvable by a deterministic algorithm in polynomial time.
+\end{block}
+\centering
+\begin{tikzpicture}[node distance=0.35cm]
+    \node[box,minimum width=2.1cm] (in) {instance $x$};
+    \node[box,minimum width=2.1cm,below=of in] (alg) {polynomial-time\\algorithm};
+    \node[box,minimum width=2.1cm,below=of alg] (out) {YES or NO};
+    \draw[arrow] (in)--(alg);
+    \draw[arrow] (alg)--(out);
+\end{tikzpicture}
+
+\small Example: reachability can be solved by BFS or DFS.
+\end{column}
+\begin{column}{0.48\textwidth}
+\uncover<2->{
+\begin{block}{NP: verify efficiently}
+There are a polynomial-time verifier $V$ and polynomial $p$ such that, for every $x$,
+\[
+x\in L\iff \exists c:
+\begin{array}{l}
+|c|\le p(|x|),\\[0.5mm]
+V(x,c)=1.
+\end{array}
+\]
+\end{block}
+\centering
+\begin{tikzpicture}[node distance=0.35cm]
+    \node[box,minimum width=2.45cm] (inc) {instance $x$ + certificate $c$};
+    \node[box,minimum width=2.45cm,below=of inc] (ver) {polynomial-time\\verifier};
+    \node[box,minimum width=2.45cm,below=of ver] (acc) {accept or reject};
+    \draw[arrow] (inc)--(ver);
+    \draw[arrow] (ver)--(acc);
+\end{tikzpicture}
+
+\small For 3-COLOR, $c$ assigns a color to every vertex; scan all edges to verify it.}
+\end{column}
+\end{columns}
+\vspace{0.18cm}
+\uncover<3->{
+\begin{center}
+\fbox{\parbox{0.88\linewidth}{\centering
+$P\subseteq NP$: a polynomial-time solver can serve as a verifier and ignore the certificate.}}
+
+\vspace{0.12cm}
+\scriptsize \textbf{Important:} NP means ``nondeterministic polynomial time,'' not ``non-polynomial.'' Whether $P=NP$ is open.
+\end{center}}
+\end{frame}
+
+% 4
+\begin{frame}{From NP-Hard to NP-Complete}
+\begin{columns}[T]
+\begin{column}{0.47\textwidth}
+\begin{block}{NP-hard: hard for all of NP}
+A problem $H$ is NP-hard if
+\[
+\forall L\in NP,\qquad L\le_p H.
+\]
+Here $L\le_p H$ means an efficient, answer-preserving translation from $L$ to $H$ (formalized next). It need not itself belong to NP.
+\end{block}
+\begin{block}{NP-complete: both properties}
+\[
+H\in NP
+\qquad\text{and}\qquad
+H\text{ is NP-hard}.
+\]
+These are the hardest efficiently verifiable decision problems.
+\end{block}
+\end{column}
+\begin{column}{0.51\textwidth}
+\uncover<2->{
+\centering
+\begin{tikzpicture}[scale=0.65,every node/.style={font=\scriptsize}]
+    \begin{scope}
+        \clip (0,0) ellipse (2.25cm and 1.45cm);
+        \fill[yellow!38] (1.75,0) ellipse (2.30cm and 1.45cm);
+    \end{scope}
+    \draw[very thick,blue!70] (0,0) ellipse (2.25cm and 1.45cm);
+    \draw[very thick,red!70] (1.75,0) ellipse (2.30cm and 1.45cm);
+    \node[blue!75,font=\scriptsize\bfseries] at (-0.85,0.92) {$NP$};
+    \node[red!75,font=\scriptsize\bfseries] at (2.70,0.92) {$NP$-hard};
+    \node[align=center,font=\scriptsize\bfseries] at (0.88,0)
+        {$NP$-complete\\$=NP\cap NP\text{-hard}$};
+
+    \node[box,minimum width=1.35cm] (p) at (-2.45,-1.85) {$P$};
+    \draw[arrow] (p.north) to[bend left=12]
+        node[left,font=\scriptsize] {$\subseteq$} (-1.72,-0.78);
+\end{tikzpicture}
+
+\scriptsize $P\subseteq NP$ is known. Because whether $P=NP$ is open, the exact boundary of $P$ is not drawn.}
+\end{column}
+\end{columns}
+\vspace{0.16cm}
+\uncover<2->{
+\begin{center}
+\fbox{If one NP-complete problem is in $P$, then $P=NP$.}
+\end{center}}
+\end{frame}
+
+% 5
+\begin{frame}{Polynomial-Time Reduction: an Answer-Preserving Translator}
+\begin{center}
+\begin{tikzpicture}[node distance=0.42cm,every node/.style={font=\scriptsize}]
+    \node[box,minimum width=2.15cm] (a) {instance $x$\\of problem $A$};
+    \node[box,minimum width=2.25cm,right=of a,fill=blue!8] (f)
+        {translator $f$\\polynomial time};
+    \node[box,minimum width=2.15cm,right=of f] (b) {instance $f(x)$\\of problem $B$};
+    \node[box,minimum width=2.15cm,right=of b] (solve) {solver for $B$\\gives answer for $A$};
+    \draw[arrow] (a)--(f);
+    \draw[arrow] (f)--(b);
+    \draw[arrow] (b)--(solve);
+\end{tikzpicture}
+\end{center}
+\vspace{0.10cm}
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+\uncover<2->{
+\begin{block}{Formal meaning}
+$A\le_p B$ means there exists a polynomial-time computable function $f$ such that
+\[
+\forall x,\qquad x\in A \Longleftrightarrow f(x)\in B.
+\]
+Therefore, a solver for $B$ would also solve $A$: $B$ is at least as hard as $A$.
+\end{block}
+\begin{center}
+\fbox{\parbox{0.88\linewidth}{\centering
+To prove $B$ hard: known hard $A\;\longrightarrow\;$ target $B$.}}
+\end{center}}
+\end{column}
+\begin{column}{0.48\textwidth}
+\uncover<3->{
+\begin{block}{Tiny example: EVEN $\le_p$ MULTIPLE-OF-4}
+Use $f(n)=2n$. Then
+\[
+n\text{ is even}\iff 4\mid 2n.
+\]
+\centering
+\begin{tabular}{c|c|c}
+\toprule
+$n$ & $f(n)$ & preserved?\\
+\midrule
+$6$: YES & $12$: YES & \color{green!45!black}YES\\
+$7$: NO  & $14$: NO  & \color{green!45!black}YES\\
+\bottomrule
+\end{tabular}
+\end{block}
+\scriptsize This illustrates the mechanics; a hardness proof starts from a known hard problem.}
+\end{column}
+\end{columns}
+\end{frame}
+
+% 6
+\begin{frame}{Reusable Recipe: Proving a Problem NP-Complete}
+\begin{columns}[T]
+\begin{column}{0.44\textwidth}
+\begin{block}{1. Membership in NP}
+\begin{itemize}
+    \item State a polynomial-size certificate.
+    \item Give a polynomial-time verifier.
+\end{itemize}
+\begin{center}
+\fbox{$B\in NP$}
+\end{center}
+\end{block}
+\end{column}
+\begin{column}{0.52\textwidth}
+\uncover<2->{
+\begin{block}{2. NP-hardness}
+\begin{enumerate}
+    \item Choose a known NP-complete problem $A$.
+    \item Construct $f$ in polynomial time.
+    \item Prove $x\in A\iff f(x)\in B$.
+\end{enumerate}
+\begin{center}
+\fbox{\parbox{0.88\linewidth}{\centering
+$A$ is NP-hard and $A\le_p B$\\
+$\Longrightarrow B$ is NP-hard.}}
+\end{center}
+\end{block}}
+\end{column}
+\end{columns}
+\vspace{0.18cm}
+\uncover<3->{
+\begin{center}
+\begin{tikzpicture}
+    \node[box,minimum width=2.7cm,fill=blue!8] (inNP) at (-2.25,0) {$B\in NP$};
+    \node[box,minimum width=2.7cm,fill=red!8] (isHard) at (2.25,0) {$B$ is NP-hard};
+    \node[box,text width=3.25cm,fill=yellow!22] (done) at (0,-1.15)
+        {$B$ is NP-complete};
+    \draw[arrow] (inNP.south)--(done.north west);
+    \draw[arrow] (isHard.south)--(done.north east);
+\end{tikzpicture}
+
+\vspace{0.15cm}
+\fbox{\parbox{0.72\linewidth}{\centering
+Direction mnemonic: the known hard problem goes \emph{into} the target problem.}}
+\end{center}}
+\end{frame}
+
+% 7
+\begin{frame}{Worked Reduction: $3$-SAT $\le_p$ $3$-COLOR}
+\begin{columns}[T]
+\begin{column}{0.46\textwidth}
+\begin{block}{Source: 3-SAT}
+Given a 3-CNF formula (an AND of clauses, each an OR of three literals)
+\[
+\phi=C_1\land\cdots\land C_m,
+\]
+is there a truth assignment satisfying every clause? A literal is a variable or its negation.
+\end{block}
+\end{column}
+\begin{column}{0.46\textwidth}
+\begin{block}{Target: 3-COLOR}
+Given a graph $G$, can its vertices be colored with three colors so that adjacent vertices have different colors?
+\end{block}
+\end{column}
+\end{columns}
+\vspace{0.12cm}
+\uncover<2->{
+\begin{center}
+\begin{tikzpicture}[every node/.style={font=\scriptsize}]
+    \node[box,minimum width=2.2cm] (phi) at (-4.3,0) {$3$-CNF formula $\phi$};
+    \node[box,text width=2.35cm] (palette) at (-1.25,0.72) {palette gadget: name colors};
+    \node[box,text width=2.35cm] (vars) at (-1.25,0) {variable gadgets: encode choices};
+    \node[box,text width=2.35cm] (clauses) at (-1.25,-0.72) {clause gadgets: enforce OR};
+    \node[box,minimum width=2.15cm] (graph) at (2.35,0) {graph $G_\phi$};
+    \draw[arrow] (phi.east) to[bend left=12] (palette.west);
+    \draw[arrow] (phi.east)--(vars.west);
+    \draw[arrow] (phi.east) to[bend right=12] (clauses.west);
+    \draw[arrow] (palette.east) to[out=0,in=155] (graph.north west);
+    \draw[arrow] (vars.east)--(graph.west);
+    \draw[arrow] (clauses.east) to[out=0,in=205] (graph.south west);
+\end{tikzpicture}
+\end{center}}
+\vspace{0.15cm}
+\uncover<3->{
+\begin{center}
+\fbox{\parbox{0.82\linewidth}{\centering
+Design invariant: $\phi$ is satisfiable $\iff$ the constructed graph $G_\phi$ is 3-colorable.}}
+\end{center}
+\small This is one illustration of the general proof recipe---not the definition of a reduction.}
+\end{frame}
+
+% 8
+\begin{frame}{Encoding Truth with Colors}
+\begin{columns}[T]
+\begin{column}{0.43\textwidth}
+\begin{block}{Palette gadget}
+The triangle forces three distinct colors. We name them $T$, $F$, and $B$ (base/helper).
+\end{block}
+\centering
+\begin{tikzpicture}[scale=0.95,every node/.style={font=\scriptsize}]
+    \node[dot,fill=green!30] (T) at (0,1.45) {$T$};
+    \node[dot,fill=red!25] (F) at (-1.15,0) {$F$};
+    \node[dot,fill=blue!25] (B) at (1.15,0) {$B$};
+    \draw[thick] (T)--(F)--(B)--(T);
+    \node[align=center] at (0,-0.65) {three vertices $\Rightarrow$ three meanings};
+\end{tikzpicture}
+\end{column}
+\begin{column}{0.53\textwidth}
+\uncover<2->{
+\begin{block}{Variable gadget}
+Connect $x_i$ and $\neg x_i$ to each other and to $B$.
+\end{block}
+\centering
+\begin{tikzpicture}[scale=0.88,every node/.style={font=\scriptsize}]
+    \node[dot,fill=blue!25] (B) at (0,0) {$B$};
+    \node[dot,fill=green!30] (x) at (-1.25,0.85) {$x_i$};
+    \node[dot,fill=red!25] (nx) at (-1.25,-0.85) {$\neg x_i$};
+    \draw[thick] (x)--(nx)--(B)--(x);
+    \node[box,text width=3.10cm] at (2.50,0.05)
+        {Exactly two logical colorings:\\[1mm]
+        $(x_i,\neg x_i)=(T,F)$\\or\\
+        $(x_i,\neg x_i)=(F,T)$.};
+\end{tikzpicture}
+\vspace{0.12cm}
+
+\fbox{\parbox{0.92\linewidth}{\centering Exactly one of $x_i$ and $\neg x_i$ receives color $T$.}}}
+\end{column}
+\end{columns}
+\end{frame}
+
+% 9
+\begin{frame}{Constructing the Exact Clause Gadget}
+\begin{columns}[T]
+\begin{column}{0.37\textwidth}
+For $C=(\ell_1\vee\ell_2\vee\ell_3)$, add six fresh vertices $a_i,b_i$ and 13 edges:
+\[
+\begin{aligned}
+& (\ell_i,a_i),(a_i,b_i),(T,a_i)\\[-1mm]
+&\hspace{1.0cm}\text{for }i=1,2,3,\\
+& (T,b_1),(b_1,b_2),\\[-1mm]
+& (b_2,b_3),(b_3,F).
+\end{aligned}
+\]
+\uncover<4->{
+\begin{block}{Result: can we complete the coloring?}
+With inputs fixed in $\{T,F\}$, the internal vertices can be colored exactly when at least one input is $T$. There is no output vertex.
+\end{block}}
+\end{column}
+\begin{column}{0.60\textwidth}
+\centering
+\begin{tikzpicture}[
+    scale=0.72,
+    every node/.style={font=\scriptsize},
+    literalarm/.style={black,thick},
+    truthlink/.style={blue!70!black,thick,preaction={draw=white,line width=3.0pt}},
+    forcepath/.style={red!70!black,very thick,preaction={draw=white,line width=3.2pt}}
+]
+    \node[dot,fill=blue!25] (B) at (2.1,2.65) {$B$};
+    \node[dot,fill=green!30] (T) at (-0.55,-1.55) {$T$};
+    \node[dot,fill=red!25] (F) at (4.75,-1.55) {$F$};
+    \node[smalldot] (l1) at (0,1.65) {$\ell_1$};
+    \node[smalldot] (l2) at (2.1,1.65) {$\ell_2$};
+    \node[smalldot] (l3) at (4.2,1.65) {$\ell_3$};
+    \node[smalldot,fill=black!8] (a1) at (0,0.45) {$a_1$};
+    \node[smalldot,fill=black!8] (a2) at (2.1,0.45) {$a_2$};
+    \node[smalldot,fill=black!8] (a3) at (4.2,0.45) {$a_3$};
+    \node[smalldot,fill=black!8] (b1) at (0,-0.75) {$b_1$};
+    \node[smalldot,fill=black!8] (b2) at (2.1,-0.75) {$b_2$};
+    \node[smalldot,fill=black!8] (b3) at (4.2,-0.75) {$b_3$};
+
+    \draw[gray!65,densely dotted] (B)--(l1);
+    \draw[gray!65,densely dotted] (B)--(l2);
+    \draw[gray!65,densely dotted] (B)--(l3);
+    \draw[gray!65,densely dotted] (T) to[bend right=12] (F);
+    \visible<2->{\foreach \l/\a/\b in {l1/a1/b1,l2/a2/b2,l3/a3/b3} {
+        \draw[literalarm] (\l)--(\a)--(\b);
+    }}
+    \visible<3->{\foreach \l/\a/\b in {l1/a1/b1,l2/a2/b2,l3/a3/b3} {
+        \draw[truthlink] (T)--(\a);
+    }}
+    \visible<4->{\draw[forcepath] (T)--(b1)--(b2)--(b3)--(F);}
+\end{tikzpicture}
+
+\vspace{0.05cm}
+\uncover<4->{
+\scriptsize
+\begin{tabular}{@{}ll@{\hspace{4mm}}ll@{}}
+\textcolor{black}{\rule{5mm}{0.7pt}} & literal arms &
+\textcolor{blue!70!black}{\rule{5mm}{0.9pt}} & $T$ links\\[0.8mm]
+\textcolor{red!70!black}{\rule{5mm}{1.0pt}} & forcing path &
+\textcolor{gray!80}{\rule[0.4ex]{1mm}{0.5pt}\hspace{0.6mm}\rule[0.4ex]{1mm}{0.5pt}\hspace{0.6mm}\rule[0.4ex]{1mm}{0.5pt}} & existing edges
+\end{tabular}
+
+\smallskip
+\scriptsize All lines are ordinary edges; line colors only group their roles. Gray/white vertices are unassigned, not extra colors.}
+\end{column}
+\end{columns}
+\end{frame}
+
+% 10
+\begin{frame}{Why the Clause Gadget Encodes OR}
+\begin{columns}[T]
+\begin{column}{0.49\textwidth}
+\begin{block}{All inputs are $F$: impossible}
+If every $\ell_i=F$, each $a_i$ is forced to $B$. Hence each $b_i$ can use only $T$ or $F$.
+\end{block}
+\centering
+\begin{tikzpicture}[scale=0.72,every node/.style={font=\scriptsize}]
+    \node[smalldot,fill=green!30] (T) at (0,0) {$T$};
+    \node[smalldot,fill=red!25] (b1) at (1.1,0) {$b_1$};
+    \node[smalldot,fill=green!30] (b2) at (2.2,0) {$b_2$};
+    \node[smalldot,fill=red!25] (b3) at (3.3,0) {$b_3$};
+    \node[smalldot,fill=red!25] (F) at (4.4,0) {$F$};
+    \draw[thick] (T)--(b1)--(b2)--(b3);
+    \draw[very thick,red] (b3)--(F);
+    \node[red,font=\bfseries] at (3.85,0.35) {$\times$};
+\end{tikzpicture}
+
+\small From $T$, the first three edges force $F,T,F$; the final edge then joins two $F$ vertices.
+\end{column}
+\begin{column}{0.49\textwidth}
+\uncover<2->{
+\begin{block}{At least one input is $T$: possible}
+Choose one true input $\ell_i$. Set $a_i=F$, $b_i=B$, and every other $a_j=B$.
+\end{block}
+\centering
+\begin{tikzpicture}[scale=0.72,every node/.style={font=\scriptsize}]
+    \node[smalldot,fill=green!30] (T) at (0,0) {$T$};
+    \node[smalldot,fill=red!25] (b1) at (1.1,0) {$b_1$};
+    \node[smalldot,fill=green!30] (b2) at (2.2,0) {$b_2$};
+    \node[smalldot,fill=blue!25] (b3) at (3.3,0) {$b_3$};
+    \node[smalldot,fill=red!25] (F) at (4.4,0) {$F$};
+    \draw[thick] (T)--(b1)--(b2)--(b3)--(F);
+    \node[smalldot,fill=red!25] (a3) at (3.3,1.1) {$a_3$};
+    \node[smalldot,fill=green!30] (l3) at (3.3,2.2) {$\ell_3$};
+    \draw[thick] (l3)--(a3)--(b3);
+    \draw[thick] (T) to[bend left=12] (a3);
+\end{tikzpicture}
+
+\scriptsize Shown: $i=3$. For chosen true position $i=1,2,3$, use $(b_1,b_2,b_3)=(B,F,T),(F,B,T),(F,T,B)$, respectively.}
+\end{column}
+\end{columns}
+\vspace{0.15cm}
+\uncover<3->{
+\begin{center}
+\fbox{$F,F,F$: no extension; all other seven input patterns: an extension exists.}
+\end{center}}
+\end{frame}
+
+% 11
+\begin{frame}{Evaluating One Complete Formula}
+Use
+\[
+\phi=(x_1\vee \neg x_2\vee x_3)\land(\neg x_1\vee x_2\vee \neg x_3).
+\]
+\vspace{0.10cm}
+\begin{columns}[T]
+\begin{column}{0.46\textwidth}
+\uncover<2->{
+\begin{block}{Clause input ports}
+\[
+C_1:(x_1,\neg x_2,x_3),
+\]
+\[
+C_2:(\neg x_1,x_2,\neg x_3).
+\]
+Each clause receives its own six fresh internal vertices.
+\end{block}}
+\end{column}
+\begin{column}{0.46\textwidth}
+\uncover<3->{
+\begin{block}{One satisfying assignment}
+\[
+x_1=T,\qquad x_2=T,\qquad x_3=F.
+\]
+Thus
+\[
+C_1=(T,F,F),\qquad C_2=(F,T,T).
+\]
+Both clause gadgets can be extended.
+\end{block}}
+\end{column}
+\end{columns}
+\end{frame}
+
+% 12
+\begin{frame}{Assembling the Formula Graph}
+\centering
+\begin{tikzpicture}[scale=0.82,every node/.style={font=\scriptsize}]
+    \node[dot,fill=green!30] (T) at (-2.8,2.15) {$T$};
+    \node[dot,fill=blue!25] (B) at (0,3.15) {$B$};
+    \node[dot,fill=red!25] (F) at (2.8,2.15) {$F$};
+    \draw[thick] (T)--(B)--(F)--(T);
+    \node[fill=white,inner sep=1pt] at (0,3.72) {palette triangle};
+
+    \visible<2->{
+    \node[smalldot] (x1)  at (-3.0,1.0) {$x_1$};
+    \node[smalldot] (nx1) at (-2.1,1.0) {$\neg x_1$};
+    \node[smalldot] (x2)  at (-0.45,1.0) {$x_2$};
+    \node[smalldot] (nx2) at (0.45,1.0) {$\neg x_2$};
+    \node[smalldot] (x3)  at (2.1,1.0) {$x_3$};
+    \node[smalldot] (nx3) at (3.0,1.0) {$\neg x_3$};
+    \foreach \a/\b in {x1/nx1,x2/nx2,x3/nx3} {\draw[thick] (\a)--(\b);}
+    \foreach \a in {x1,nx1,x2,nx2,x3,nx3} {\draw[gray!55] (B)--(\a);}
+    \node[fill=white,inner sep=1pt] at (0,0.48) {three variable gadgets};}
+
+    \visible<3->{
+    \node[box,text width=3.35cm,minimum height=1.05cm] (c1) at (-2.35,-0.85)
+        {$C_1$ clause gadget\\[1mm]ports: $x_1,\neg x_2,x_3$};
+    \node[box,text width=3.35cm,minimum height=1.05cm] (c2) at (2.35,-0.85)
+        {$C_2$ clause gadget\\[1mm]ports: $\neg x_1,x_2,\neg x_3$};
+    \draw[arrow] (0,0.30)--node[right=1mm,pos=0.22,font=\scriptsize,fill=white,inner sep=1pt]
+        {reuse literals as clause ports} (0,-0.24);
+    \draw[dashed,rounded corners,gray!70] (-4.45,-1.62) rectangle (4.45,-0.10);
+    \node[fill=white,inner sep=1pt,font=\scriptsize] at (0,-1.79)
+        {two copies of the exact six-vertex clause gadget};}
+\end{tikzpicture}
+\vspace{0.10cm}
+
+\uncover<3->{\small The palette and literal vertices are shared; each clause has fresh internal vertices.}
+\end{frame}
+
+% 13
+\begin{frame}{Correctness and Complexity of the Reduction}
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+\begin{block}{$\phi$ satisfiable $\Rightarrow G_\phi$ 3-colorable}
+\begin{itemize}
+    \item Give each literal its truth color.
+    \item Every clause has a true literal.
+    \item Therefore every clause gadget extends to a legal coloring.
+\end{itemize}
+\end{block}
+\end{column}
+\begin{column}{0.48\textwidth}
+\uncover<2->{
+\begin{block}{$G_\phi$ 3-colorable $\Rightarrow \phi$ satisfiable}
+\begin{itemize}
+    \item Read $x_i=true$ exactly when vertex $x_i$ has color $T$.
+    \item Every colorable clause gadget has a $T$ input.
+    \item Therefore every clause is satisfied.
+\end{itemize}
+\end{block}}
+\end{column}
+\end{columns}
+\vspace{0.08cm}
+\uncover<3->{
+\begin{center}
+\fbox{$\phi\text{ satisfiable}\iff G_\phi\text{ 3-colorable}$}
+\end{center}
+\vspace{0.10cm}
+\begin{center}
+\begin{tikzpicture}[every node/.style={font=\scriptsize}]
+    \node[box,text width=3.05cm,minimum height=0.90cm] (source) at (-3.85,0)
+        {$3$-SAT is NP-complete\\$+$\\$3$-SAT $\le_p$ $3$-COLOR};
+    \node[box,text width=2.45cm,minimum height=0.90cm] (nph) at (-0.45,0)
+        {$3$-COLOR is NP-hard};
+    \node[box,text width=2.75cm,minimum height=0.90cm] (np) at (3.45,0)
+        {$3$-COLOR $\in NP$\\verify all vertices and edges};
+    \draw[arrow] (source)--(nph);
+    \node[box,text width=3.8cm,fill=yellow!22] (done) at (1.45,-1.42)
+        {Therefore $3$-COLOR is NP-complete.};
+    \draw[arrow] (nph.south)--(done.north west);
+    \draw[arrow] (np.south)--(done.north east);
+\end{tikzpicture}
+
+\scriptsize For $n$ variables and $m$ clauses: $|V|=3+2n+6m$, $|E|=3+3n+13m$.\\
+Enumerating these vertices and edges takes polynomial time.
+\end{center}}
+\end{frame}
+
+% 14
+\begin{frame}{A Second Reduction Pattern: $3$-SAT $\le_p$ CLIQUE}
+\scriptsize
+\[
+\phi'=(x_1\vee\neg x_2\vee x_3)\land
+(\neg x_1\vee x_2\vee x_3)\land
+(x_1\vee x_2\vee\neg x_3).
+\]
+\normalsize
+\begin{columns}[T]
+\begin{column}{0.46\textwidth}
+\begin{itemize}
+    \item Create one vertex for each literal occurrence.
+    \item Put vertices in clause groups.
+    \item Connect vertices from different clauses when they are not contradictory.
+    \item Ask for $m$ pairwise adjacent vertices: an $m$-clique.
+\end{itemize}
+\vspace{0.12cm}
+\uncover<3->{
+\begin{center}
+\fbox{\parbox{0.88\linewidth}{\centering
+One pairwise noncontradictory literal occurrence from each clause forms a clique.}}
+\end{center}
+\scriptsize Conversely, an $m$-clique must choose one occurrence per clause, with no complementary pair: set them true. Construction: $3m$ vertices and $O(m^2)$ edges.}
+\end{column}
+\begin{column}{0.50\textwidth}
+\uncover<2->{
+\centering
+\begin{tikzpicture}[scale=0.78,every node/.style={font=\scriptsize}]
+    \node[smalldot,fill=yellow!30] (a) at (0,2.1) {$x_1$};
+    \node[smalldot] (b) at (1.1,2.1) {$\neg x_2$};
+    \node[smalldot] (c) at (2.2,2.1) {$x_3$};
+    \node[smalldot] (d) at (0,0.85) {$\neg x_1$};
+    \node[smalldot,fill=yellow!30] (e) at (1.1,0.85) {$x_2$};
+    \node[smalldot] (f) at (2.2,0.85) {$x_3$};
+    \node[smalldot,fill=yellow!30] (g) at (0,-0.4) {$x_1$};
+    \node[smalldot] (h) at (1.1,-0.4) {$x_2$};
+    \node[smalldot] (i) at (2.2,-0.4) {$\neg x_3$};
+    \draw[gray!55] (a)--(e); \draw[gray!55] (a)--(f); \draw[gray!55] (b)--(d); \draw[gray!55] (b)--(f);
+    \draw[gray!55] (c)--(d); \draw[gray!55] (c)--(e); \draw[gray!55] (c)--(f);
+    \draw[gray!55] (a) to[bend right=28] (g); \draw[gray!55] (a)--(h); \draw[gray!55] (a)--(i); \draw[gray!55] (b)--(g); \draw[gray!55] (b)--(i); \draw[gray!55] (c)--(g); \draw[gray!55] (c)--(h);
+    \draw[gray!55] (d)--(h); \draw[gray!55] (d)--(i); \draw[gray!55] (e)--(g); \draw[gray!55] (e)--(h); \draw[gray!55] (e)--(i); \draw[gray!55] (f)--(g); \draw[gray!55] (f)--(h);
+    \visible<3->{\draw[very thick,blue!70!black] (a)--(e)--(g);\draw[very thick,blue!70!black] (g) to[bend left=28] (a);}
+    \node[left=0.1cm of a] {$C_1$}; \node[left=0.1cm of d] {$C_2$}; \node[left=0.1cm of g] {$C_3$};
+\end{tikzpicture}}
+\end{column}
+\end{columns}
+\end{frame}
+
+% 15
+\begin{frame}{Takeaway}
+\begin{center}
+\begin{tikzpicture}[node distance=0.45cm,every node/.style={font=\scriptsize}]
+    \node[box,text width=2.78cm,minimum height=1.35cm] (classify)
+        {\textbf{Classify}\\$P$: solve efficiently\\$NP$: verify YES efficiently};
+    \visible<2->{\node[box,text width=2.78cm,minimum height=1.35cm,right=of classify] (reduce)
+        {\textbf{Compare}\\$A\le_p B$ lets $A$ borrow a solver for $B$};
+    \draw[arrow] (classify)--(reduce);}
+    \visible<3->{\node[box,text width=2.78cm,minimum height=1.35cm,right=of reduce] (prove)
+        {\textbf{Prove}\\membership in $NP$\\$+$ hardness by reduction};
+    \draw[arrow] (reduce)--(prove);}
+\end{tikzpicture}
+\end{center}
+\vspace{0.30cm}
+\uncover<4->{
+\begin{block}{One reusable sentence}
+To prove a target $B$ NP-complete, show $B\in NP$ and reduce a known NP-complete problem $A$ to $B$ in polynomial time while preserving YES/NO answers.
+\end{block}
+\vfill
+\begin{center}
+\Large Questions?
+
+\vspace{0.12cm}
+\tiny Core references: Sipser; Cormen--Leiserson--Rivest--Stein; Princeton COS 423 reduction notes.
+\end{center}}
+\end{frame}
+
+% 16
+\begin{frame}{References}
+\begin{block}{Primary references}
+\begin{itemize}
+    \item Michael Sipser, \emph{Introduction to the Theory of Computation}.
+    \item Cormen, Leiserson, Rivest, Stein, \emph{Introduction to Algorithms}.
+    \item CMU 15-451/651 lecture notes on NP-completeness.
+    \item Princeton COS 423 lecture notes, \emph{Polynomial-Time Reductions}.
+\end{itemize}
+\end{block}
+\vspace{0.20cm}
+\begin{center}
+\small The exact six-vertex clause gadget and its 13-edge construction follow the Princeton reduction notes.
+\end{center}
+\end{frame}
+
+\end{document}

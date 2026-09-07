@@ -1,0 +1,46 @@
+# 11. Things to Explain on Board (Pra (visible)
+
+B3: RSA Encryption
+D3: The RSA Encryption Algorithm (1 of 2: Computing an Example)
+E3: The RSA Encryption Algorithm (2 of 2: Generating the Keys)
+B5: AES Encryption
+B7: Man in the middle attack
+B9: Bellman Ford
+D9: Bellman-Ford Algorithm (Single source shortest path) | Data Structure & Algorithm | Bangla Tutorial - YouTube
+F9: How to detect negative weight cycle with BF
+B11: Floyd Warshall
+D11: Floyd Warshall Algorithm (All pairs shortest path) | Data Structure & Algorithm | Bangla Tutorial - YouTube
+F11: (Floyd warshall doesn't work with negative cycle graphs. So understand clearly between directed and undirected graphs and where this algorithns actually works.
+B13: Dijkstra
+D13: Dijkstras Shortest Path Algorithm Explained | With Example | Graph Theory - YouTube
+F13: Why Dijkstra's Algorithm Doesn't Work with Negative Weights - YouTube
+B15: How neg cycles pose a problem and how to solve it using different algorithms
+B17: IP Spoofing
+B19: DNS Spoofing
+B21: HTTP Spoofing
+B23: Email Hijacking
+B25: Wifi Eavesdropping
+B27: Cache Poisoning
+B29: Authentication vs Authorization
+D29: Authentication vs Authorization Explained
+B31: MAC vs IP Address
+B33: Symetric Crypto vs Assymetric Crypto
+B35: QuickSort Simulation worked out
+D35: L-3.1: How Quick Sort Works | Performance of Quick Sort with Example | Divide and Conquer
+B37: Heap Sort
+D37: L-3.13: Heap sort with Example | Heapify Method
+B39: Buffer Overflow attacks
+B41: SQL Injection attacks
+
+LINKS
+D3: https://www.youtube.com/watch?v=4zahvcJ9glg
+E3: https://www.youtube.com/watch?v=oOcTVTpUsPQ
+D9: https://www.youtube.com/watch?v=2fZw1BtkoTk
+D11: https://www.youtube.com/watch?v=tFQAoyEu6Bk
+D13: https://www.youtube.com/watch?v=bZkzH5x0SKU
+F13: https://www.youtube.com/watch?v=eXPw7BBMFNk&t=92s
+D29: https://youtu.be/7ijBiXddB7w?si=psNlBW5ihhofLePe
+D35: https://www.youtube.com/watch?v=tWCaFVJMUi8
+D37: https://www.youtube.com/watch?v=nJ6FdAIr_6g
+
+IMAGES

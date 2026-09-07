@@ -1,0 +1,1973 @@
+[
+  {
+    "chapter": "Structured programming: parameter passing",
+    "file": "04_C_PROGRAMMING_SLIDE_COMPLETE.md",
+    "title": "7.1 Prototype, call, definition",
+    "first_line": 356,
+    "last_line": 383,
+    "source_sha256": "309ecab8c23995f685c4ad1b263bd1291eb10556ee4f4ca53582b31546cfe4ca",
+    "characters": 542
+  },
+  {
+    "chapter": "Structured programming: parameter passing",
+    "file": "04_C_PROGRAMMING_SLIDE_COMPLETE.md",
+    "title": "11.1 Address and dereference",
+    "first_line": 655,
+    "last_line": 668,
+    "source_sha256": "c8fd9733073dfb7484432e00a1b8513a0370b5224ce9ca00c48bff6fdf014b36",
+    "characters": 397
+  },
+  {
+    "chapter": "Structured programming: parameter passing",
+    "file": "04_C_PROGRAMMING_SLIDE_COMPLETE.md",
+    "title": "11.3 Arrays are not pointers",
+    "first_line": 678,
+    "last_line": 686,
+    "source_sha256": "7e06af27b1fd4bdc16af489bc1419de0d172e32a9f1e01605403548a04de0207",
+    "characters": 395
+  },
+  {
+    "chapter": "Structured programming: parameter passing",
+    "file": "04_C_PROGRAMMING_SLIDE_COMPLETE.md",
+    "title": "11.4 Pointer parameters",
+    "first_line": 687,
+    "last_line": 699,
+    "source_sha256": "80984acc72ef7bd20fb71c3ade4bc1225ceb36aa02f5222e8edadd6cb0289cf6",
+    "characters": 303
+  },
+  {
+    "chapter": "Structured programming: parameter passing",
+    "file": "04_C_PROGRAMMING_SLIDE_COMPLETE.md",
+    "title": "20.2 Pointer versus ordinary parameter",
+    "first_line": 1159,
+    "last_line": 1170,
+    "source_sha256": "d873b6dbe118a54a248be97eb707d61538a5bd9b6aa3de1321953d1246dbf22a",
+    "characters": 296
+  },
+  {
+    "chapter": "Object-oriented programming",
+    "file": "03_OOP_CPP_JAVA_SLIDE_COMPLETE.md",
+    "title": "Part I — OOP foundations",
+    "first_line": 20,
+    "last_line": 123,
+    "source_sha256": "30bc43977bf499cbae13b3e6faa1809c7f28790c17c116fa436b2cdea802dfb8",
+    "characters": 5127
+  },
+  {
+    "chapter": "Object-oriented programming",
+    "file": "03_OOP_CPP_JAVA_SLIDE_COMPLETE.md",
+    "title": "Constructors",
+    "first_line": 202,
+    "last_line": 216,
+    "source_sha256": "22d0b7eaa1858bc51c5e9c6d940d0782262b309db2b1b622d1eab5926fe5eae8",
+    "characters": 506
+  },
+  {
+    "chapter": "Object-oriented programming",
+    "file": "03_OOP_CPP_JAVA_SLIDE_COMPLETE.md",
+    "title": "Lecture 3 — Assignment, copying, parameters, returns, and friends",
+    "first_line": 251,
+    "last_line": 349,
+    "source_sha256": "93cbd46f1944bd436ad12fd6f49d1d9598ea0946e41c4597e6ae60523c223083",
+    "characters": 3414
+  },
+  {
+    "chapter": "Object-oriented programming",
+    "file": "03_OOP_CPP_JAVA_SLIDE_COMPLETE.md",
+    "title": "References",
+    "first_line": 391,
+    "last_line": 406,
+    "source_sha256": "58b6ceac05ee85a7709cc71b1f9da51f34bc37ae19e4c0c7f7423582b4e3c67a",
+    "characters": 387
+  },
+  {
+    "chapter": "Object-oriented programming",
+    "file": "03_OOP_CPP_JAVA_SLIDE_COMPLETE.md",
+    "title": "Lecture 5 — Function/constructor overloading, defaults, and ambiguity",
+    "first_line": 407,
+    "last_line": 462,
+    "source_sha256": "361ad4f5108630beb1fda55ddd2c4ee91ee72602b2086bfc0c4ff2cf7c507b25",
+    "characters": 1774
+  },
+  {
+    "chapter": "Object-oriented programming",
+    "file": "03_OOP_CPP_JAVA_SLIDE_COMPLETE.md",
+    "title": "Lecture 7 — Inheritance, access, construction order, and the diamond",
+    "first_line": 531,
+    "last_line": 593,
+    "source_sha256": "b5feff21ea98d321b5235e060598fbe2dcfc25f7d4948425bda19074912c5461",
+    "characters": 1869
+  },
+  {
+    "chapter": "Object-oriented programming",
+    "file": "03_OOP_CPP_JAVA_SLIDE_COMPLETE.md",
+    "title": "Lecture 10 — Virtual functions and runtime polymorphism",
+    "first_line": 680,
+    "last_line": 769,
+    "source_sha256": "ade228ab5e5c9be8d1299e7e0122bdf3f89e54d049eaccff2679270082114f93",
+    "characters": 3128
+  },
+  {
+    "chapter": "Object-oriented programming",
+    "file": "03_OOP_CPP_JAVA_SLIDE_COMPLETE.md",
+    "title": "The pass-by-value correction",
+    "first_line": 1055,
+    "last_line": 1077,
+    "source_sha256": "0ebecb267344d4143aaa33b5d872e6b9d977be70d59a1e15c9efdc08863fae40",
+    "characters": 684
+  },
+  {
+    "chapter": "Object-oriented programming",
+    "file": "03_OOP_CPP_JAVA_SLIDE_COMPLETE.md",
+    "title": "Overriding, hiding, and dispatch",
+    "first_line": 1264,
+    "last_line": 1284,
+    "source_sha256": "96dfb7a612f469de579b340add9b2c1690a6bb7c7725053368d525e4ff54cdb0",
+    "characters": 824
+  },
+  {
+    "chapter": "Object-oriented programming",
+    "file": "03_OOP_CPP_JAVA_SLIDE_COMPLETE.md",
+    "title": "Abstract classes and anonymous subclasses",
+    "first_line": 1285,
+    "last_line": 1288,
+    "source_sha256": "36faa6a7f4a74118406d23fc0d839af2a2726f75824b8e33a2396759228bea41",
+    "characters": 302
+  },
+  {
+    "chapter": "Object-oriented programming",
+    "file": "03_OOP_CPP_JAVA_SLIDE_COMPLETE.md",
+    "title": "Interfaces",
+    "first_line": 1380,
+    "last_line": 1403,
+    "source_sha256": "c2affb27030a8bd9162b2998b0ddf8008f0960e98fec5fbea0e2275cfa7f4a30",
+    "characters": 1281
+  },
+  {
+    "chapter": "Object-oriented programming",
+    "file": "03_OOP_CPP_JAVA_SLIDE_COMPLETE.md",
+    "title": "Abstract class versus interface in Java",
+    "first_line": 1870,
+    "last_line": 1878,
+    "source_sha256": "14fc99d306bb525919de572459531b3ab8c9274dbe5221a5a388b3e15d54e1af",
+    "characters": 367
+  },
+  {
+    "chapter": "Object-oriented programming",
+    "file": "03_OOP_CPP_JAVA_SLIDE_COMPLETE.md",
+    "title": "Workbook board supplement — friends, constructors, and Java's diamond",
+    "first_line": 1905,
+    "last_line": 1980,
+    "source_sha256": "634a12695142898040b1cc628b5f3a527fd7ea9c91070c4db8420d99122a90d7",
+    "characters": 2898
+  },
+  {
+    "chapter": "Discrete mathematics and number theory",
+    "file": "10_DISCRETE_MATHEMATICS_SLIDE_COMPLETE.md",
+    "title": "106. Graph definitions and types",
+    "first_line": 2719,
+    "last_line": 2742,
+    "source_sha256": "6ab0250ae84331e8e35ca37c36b79288b7c0341176db521ebf1d08005602f019",
+    "characters": 968
+  },
+  {
+    "chapter": "Discrete mathematics and number theory",
+    "file": "10_DISCRETE_MATHEMATICS_SLIDE_COMPLETE.md",
+    "title": "107. Handshaking lemma and degree sequences",
+    "first_line": 2743,
+    "last_line": 2775,
+    "source_sha256": "e181d43bcead87ad8797d757c64ffdae9593b82ca4cd1c77282a69eb335ae635",
+    "characters": 1377
+  },
+  {
+    "chapter": "Discrete mathematics and number theory",
+    "file": "10_DISCRETE_MATHEMATICS_SLIDE_COMPLETE.md",
+    "title": "110. Walks, trails, paths, and cycles",
+    "first_line": 2808,
+    "last_line": 2821,
+    "source_sha256": "e7a07756fb38015773e991fead7a09ae6eac6dbb2d0b6dd977684a249f218c86",
+    "characters": 771
+  },
+  {
+    "chapter": "Discrete mathematics and number theory",
+    "file": "10_DISCRETE_MATHEMATICS_SLIDE_COMPLETE.md",
+    "title": "111. Connectedness and components",
+    "first_line": 2822,
+    "last_line": 2842,
+    "source_sha256": "e321184f691410561ebedcfc3f259ed427167e45a280bfb7f8a0ada71c47dd51",
+    "characters": 893
+  },
+  {
+    "chapter": "Discrete mathematics and number theory",
+    "file": "10_DISCRETE_MATHEMATICS_SLIDE_COMPLETE.md",
+    "title": "112. Trees and forests",
+    "first_line": 2843,
+    "last_line": 2857,
+    "source_sha256": "901a965b1c675d20d29ce57a563072876a38471c19c44a1a6d85f8b6f99646a5",
+    "characters": 690
+  },
+  {
+    "chapter": "Discrete mathematics and number theory",
+    "file": "10_DISCRETE_MATHEMATICS_SLIDE_COMPLETE.md",
+    "title": "113. Core tree proofs from the slides",
+    "first_line": 2858,
+    "last_line": 2881,
+    "source_sha256": "e77acc2e9f363e6aba31f69edbc64f3f60d22cebb89bebd52b5ef46bbce2422b",
+    "characters": 1691
+  },
+  {
+    "chapter": "Discrete mathematics and number theory",
+    "file": "10_DISCRETE_MATHEMATICS_SLIDE_COMPLETE.md",
+    "title": "Seniors' workbook supplement — number theory for the board",
+    "first_line": 3395,
+    "last_line": 3658,
+    "source_sha256": "fb7eadf3a617843356106f8cdd9fa12583a89ca61ac4043e29c9a93c705b92da",
+    "characters": 10463
+  },
+  {
+    "chapter": "Discrete mathematics and number theory",
+    "file": "01_DSA_I_SLIDE_COMPLETE.md",
+    "title": "15.1 The pigeonhole principle -- a solid answer",
+    "first_line": 2658,
+    "last_line": 2679,
+    "source_sha256": "5a94c0297037c6f66c5a41dfd64fe6731a3b6ba48aac99f8f702e2bfe44b240c",
+    "characters": 1682
+  },
+  {
+    "chapter": "Data structures, searching, sorting and dynamic programming",
+    "file": "01_DSA_I_SLIDE_COMPLETE.md",
+    "title": "1. Algorithms, ADTs, correctness, and analysis",
+    "first_line": 47,
+    "last_line": 170,
+    "source_sha256": "36b817eae6a8fa9ca2af7fe91befea171f06c05d09bfcfdddc97a41c1c77b097",
+    "characters": 7003
+  },
+  {
+    "chapter": "Data structures, searching, sorting and dynamic programming",
+    "file": "01_DSA_I_SLIDE_COMPLETE.md",
+    "title": "2.1 Recursion mental model",
+    "first_line": 173,
+    "last_line": 214,
+    "source_sha256": "7a32c01ebf83840d5e4586d3023a4332fcc73e74ee1e711e57becadf26133141",
+    "characters": 1112
+  },
+  {
+    "chapter": "Data structures, searching, sorting and dynamic programming",
+    "file": "01_DSA_I_SLIDE_COMPLETE.md",
+    "title": "2.2 Recursion versus iteration",
+    "first_line": 215,
+    "last_line": 230,
+    "source_sha256": "07fad9707a6cf2beeff26af0dfae6e3e24928cf9ab526f949a1acd461e81c2cd",
+    "characters": 1030
+  },
+  {
+    "chapter": "Data structures, searching, sorting and dynamic programming",
+    "file": "01_DSA_I_SLIDE_COMPLETE.md",
+    "title": "2.5 Solving recurrences",
+    "first_line": 269,
+    "last_line": 324,
+    "source_sha256": "8f45d9ea1899da2c866e7cc04ac7cbe44c241ec66c704e346d6e00d0f7eb09cb",
+    "characters": 1732
+  },
+  {
+    "chapter": "Data structures, searching, sorting and dynamic programming",
+    "file": "01_DSA_I_SLIDE_COMPLETE.md",
+    "title": "3.2 Array-based list",
+    "first_line": 354,
+    "last_line": 397,
+    "source_sha256": "a133d3e558d415fe7e1a26dd3430481f087e18dd3d19c9f3356e1b89e0446d65",
+    "characters": 1336
+  },
+  {
+    "chapter": "Data structures, searching, sorting and dynamic programming",
+    "file": "01_DSA_I_SLIDE_COMPLETE.md",
+    "title": "3.3 Singly linked list",
+    "first_line": 398,
+    "last_line": 500,
+    "source_sha256": "f3ac0a6931cfd4578ef2601742567720afdb172fccce6720e43b7524c4035fef",
+    "characters": 3014
+  },
+  {
+    "chapter": "Data structures, searching, sorting and dynamic programming",
+    "file": "01_DSA_I_SLIDE_COMPLETE.md",
+    "title": "3.6 Array versus linked representation",
+    "first_line": 550,
+    "last_line": 564,
+    "source_sha256": "a9dba58ea61d2316b3b00b8a2b713d58060ccc9a8cf275fec64f2f092b873ba0",
+    "characters": 860
+  },
+  {
+    "chapter": "Data structures, searching, sorting and dynamic programming",
+    "file": "01_DSA_I_SLIDE_COMPLETE.md",
+    "title": "4.1 Stack ADT and representations",
+    "first_line": 567,
+    "last_line": 642,
+    "source_sha256": "fe05455a1e086f2d853d7e78be7f94900f9b6874a0a03654e741efe3214c4b73",
+    "characters": 1984
+  },
+  {
+    "chapter": "Data structures, searching, sorting and dynamic programming",
+    "file": "01_DSA_I_SLIDE_COMPLETE.md",
+    "title": "5.1 Queue ADT",
+    "first_line": 764,
+    "last_line": 776,
+    "source_sha256": "e897668e778a3e900cb4f28e328de3a0c1912ca1e78742bc16931f4c96c3dfae",
+    "characters": 348
+  },
+  {
+    "chapter": "Data structures, searching, sorting and dynamic programming",
+    "file": "01_DSA_I_SLIDE_COMPLETE.md",
+    "title": "5.2 Why a naive array queue fails",
+    "first_line": 777,
+    "last_line": 780,
+    "source_sha256": "aa68dc3d2be15588fe20e7cbdb564d002ee7efc1b114b7bc0a061d2b3f498669",
+    "characters": 276
+  },
+  {
+    "chapter": "Data structures, searching, sorting and dynamic programming",
+    "file": "01_DSA_I_SLIDE_COMPLETE.md",
+    "title": "5.3 Circular queue: one-slot-empty design",
+    "first_line": 781,
+    "last_line": 828,
+    "source_sha256": "2374d9005c5e865152c5d01fe1240a044908d1b332b4f3b32a3aba7f5955db22",
+    "characters": 1984
+  },
+  {
+    "chapter": "Data structures, searching, sorting and dynamic programming",
+    "file": "01_DSA_I_SLIDE_COMPLETE.md",
+    "title": "5.4 Circular queue with a count",
+    "first_line": 829,
+    "last_line": 853,
+    "source_sha256": "28f60e0a223935604c4cd1affefc204a67ea281d419ad9886387a833cb6650a3",
+    "characters": 660
+  },
+  {
+    "chapter": "Data structures, searching, sorting and dynamic programming",
+    "file": "01_DSA_I_SLIDE_COMPLETE.md",
+    "title": "6. Binary trees and traversals",
+    "first_line": 918,
+    "last_line": 1094,
+    "source_sha256": "3cc5601f762c16de0c097852928600603d73aaa91c40c73a35fc28438b0db77d",
+    "characters": 5032
+  },
+  {
+    "chapter": "Data structures, searching, sorting and dynamic programming",
+    "file": "01_DSA_I_SLIDE_COMPLETE.md",
+    "title": "7. Binary search trees",
+    "first_line": 1095,
+    "last_line": 1296,
+    "source_sha256": "028eacc1803b9e40f23aa0c2621c86194e577dcb5faba694c5d44a92be7782ea",
+    "characters": 7220
+  },
+  {
+    "chapter": "Data structures, searching, sorting and dynamic programming",
+    "file": "01_DSA_I_SLIDE_COMPLETE.md",
+    "title": "8. Binary heaps, priority queues, build-heap, and heapsort",
+    "first_line": 1297,
+    "last_line": 1446,
+    "source_sha256": "3e268a5c5bd14117b3e35cd6c35e2e26a1b647a1f8c19120bf7be0a5d9b86de7",
+    "characters": 5397
+  },
+  {
+    "chapter": "Data structures, searching, sorting and dynamic programming",
+    "file": "01_DSA_I_SLIDE_COMPLETE.md",
+    "title": "9. Graph language and representations",
+    "first_line": 1447,
+    "last_line": 1502,
+    "source_sha256": "2844035d6cd3bfc8395d1c5c9db553fda12cb582d4578791a39512a494222930",
+    "characters": 2156
+  },
+  {
+    "chapter": "Data structures, searching, sorting and dynamic programming",
+    "file": "01_DSA_I_SLIDE_COMPLETE.md",
+    "title": "10. BFS, DFS, bipartite testing, cycles, and topological ordering",
+    "first_line": 1503,
+    "last_line": 1735,
+    "source_sha256": "700aaa5c5dc9fff77b52c5eed10725e00f53833dae908c8f05ece7df1baba484",
+    "characters": 8145
+  },
+  {
+    "chapter": "Data structures, searching, sorting and dynamic programming",
+    "file": "01_DSA_I_SLIDE_COMPLETE.md",
+    "title": "11. Searching and sorting",
+    "first_line": 1736,
+    "last_line": 1940,
+    "source_sha256": "96b66be82e94ad8fc789390f35f56e07ce97a9c308bda4e0012d840e31495e41",
+    "characters": 7758
+  },
+  {
+    "chapter": "Data structures, searching, sorting and dynamic programming",
+    "file": "01_DSA_I_SLIDE_COMPLETE.md",
+    "title": "12.1 Pattern and proof method",
+    "first_line": 1943,
+    "last_line": 1952,
+    "source_sha256": "3f0d0522e27b9966ecfb93955384e98cf7c062df39f11a2e8635eb9e8d5365cd",
+    "characters": 405
+  },
+  {
+    "chapter": "Data structures, searching, sorting and dynamic programming",
+    "file": "01_DSA_I_SLIDE_COMPLETE.md",
+    "title": "12.3 Maximum subarray by divide and conquer",
+    "first_line": 1974,
+    "last_line": 2013,
+    "source_sha256": "ec0b8010c145ddcd83dbeef8720be385ec43cfdd7a518c9fc6bd357e374d8bc0",
+    "characters": 1569
+  },
+  {
+    "chapter": "Data structures, searching, sorting and dynamic programming",
+    "file": "01_DSA_I_SLIDE_COMPLETE.md",
+    "title": "14.1 When DP applies",
+    "first_line": 2293,
+    "last_line": 2311,
+    "source_sha256": "64ce6af5e029e9f519c7edf717b8365c732384ebf8c40091aa82c08358da27c5",
+    "characters": 835
+  },
+  {
+    "chapter": "Data structures, searching, sorting and dynamic programming",
+    "file": "01_DSA_I_SLIDE_COMPLETE.md",
+    "title": "14.2 Fibonacci: the smallest overlap example",
+    "first_line": 2312,
+    "last_line": 2350,
+    "source_sha256": "39e2c34c0e5775ed560a9f1a68cfe880d7925f80b96d5902a4edab0ad37fffaa",
+    "characters": 932
+  },
+  {
+    "chapter": "Data structures, searching, sorting and dynamic programming",
+    "file": "01_DSA_I_SLIDE_COMPLETE.md",
+    "title": "14.3 Longest common subsequence (LCS)",
+    "first_line": 2351,
+    "last_line": 2396,
+    "source_sha256": "ff54483cf3e72291d1bb1d4739d5ff90b6460388d55aea84c25fa5b27a74b250",
+    "characters": 1514
+  },
+  {
+    "chapter": "Data structures, searching, sorting and dynamic programming",
+    "file": "01_DSA_I_SLIDE_COMPLETE.md",
+    "title": "14.5 0/1 knapsack",
+    "first_line": 2426,
+    "last_line": 2481,
+    "source_sha256": "d6969d6a01ed4547f5f596f1ad92dcaf74add2c9aa447e15af305cfb05a36f58",
+    "characters": 1596
+  },
+  {
+    "chapter": "Data structures, searching, sorting and dynamic programming",
+    "file": "01_DSA_I_SLIDE_COMPLETE.md",
+    "title": "14.12 Memoization versus tabulation",
+    "first_line": 2642,
+    "last_line": 2655,
+    "source_sha256": "40ae1eb7482a7b409ceec0dd1c9823792909f57f6dd3c16d6a98435ee5a916e7",
+    "characters": 529
+  },
+  {
+    "chapter": "Data structures, searching, sorting and dynamic programming",
+    "file": "01_DSA_I_SLIDE_COMPLETE.md",
+    "title": "17. Seniors' workbook supplement — search, sorting, and board simulations",
+    "first_line": 2873,
+    "last_line": 3177,
+    "source_sha256": "ca23dab3ef6569f06fd1a98c7bd117535ceb5038c31f705afc49c5132a8c9527",
+    "characters": 11506
+  },
+  {
+    "chapter": "Graph algorithms, hashing and amortized analysis",
+    "file": "02_DSA_II_SLIDE_COMPLETE.md",
+    "title": "3.1 Disjoint-set union (union–find)",
+    "first_line": 345,
+    "last_line": 411,
+    "source_sha256": "2f969b0d6f21f059091ccda3d2d3c57857113dd9e1e41b597b4b9a2d2f583c55",
+    "characters": 2319
+  },
+  {
+    "chapter": "Graph algorithms, hashing and amortized analysis",
+    "file": "02_DSA_II_SLIDE_COMPLETE.md",
+    "title": "3.2 MST definitions and facts",
+    "first_line": 412,
+    "last_line": 428,
+    "source_sha256": "01ff6d4d4c955d0eb1dbdbe32974c3c8cad3dd8e1b31d736641f8ce2bbbbaa03",
+    "characters": 1149
+  },
+  {
+    "chapter": "Graph algorithms, hashing and amortized analysis",
+    "file": "02_DSA_II_SLIDE_COMPLETE.md",
+    "title": "3.3 Kruskal",
+    "first_line": 429,
+    "last_line": 477,
+    "source_sha256": "b13efc04878080c5f85cae75e5afe911178094338e01b8f21adfa9f9bdf7bc3a",
+    "characters": 1488
+  },
+  {
+    "chapter": "Graph algorithms, hashing and amortized analysis",
+    "file": "02_DSA_II_SLIDE_COMPLETE.md",
+    "title": "3.4 Prim",
+    "first_line": 478,
+    "last_line": 525,
+    "source_sha256": "67afac7bbb98bba65e525a9cfae2d89137403a4ea80f2beedfe5c70935703e85",
+    "characters": 1823
+  },
+  {
+    "chapter": "Graph algorithms, hashing and amortized analysis",
+    "file": "02_DSA_II_SLIDE_COMPLETE.md",
+    "title": "3.6 MST comparison viva table",
+    "first_line": 532,
+    "last_line": 545,
+    "source_sha256": "ce19e6e9a8de184d55506b11ce1c5a45fb30bf89082a069fd3bd47202bbb8a65",
+    "characters": 536
+  },
+  {
+    "chapter": "Graph algorithms, hashing and amortized analysis",
+    "file": "02_DSA_II_SLIDE_COMPLETE.md",
+    "title": "4. Single-source shortest paths",
+    "first_line": 546,
+    "last_line": 712,
+    "source_sha256": "0e3241f5bc2f1fb0f7b14502ed1db77a526c294daec67bfb1db2bcca061f4fbc",
+    "characters": 6088
+  },
+  {
+    "chapter": "Graph algorithms, hashing and amortized analysis",
+    "file": "02_DSA_II_SLIDE_COMPLETE.md",
+    "title": "5.2 Floyd–Warshall",
+    "first_line": 733,
+    "last_line": 769,
+    "source_sha256": "208c56fee0521b7891e13dfbfac80a1f6453ac6a5b7d40c62829a438bfb8ee9d",
+    "characters": 1345
+  },
+  {
+    "chapter": "Graph algorithms, hashing and amortized analysis",
+    "file": "02_DSA_II_SLIDE_COMPLETE.md",
+    "title": "5.3 Johnson’s algorithm",
+    "first_line": 770,
+    "last_line": 848,
+    "source_sha256": "1bd751ac00e7bca8e79586d106ecaec626e4f54ed95e943916302058ba227c3c",
+    "characters": 2492
+  },
+  {
+    "chapter": "Graph algorithms, hashing and amortized analysis",
+    "file": "02_DSA_II_SLIDE_COMPLETE.md",
+    "title": "13.1 What it is—and is not",
+    "first_line": 1940,
+    "last_line": 1949,
+    "source_sha256": "70b50b725462d0e689eb3af3078f2ddbfc8634e4bca67576857394f53f331c9b",
+    "characters": 464
+  },
+  {
+    "chapter": "Graph algorithms, hashing and amortized analysis",
+    "file": "02_DSA_II_SLIDE_COMPLETE.md",
+    "title": "13.2 The three methods",
+    "first_line": 1950,
+    "last_line": 1991,
+    "source_sha256": "eb4b7fa704e6f563412b0f15ddacb1141df29a0d419cc3c41f62dfd898adcdb0",
+    "characters": 1084
+  },
+  {
+    "chapter": "Graph algorithms, hashing and amortized analysis",
+    "file": "02_DSA_II_SLIDE_COMPLETE.md",
+    "title": "13.3 Binary counter",
+    "first_line": 1992,
+    "last_line": 2012,
+    "source_sha256": "e307543969f2e64e9c590c649b0f4b684c7d74db047fa18d30d42cddf79678bb",
+    "characters": 540
+  },
+  {
+    "chapter": "Graph algorithms, hashing and amortized analysis",
+    "file": "02_DSA_II_SLIDE_COMPLETE.md",
+    "title": "13.4 Stack with multipop",
+    "first_line": 2013,
+    "last_line": 2026,
+    "source_sha256": "95313fef9116e460c157b18d2c557e06a736e0697df352584993913f5ed38989",
+    "characters": 462
+  },
+  {
+    "chapter": "Graph algorithms, hashing and amortized analysis",
+    "file": "02_DSA_II_SLIDE_COMPLETE.md",
+    "title": "13.5 Dynamic array/table",
+    "first_line": 2027,
+    "last_line": 2063,
+    "source_sha256": "18e3558b1a0d272eded5ca31c7d4cb1a22c8602e3012ad131e95d802dbfbb6e4",
+    "characters": 995
+  },
+  {
+    "chapter": "Graph algorithms, hashing and amortized analysis",
+    "file": "02_DSA_II_SLIDE_COMPLETE.md",
+    "title": "17. Hashing",
+    "first_line": 2423,
+    "last_line": 2778,
+    "source_sha256": "ddb879d107783594433cb3a7d89d495b565a1bc703f3c150067a9a0c3ae154a5",
+    "characters": 12933
+  },
+  {
+    "chapter": "Graph algorithms, hashing and amortized analysis",
+    "file": "02_DSA_II_SLIDE_COMPLETE.md",
+    "title": "21. Coping with hardness: special cases, DP, approximation, and exact exponential algorithms",
+    "first_line": 3372,
+    "last_line": 3382,
+    "source_sha256": "c0af61b59a21b3955c62ffafbbf1218657c814c71a082deffbad80e7a4f4f5fb",
+    "characters": 430
+  },
+  {
+    "chapter": "Graph algorithms, hashing and amortized analysis",
+    "file": "02_DSA_II_SLIDE_COMPLETE.md",
+    "title": "21.5 Approximation versus heuristic",
+    "first_line": 3452,
+    "last_line": 3461,
+    "source_sha256": "257e0a556c3aa20320c31a7d13b4f1fafe1be5c2491eed08ce491cfd70f66978",
+    "characters": 357
+  },
+  {
+    "chapter": "Graph algorithms, hashing and amortized analysis",
+    "file": "02_DSA_II_SLIDE_COMPLETE.md",
+    "title": "24. Workbook board drill — negative edges, negative cycles, and runtime",
+    "first_line": 4334,
+    "last_line": 4406,
+    "source_sha256": "ff9e6687783fb8ec6674af784a62b06638b8047e5249ed69bf08b3df8def5fcf",
+    "characters": 3401
+  },
+  {
+    "chapter": "Database topics from the interviews",
+    "file": "05_DBMS_SLIDE_COMPLETE.md",
+    "title": "1.6 Relational versus non-relational",
+    "first_line": 83,
+    "last_line": 93,
+    "source_sha256": "cb65c9380989a1c6294c301ff2e5df64e519e1941973927d25fe5e5c9e62b119",
+    "characters": 495
+  },
+  {
+    "chapter": "Database topics from the interviews",
+    "file": "05_DBMS_SLIDE_COMPLETE.md",
+    "title": "2.1 Relation vocabulary",
+    "first_line": 96,
+    "last_line": 116,
+    "source_sha256": "fcaee7265bf3498d9e635f4d70c376ece2f66a88c713eb733b39808e0b7a13c0",
+    "characters": 734
+  },
+  {
+    "chapter": "Database topics from the interviews",
+    "file": "05_DBMS_SLIDE_COMPLETE.md",
+    "title": "2.2 Keys—say these precisely",
+    "first_line": 117,
+    "last_line": 139,
+    "source_sha256": "b22f4b423fcdce74509d1ed953552ddc4fd854349538037d4b04e4cf6888d47d",
+    "characters": 1012
+  },
+  {
+    "chapter": "Database topics from the interviews",
+    "file": "05_DBMS_SLIDE_COMPLETE.md",
+    "title": "18.1 Transaction and ACID",
+    "first_line": 2894,
+    "last_line": 2916,
+    "source_sha256": "d90b2d6a5af0472bd7f65d4bf32e13b31daa0d4479c5ad98a822df7a16b40103",
+    "characters": 1078
+  },
+  {
+    "chapter": "Database topics from the interviews",
+    "file": "05_DBMS_SLIDE_COMPLETE.md",
+    "title": "18.2 Transaction states",
+    "first_line": 2917,
+    "last_line": 2935,
+    "source_sha256": "6667c2ea06df8f8bbb585046dd417bc515609f46cf7ae5c690259570707483eb",
+    "characters": 743
+  },
+  {
+    "chapter": "Database topics from the interviews",
+    "file": "05_DBMS_SLIDE_COMPLETE.md",
+    "title": "26. Workbook interview case — migrate a document database to SQL",
+    "first_line": 3927,
+    "last_line": 4001,
+    "source_sha256": "47c84d2a0abf3831bb0a9dc819d3d39b8b4f8936c44ba171a3384c23468b8167",
+    "characters": 2973
+  },
+  {
+    "chapter": "Database topics from the interviews",
+    "file": "13_SECURITY_CORE_COMPLETE.md",
+    "title": "11.1 SQL injection",
+    "first_line": 379,
+    "last_line": 400,
+    "source_sha256": "8359607b40d38c739ba6947b8e2d24f4ca90646c9eee04e5a9549c294c297a6a",
+    "characters": 525
+  },
+  {
+    "chapter": "Database topics from the interviews",
+    "file": "13_SECURITY_CORE_COMPLETE.md",
+    "title": "19.4 SQL injection, prepared statements, and identifiers",
+    "first_line": 923,
+    "last_line": 945,
+    "source_sha256": "a40c7e227b9eb10ea34d853e38e21d6c1957e10bbb272b2afa3a4ddbedcfcc51",
+    "characters": 718
+  },
+  {
+    "chapter": "Software engineering",
+    "file": "08_SOFTWARE_ENGINEERING_SLIDE_COMPLETE.md",
+    "title": "2. What software engineering is",
+    "first_line": 24,
+    "last_line": 55,
+    "source_sha256": "0380a2fa13ed0b1662babcaee8fbafbeab8f67cadb9554f99441df579ff06fe7",
+    "characters": 1408
+  },
+  {
+    "chapter": "Software engineering",
+    "file": "08_SOFTWARE_ENGINEERING_SLIDE_COMPLETE.md",
+    "title": "3. SDLC and process models",
+    "first_line": 56,
+    "last_line": 119,
+    "source_sha256": "eca0b9aee6038249ce66ae2f713ade19b83ee9e4147dc245796f3464df302322",
+    "characters": 3154
+  },
+  {
+    "chapter": "Software engineering",
+    "file": "08_SOFTWARE_ENGINEERING_SLIDE_COMPLETE.md",
+    "title": "4. Agile, XP, and Scrum",
+    "first_line": 120,
+    "last_line": 225,
+    "source_sha256": "7ca772d8c49a6b28f9c9f580cfc8d432c2fb94dd89d133ffae889a1cad556179",
+    "characters": 5290
+  },
+  {
+    "chapter": "Software engineering",
+    "file": "08_SOFTWARE_ENGINEERING_SLIDE_COMPLETE.md",
+    "title": "17.4 Software engineering ethics principles",
+    "first_line": 976,
+    "last_line": 992,
+    "source_sha256": "0515cd1b0d744ce87aeccca3513b75f3e774298bd6c0ee33f4dcadfd6f8f9361",
+    "characters": 742
+  },
+  {
+    "chapter": "Operating systems",
+    "file": "06_OPERATING_SYSTEMS_SLIDE_COMPLETE.md",
+    "title": "1. The operating-system mental model",
+    "first_line": 20,
+    "last_line": 56,
+    "source_sha256": "39213dc03ef183d738fa7fed1044f1c454696181eb83a25b6b87cde2fde25986",
+    "characters": 2788
+  },
+  {
+    "chapter": "Operating systems",
+    "file": "06_OPERATING_SYSTEMS_SLIDE_COMPLETE.md",
+    "title": "2. Programs, processes, and threads",
+    "first_line": 57,
+    "last_line": 101,
+    "source_sha256": "7ce6432b8adc67d522ddb8bac836220f96b01fd78e78aa16fe083d69ced5ba2e",
+    "characters": 2806
+  },
+  {
+    "chapter": "Operating systems",
+    "file": "06_OPERATING_SYSTEMS_SLIDE_COMPLETE.md",
+    "title": "3. CPU scheduling",
+    "first_line": 102,
+    "last_line": 171,
+    "source_sha256": "16c9de468f352ab6d236095aeccbe9128bbe7b5d9cb6eb093b1bf0583a56b6e2",
+    "characters": 3435
+  },
+  {
+    "chapter": "Operating systems",
+    "file": "06_OPERATING_SYSTEMS_SLIDE_COMPLETE.md",
+    "title": "4. Concurrency and synchronization",
+    "first_line": 172,
+    "last_line": 265,
+    "source_sha256": "1546beac3b8522ead8cac7a188426eeea21738cadd7b0b83a04c4968de671d0b",
+    "characters": 4904
+  },
+  {
+    "chapter": "Operating systems",
+    "file": "06_OPERATING_SYSTEMS_SLIDE_COMPLETE.md",
+    "title": "5. Deadlock, starvation, and livelock",
+    "first_line": 266,
+    "last_line": 298,
+    "source_sha256": "354578fb5a132777b69a394eb53004a49c6be301516362244198f40d25c5a436",
+    "characters": 1754
+  },
+  {
+    "chapter": "Operating systems",
+    "file": "06_OPERATING_SYSTEMS_SLIDE_COMPLETE.md",
+    "title": "6. Address spaces and virtual memory",
+    "first_line": 299,
+    "last_line": 363,
+    "source_sha256": "4e1c590505a402da604022c09f8204f8ba4a29b0b089545ab2f3ef24957f68a5",
+    "characters": 4399
+  },
+  {
+    "chapter": "Operating systems",
+    "file": "06_OPERATING_SYSTEMS_SLIDE_COMPLETE.md",
+    "title": "Workbook supplement — single-core threads, process states, and RR cost",
+    "first_line": 544,
+    "last_line": 608,
+    "source_sha256": "b7d2807226eeadc6ad309944a885adbd516203b38f733a8f2544c272fca86ee5",
+    "characters": 3297
+  },
+  {
+    "chapter": "Operating systems",
+    "file": "06_OPERATING_SYSTEMS_SLIDE_COMPLETE.md",
+    "title": "15.1 Scheduling metrics and one complete trace",
+    "first_line": 611,
+    "last_line": 670,
+    "source_sha256": "1d151e0bfcc2785cb946cb6f59b3856982c503dbb14f5796685d27529818d9c8",
+    "characters": 1979
+  },
+  {
+    "chapter": "Operating systems",
+    "file": "06_OPERATING_SYSTEMS_SLIDE_COMPLETE.md",
+    "title": "15.2 MLFQ as an explicit algorithm",
+    "first_line": 671,
+    "last_line": 682,
+    "source_sha256": "7ad88064bd820f79f368e91e90601c87bbf89c2d0a2d42bce087e9ece905f734",
+    "characters": 767
+  },
+  {
+    "chapter": "Operating systems",
+    "file": "06_OPERATING_SYSTEMS_SLIDE_COMPLETE.md",
+    "title": "15.5 Race condition trace",
+    "first_line": 711,
+    "last_line": 723,
+    "source_sha256": "e1f469e9e36fe5ba029944ef4c5885a8c4bf28225e8890d59f334312f4b7d545",
+    "characters": 425
+  },
+  {
+    "chapter": "Operating systems",
+    "file": "06_OPERATING_SYSTEMS_SLIDE_COMPLETE.md",
+    "title": "15.6 Semaphore bounded buffer",
+    "first_line": 724,
+    "last_line": 750,
+    "source_sha256": "dce762c9de468f2bc149b5d503d78225db58078ed1728f7e6f8152ff526e31ed",
+    "characters": 591
+  },
+  {
+    "chapter": "Operating systems",
+    "file": "06_OPERATING_SYSTEMS_SLIDE_COMPLETE.md",
+    "title": "15.8 Deadlock detection and Banker safety",
+    "first_line": 764,
+    "last_line": 782,
+    "source_sha256": "35e6a7dd5d734f169366456acba2c5e059ea7807d55fb6ccdbe2e326e9148550",
+    "characters": 784
+  },
+  {
+    "chapter": "Operating systems",
+    "file": "06_OPERATING_SYSTEMS_SLIDE_COMPLETE.md",
+    "title": "15.10 Paging numeric example",
+    "first_line": 794,
+    "last_line": 851,
+    "source_sha256": "9fd115885fe01972d2d8ba6c0a2937942fefd9c330f61777c531a95744cd7d2d",
+    "characters": 2132
+  },
+  {
+    "chapter": "Operating systems",
+    "file": "06_OPERATING_SYSTEMS_SLIDE_COMPLETE.md",
+    "title": "15.11 TLB effective access time",
+    "first_line": 852,
+    "last_line": 867,
+    "source_sha256": "fd1f17880783d6676b353e80a57ded6a821ed9d99f0794895ac0afefeb617e5d",
+    "characters": 398
+  },
+  {
+    "chapter": "Operating systems",
+    "file": "06_OPERATING_SYSTEMS_SLIDE_COMPLETE.md",
+    "title": "15.12 Page-fault service sequence",
+    "first_line": 868,
+    "last_line": 881,
+    "source_sha256": "8d159928f2d64c302ce43399fd7ccbe5cff6a3587d4ca83e4a8d7842fef643c2",
+    "characters": 573
+  },
+  {
+    "chapter": "Operating systems",
+    "file": "06_OPERATING_SYSTEMS_SLIDE_COMPLETE.md",
+    "title": "15.13 Replacement algorithms and Belady anomaly",
+    "first_line": 882,
+    "last_line": 919,
+    "source_sha256": "1491dbf37f634c8d70053644d46f191da06482f770fe83ebedba10c0beed4a68",
+    "characters": 2300
+  },
+  {
+    "chapter": "Artificial intelligence",
+    "file": "09_ARTIFICIAL_INTELLIGENCE_SLIDE_COMPLETE.md",
+    "title": "1. Four views of AI",
+    "first_line": 25,
+    "last_line": 37,
+    "source_sha256": "c6f9e2f6b59f9a648ef1a55d158bdc7504e3afea2eac26ebff9cf246ef6d4a6f",
+    "characters": 1140
+  },
+  {
+    "chapter": "Artificial intelligence",
+    "file": "09_ARTIFICIAL_INTELLIGENCE_SLIDE_COMPLETE.md",
+    "title": "3. Agent, percept, action, rationality",
+    "first_line": 55,
+    "last_line": 62,
+    "source_sha256": "a4a96855e51bedfab6ba8202398599e30cff866b7cdfbbfbcb7b89ca471753bb",
+    "characters": 511
+  },
+  {
+    "chapter": "Artificial intelligence",
+    "file": "09_ARTIFICIAL_INTELLIGENCE_SLIDE_COMPLETE.md",
+    "title": "4. PEAS",
+    "first_line": 63,
+    "last_line": 82,
+    "source_sha256": "cf5c48abe38ae466ef1d7e936be59211cfb64f00f7fe0ae79cb9a387fe9c315f",
+    "characters": 647
+  },
+  {
+    "chapter": "Artificial intelligence",
+    "file": "09_ARTIFICIAL_INTELLIGENCE_SLIDE_COMPLETE.md",
+    "title": "5. Environment dimensions",
+    "first_line": 83,
+    "last_line": 96,
+    "source_sha256": "5c0c2a51dc24b51395abd728f5e1361572243dfab59d7e64aca300413c6bf65d",
+    "characters": 968
+  },
+  {
+    "chapter": "Artificial intelligence",
+    "file": "09_ARTIFICIAL_INTELLIGENCE_SLIDE_COMPLETE.md",
+    "title": "6. Agent architectures",
+    "first_line": 97,
+    "last_line": 109,
+    "source_sha256": "e16a0c0f9bd484745d50bbb02f172b4b16f5b1f8d89f0f0b9f355a1d720fc0a7",
+    "characters": 590
+  },
+  {
+    "chapter": "Artificial intelligence",
+    "file": "09_ARTIFICIAL_INTELLIGENCE_SLIDE_COMPLETE.md",
+    "title": "7. Search-problem formulation",
+    "first_line": 112,
+    "last_line": 127,
+    "source_sha256": "bca5420be26c5d639f427d77aafe5264e39733f2c09f5f3d1e83dc52f63fe826",
+    "characters": 979
+  },
+  {
+    "chapter": "Artificial intelligence",
+    "file": "09_ARTIFICIAL_INTELLIGENCE_SLIDE_COMPLETE.md",
+    "title": "8. Tree search versus graph search",
+    "first_line": 128,
+    "last_line": 145,
+    "source_sha256": "6278ecf785423ab71b4bf031923fe6bea8f89f9994464147d3e531939dbcf512",
+    "characters": 920
+  },
+  {
+    "chapter": "Artificial intelligence",
+    "file": "09_ARTIFICIAL_INTELLIGENCE_SLIDE_COMPLETE.md",
+    "title": "9. Generic best-first graph search",
+    "first_line": 146,
+    "last_line": 187,
+    "source_sha256": "dc7b77c8e81af14242c63f6d999e9ea0d4d3a68551578186ee78f05c820858dd",
+    "characters": 1370
+  },
+  {
+    "chapter": "Artificial intelligence",
+    "file": "09_ARTIFICIAL_INTELLIGENCE_SLIDE_COMPLETE.md",
+    "title": "10. Criteria and notation",
+    "first_line": 190,
+    "last_line": 193,
+    "source_sha256": "3ada8c9b3433770e1dddabe113c97ce37301dc89e340ab3e2d681c01335452d3",
+    "characters": 287
+  },
+  {
+    "chapter": "Artificial intelligence",
+    "file": "09_ARTIFICIAL_INTELLIGENCE_SLIDE_COMPLETE.md",
+    "title": "11. Breadth-first search",
+    "first_line": 194,
+    "last_line": 214,
+    "source_sha256": "09027eba1fec51ea5470dc89edec6f85fc9931bf366de8e8bc7fd2d355e65b1f",
+    "characters": 679
+  },
+  {
+    "chapter": "Artificial intelligence",
+    "file": "09_ARTIFICIAL_INTELLIGENCE_SLIDE_COMPLETE.md",
+    "title": "12. Uniform-cost search",
+    "first_line": 215,
+    "last_line": 220,
+    "source_sha256": "258d05546cdf60506c958516633e2ffca09bb9249e32f42789388e6fac3abc31",
+    "characters": 565
+  },
+  {
+    "chapter": "Artificial intelligence",
+    "file": "09_ARTIFICIAL_INTELLIGENCE_SLIDE_COMPLETE.md",
+    "title": "13. Depth-first search",
+    "first_line": 221,
+    "last_line": 224,
+    "source_sha256": "fba7d471f7aba6c7f24fd2c5e12ca9d6762cfaeb426712d6b04b13cf926e7bd4",
+    "characters": 274
+  },
+  {
+    "chapter": "Artificial intelligence",
+    "file": "09_ARTIFICIAL_INTELLIGENCE_SLIDE_COMPLETE.md",
+    "title": "14. Depth-limited and iterative deepening search",
+    "first_line": 225,
+    "last_line": 257,
+    "source_sha256": "207a562b2f407fddbe1b6633809ed93b1b40d6802837939698334276166f81b7",
+    "characters": 1248
+  },
+  {
+    "chapter": "Artificial intelligence",
+    "file": "09_ARTIFICIAL_INTELLIGENCE_SLIDE_COMPLETE.md",
+    "title": "15. Bidirectional search",
+    "first_line": 258,
+    "last_line": 261,
+    "source_sha256": "0ba37abf217db96edddeac6c8fbe9f03ec1d0d49aa72899707baf5ab4e589596",
+    "characters": 406
+  },
+  {
+    "chapter": "Artificial intelligence",
+    "file": "09_ARTIFICIAL_INTELLIGENCE_SLIDE_COMPLETE.md",
+    "title": "16. Comparison",
+    "first_line": 262,
+    "last_line": 272,
+    "source_sha256": "716bf53c2e064451f108e864045064039d98c88d881dacc4ff1492e433a594a9",
+    "characters": 591
+  },
+  {
+    "chapter": "Artificial intelligence",
+    "file": "09_ARTIFICIAL_INTELLIGENCE_SLIDE_COMPLETE.md",
+    "title": "17. Greedy and A*",
+    "first_line": 275,
+    "last_line": 294,
+    "source_sha256": "3a3a05d46a8005938bc1361c3d4a36850623c93e1e01c5e8e584cd8af4cc8c9d",
+    "characters": 702
+  },
+  {
+    "chapter": "Artificial intelligence",
+    "file": "09_ARTIFICIAL_INTELLIGENCE_SLIDE_COMPLETE.md",
+    "title": "18. Admissibility, consistency, reopening",
+    "first_line": 295,
+    "last_line": 310,
+    "source_sha256": "2066d9342e097207aeebf1723ba03f5bb52ad68f92a1b06c93e286e684eb01fa",
+    "characters": 977
+  },
+  {
+    "chapter": "Artificial intelligence",
+    "file": "09_ARTIFICIAL_INTELLIGENCE_SLIDE_COMPLETE.md",
+    "title": "19. A* optimality proof and the reported $h=0$ question",
+    "first_line": 311,
+    "last_line": 320,
+    "source_sha256": "a72ff829258477011b5c4fe931c9e55ef9f30f7c8ed412f81822f4a42608a30f",
+    "characters": 729
+  },
+  {
+    "chapter": "Artificial intelligence",
+    "file": "09_ARTIFICIAL_INTELLIGENCE_SLIDE_COMPLETE.md",
+    "title": "20. Building heuristics",
+    "first_line": 321,
+    "last_line": 330,
+    "source_sha256": "cc35b596c0e3fbfa77dd40558eb4dd2a328ef3f8dcf3d3d778932bc263987d3d",
+    "characters": 529
+  },
+  {
+    "chapter": "Artificial intelligence",
+    "file": "09_ARTIFICIAL_INTELLIGENCE_SLIDE_COMPLETE.md",
+    "title": "25. Game model and minimax",
+    "first_line": 462,
+    "last_line": 492,
+    "source_sha256": "874bf6a1bb8cacaa576c27def464463fbc235c155de4818ce2cc881d8e418eb4",
+    "characters": 1527
+  },
+  {
+    "chapter": "Artificial intelligence",
+    "file": "09_ARTIFICIAL_INTELLIGENCE_SLIDE_COMPLETE.md",
+    "title": "26. Reported infinite-depth question",
+    "first_line": 493,
+    "last_line": 500,
+    "source_sha256": "6172b64cd103f6304e343282430fd4d9d2c6decb9e71b953a6a45eb1c45296b1",
+    "characters": 845
+  },
+  {
+    "chapter": "Artificial intelligence",
+    "file": "09_ARTIFICIAL_INTELLIGENCE_SLIDE_COMPLETE.md",
+    "title": "27. Alpha–beta pruning",
+    "first_line": 501,
+    "last_line": 528,
+    "source_sha256": "39cd838a5867a454f5bfd84e5f3c7493054ea0edbc7430da8c82a85c48330844",
+    "characters": 1104
+  },
+  {
+    "chapter": "Artificial intelligence",
+    "file": "09_ARTIFICIAL_INTELLIGENCE_SLIDE_COMPLETE.md",
+    "title": "28. Cutoff, evaluation, horizon, chance",
+    "first_line": 529,
+    "last_line": 544,
+    "source_sha256": "97f47c3cc27fcf1da10eb01fb746bbad59b0497a6bc8ca2cbaf105efc07ccd28",
+    "characters": 685
+  },
+  {
+    "chapter": "Artificial intelligence",
+    "file": "09_ARTIFICIAL_INTELLIGENCE_SLIDE_COMPLETE.md",
+    "title": "Workbook supplement — completeness, rationality, and game assumptions",
+    "first_line": 1200,
+    "last_line": 1280,
+    "source_sha256": "d46bb92a9f2c97653fa1db7345f2ac3a593ce030323ef5888136e6418eb436c1",
+    "characters": 4081
+  },
+  {
+    "chapter": "Machine learning",
+    "file": "11_MACHINE_LEARNING_SLIDE_COMPLETE.md",
+    "title": "1. What is machine learning?",
+    "first_line": 30,
+    "last_line": 68,
+    "source_sha256": "4a0e7e1eb7b6e0a81484ef0a289b0fa3ea2834aead236fc028a777f787d85080",
+    "characters": 2691
+  },
+  {
+    "chapter": "Machine learning",
+    "file": "11_MACHINE_LEARNING_SLIDE_COMPLETE.md",
+    "title": "2. End-to-end ML workflow",
+    "first_line": 69,
+    "last_line": 100,
+    "source_sha256": "37320e30aea636e6868d8808524ca6c0ce4ff373de2321b02b21a9231ea77741",
+    "characters": 1889
+  },
+  {
+    "chapter": "Machine learning",
+    "file": "11_MACHINE_LEARNING_SLIDE_COMPLETE.md",
+    "title": "3. Preprocessing and feature engineering",
+    "first_line": 101,
+    "last_line": 130,
+    "source_sha256": "a00b35f9f34f4a3c5f52f625dc2059c75e725cc5c961de843de1139a2c50c319",
+    "characters": 1683
+  },
+  {
+    "chapter": "Machine learning",
+    "file": "11_MACHINE_LEARNING_SLIDE_COMPLETE.md",
+    "title": "4. Loss, risk, and model selection",
+    "first_line": 131,
+    "last_line": 144,
+    "source_sha256": "7c136727233c98bcfd82d36ca742a99c242717861e5475ce6f8a916f4fa625e4",
+    "characters": 683
+  },
+  {
+    "chapter": "Machine learning",
+    "file": "11_MACHINE_LEARNING_SLIDE_COMPLETE.md",
+    "title": "5. Classification metrics",
+    "first_line": 145,
+    "last_line": 187,
+    "source_sha256": "693b70686fcea4a8f6841b584371a5f149c7ca2ae14f5e5b35b9575ce2e30775",
+    "characters": 1774
+  },
+  {
+    "chapter": "Machine learning",
+    "file": "11_MACHINE_LEARNING_SLIDE_COMPLETE.md",
+    "title": "6. Regression metrics",
+    "first_line": 188,
+    "last_line": 198,
+    "source_sha256": "faa007708b63de757993dd7e9d6a3b928a759c2eea5173a90eed7b1e848c23e9",
+    "characters": 439
+  },
+  {
+    "chapter": "Machine learning",
+    "file": "11_MACHINE_LEARNING_SLIDE_COMPLETE.md",
+    "title": "7. Bias–variance: the precise answer",
+    "first_line": 201,
+    "last_line": 311,
+    "source_sha256": "9e247644ca4a543f12e7047636b9a53950a96a9fec4ef48abd0e777e2b473201",
+    "characters": 6698
+  },
+  {
+    "chapter": "Machine learning",
+    "file": "11_MACHINE_LEARNING_SLIDE_COMPLETE.md",
+    "title": "8. Regularization",
+    "first_line": 312,
+    "last_line": 327,
+    "source_sha256": "597938cebace3985d92404c491e30a2c9376bab9833a6eac5e1e4e73befb9cbc",
+    "characters": 1240
+  },
+  {
+    "chapter": "Machine learning",
+    "file": "11_MACHINE_LEARNING_SLIDE_COMPLETE.md",
+    "title": "9. Linear regression",
+    "first_line": 330,
+    "last_line": 378,
+    "source_sha256": "fdfdf8924161037a0b689d983b675388838d82366ead1c296eb851c8431b60ce",
+    "characters": 1580
+  },
+  {
+    "chapter": "Machine learning",
+    "file": "11_MACHINE_LEARNING_SLIDE_COMPLETE.md",
+    "title": "10. Perceptron",
+    "first_line": 379,
+    "last_line": 397,
+    "source_sha256": "e20f13eb3744ed426a3cece0c26080c9d54685d18f61cd3d89597131876ca43c",
+    "characters": 694
+  },
+  {
+    "chapter": "Machine learning",
+    "file": "11_MACHINE_LEARNING_SLIDE_COMPLETE.md",
+    "title": "11. Logistic regression",
+    "first_line": 398,
+    "last_line": 439,
+    "source_sha256": "4325385b3d23e5fb6c7413e164469459ee21d4f2e79d7d78b28c3dd546c3bff0",
+    "characters": 1512
+  },
+  {
+    "chapter": "Machine learning",
+    "file": "11_MACHINE_LEARNING_SLIDE_COMPLETE.md",
+    "title": "12. Multiclass softmax and cross-entropy",
+    "first_line": 440,
+    "last_line": 451,
+    "source_sha256": "21842d80bacf5343edcf0ce1f48cabc2bc4f2b9075565f69527a6876f41cf105",
+    "characters": 459
+  },
+  {
+    "chapter": "Machine learning",
+    "file": "11_MACHINE_LEARNING_SLIDE_COMPLETE.md",
+    "title": "15. Decision trees",
+    "first_line": 470,
+    "last_line": 518,
+    "source_sha256": "1d63ab904be40e2e17afc62832cac4c8e18a79f2cb8c910b2e0812235b8c5ac6",
+    "characters": 2107
+  },
+  {
+    "chapter": "Machine learning",
+    "file": "11_MACHINE_LEARNING_SLIDE_COMPLETE.md",
+    "title": "16. Bagging and random forest",
+    "first_line": 519,
+    "last_line": 526,
+    "source_sha256": "28ec6d6702abe6a84fac28daced286d23a988709082091dd3598e44b36f21207",
+    "characters": 669
+  },
+  {
+    "chapter": "Machine learning",
+    "file": "11_MACHINE_LEARNING_SLIDE_COMPLETE.md",
+    "title": "17. AdaBoost",
+    "first_line": 527,
+    "last_line": 551,
+    "source_sha256": "f6d2fc9358959faa71ab4b5358387d775acf80bcb7945031da15d7b62ac51504",
+    "characters": 922
+  },
+  {
+    "chapter": "Machine learning",
+    "file": "11_MACHINE_LEARNING_SLIDE_COMPLETE.md",
+    "title": "18. Gradient boosting",
+    "first_line": 552,
+    "last_line": 595,
+    "source_sha256": "a69610b509d5363d58955083ed49a60cd7f18d8544b13f04bcb8c8a998df4d97",
+    "characters": 2593
+  },
+  {
+    "chapter": "Machine learning",
+    "file": "11_MACHINE_LEARNING_SLIDE_COMPLETE.md",
+    "title": "19. Stacking",
+    "first_line": 596,
+    "last_line": 601,
+    "source_sha256": "67becfaa35fa7ebd5a9c541afc67e80a616e4d80dd2864f205c75e67c9f834ae",
+    "characters": 360
+  },
+  {
+    "chapter": "Machine learning",
+    "file": "11_MACHINE_LEARNING_SLIDE_COMPLETE.md",
+    "title": "24. Optimization algorithms",
+    "first_line": 744,
+    "last_line": 806,
+    "source_sha256": "9c4491fad1c3ccfd2b7e4df54c4a60a25f9c0ee0d31ffaab941326ecd8b856de",
+    "characters": 2810
+  },
+  {
+    "chapter": "Machine learning",
+    "file": "11_MACHINE_LEARNING_SLIDE_COMPLETE.md",
+    "title": "34. Maximum likelihood, MAP, and Bayesian learning",
+    "first_line": 1066,
+    "last_line": 1097,
+    "source_sha256": "54d41f1bd2c8e85d5e49d09ad6b0c73caba6576510e722424554dcd4fdcb8aa5",
+    "characters": 1275
+  },
+  {
+    "chapter": "Machine learning",
+    "file": "11_MACHINE_LEARNING_SLIDE_COMPLETE.md",
+    "title": "37. Gaussian mixture model",
+    "first_line": 1134,
+    "last_line": 1141,
+    "source_sha256": "025d1b666f52a61b4725e4ed3703f87bf8c0c4c676b549766f68a02c0bfc2138",
+    "characters": 355
+  },
+  {
+    "chapter": "Machine learning",
+    "file": "11_MACHINE_LEARNING_SLIDE_COMPLETE.md",
+    "title": "38. Expectation–maximization for GMM",
+    "first_line": 1142,
+    "last_line": 1199,
+    "source_sha256": "bf340921c58bc84ffff95d01691be1f1575369fa70c8752eeedbefdc0dfe5473",
+    "characters": 2152
+  },
+  {
+    "chapter": "Machine learning",
+    "file": "11_MACHINE_LEARNING_SLIDE_COMPLETE.md",
+    "title": "39. K-means and Lloyd's algorithm",
+    "first_line": 1200,
+    "last_line": 1256,
+    "source_sha256": "06851e39158d5c0e01f5426ec450dedc8186c8b6f24208921abd3b6f37b60aca",
+    "characters": 2587
+  },
+  {
+    "chapter": "Machine learning",
+    "file": "11_MACHINE_LEARNING_SLIDE_COMPLETE.md",
+    "title": "40. Dimensionality reduction recall",
+    "first_line": 1257,
+    "last_line": 1272,
+    "source_sha256": "0b2526fe6b2a627c3c395dc4ffff36c4826356a0d2008fca2b4621df5d9592e8",
+    "characters": 1045
+  },
+  {
+    "chapter": "Machine learning",
+    "file": "11_MACHINE_LEARNING_SLIDE_COMPLETE.md",
+    "title": "41. MDP definition",
+    "first_line": 1275,
+    "last_line": 1292,
+    "source_sha256": "6ab1e9e7ae3f8996f821a1add258c11ba38e637d4bd6bbec17e6011b39c4c87c",
+    "characters": 581
+  },
+  {
+    "chapter": "Machine learning",
+    "file": "11_MACHINE_LEARNING_SLIDE_COMPLETE.md",
+    "title": "42. Value functions and Bellman equations",
+    "first_line": 1293,
+    "last_line": 1310,
+    "source_sha256": "3cc6bd33066bc5aaaa5c213f618f532ee2a59891d3ae96639bed90c707510693",
+    "characters": 331
+  },
+  {
+    "chapter": "Machine learning",
+    "file": "11_MACHINE_LEARNING_SLIDE_COMPLETE.md",
+    "title": "43. Dynamic programming: value and policy iteration",
+    "first_line": 1311,
+    "last_line": 1328,
+    "source_sha256": "93217eef206a1994e51936092308b630e83714717bbfe73364aeb5835c96eaa5",
+    "characters": 657
+  },
+  {
+    "chapter": "Machine learning",
+    "file": "11_MACHINE_LEARNING_SLIDE_COMPLETE.md",
+    "title": "44. Passive learning, ADP, TD, and active learning",
+    "first_line": 1329,
+    "last_line": 1341,
+    "source_sha256": "0bb91b72d93d1f2b8b40d014ca9b7c95ae9e007133d98e18fd7c4a77b7f68d9f",
+    "characters": 901
+  },
+  {
+    "chapter": "Machine learning",
+    "file": "11_MACHINE_LEARNING_SLIDE_COMPLETE.md",
+    "title": "45. Q-learning",
+    "first_line": 1342,
+    "last_line": 1372,
+    "source_sha256": "c58aa5b775f98fb6d4c378c0a7faf947944993b900063e9183d92f459341576a",
+    "characters": 1149
+  },
+  {
+    "chapter": "Machine learning",
+    "file": "11_MACHINE_LEARNING_SLIDE_COMPLETE.md",
+    "title": "46. Bag-of-words to contextual embeddings",
+    "first_line": 1375,
+    "last_line": 1398,
+    "source_sha256": "c1c5d5135f651a3193186fc3df217209e64251754980dc121717f3cfa9c061f8",
+    "characters": 1304
+  },
+  {
+    "chapter": "Machine learning",
+    "file": "11_MACHINE_LEARNING_SLIDE_COMPLETE.md",
+    "title": "51. Autoregressive language modeling",
+    "first_line": 1505,
+    "last_line": 1514,
+    "source_sha256": "69cf3d1061e0c76916084372e016c8c2942dcc3466a8f20d84a5cb8f0b5848e8",
+    "characters": 623
+  },
+  {
+    "chapter": "Machine learning",
+    "file": "11_MACHINE_LEARNING_SLIDE_COMPLETE.md",
+    "title": "52. Transformer overview",
+    "first_line": 1515,
+    "last_line": 1536,
+    "source_sha256": "8d4ddb4c58efa666e413552d0ae2b324ea5bea337c1bc60c870783760592a7e8",
+    "characters": 1103
+  },
+  {
+    "chapter": "Machine learning",
+    "file": "11_MACHINE_LEARNING_SLIDE_COMPLETE.md",
+    "title": "53. Scaled dot-product self-attention",
+    "first_line": 1537,
+    "last_line": 1562,
+    "source_sha256": "08e004b139389532de8f4f583b859596b8acf25ee3efc70915a3c5963af56131",
+    "characters": 1440
+  },
+  {
+    "chapter": "Machine learning",
+    "file": "11_MACHINE_LEARNING_SLIDE_COMPLETE.md",
+    "title": "54. Multi-head, multi-query, and grouped-query attention",
+    "first_line": 1563,
+    "last_line": 1574,
+    "source_sha256": "f8ebd64ce2d1de0360907382b3e9a9ecc93725b910772feca639adb34b946268",
+    "characters": 652
+  },
+  {
+    "chapter": "Machine learning",
+    "file": "11_MACHINE_LEARNING_SLIDE_COMPLETE.md",
+    "title": "55. Positional information and RoPE",
+    "first_line": 1575,
+    "last_line": 1580,
+    "source_sha256": "659cb2d84488e634439dd1faecf5019f8f98c10a8264b106526d121909a10479",
+    "characters": 571
+  },
+  {
+    "chapter": "Machine learning",
+    "file": "11_MACHINE_LEARNING_SLIDE_COMPLETE.md",
+    "title": "56. Transformer block details",
+    "first_line": 1581,
+    "last_line": 1590,
+    "source_sha256": "214acc87dc18b973580e955318c39bb2b4a93c2cb669d8cc9240235f9280e4f0",
+    "characters": 422
+  },
+  {
+    "chapter": "Machine learning",
+    "file": "11_MACHINE_LEARNING_SLIDE_COMPLETE.md",
+    "title": "57. KV cache",
+    "first_line": 1591,
+    "last_line": 1602,
+    "source_sha256": "44cf3673b635b22d3a1ecdd893474b72e31f08c364c11164e80206979d9692bb",
+    "characters": 809
+  },
+  {
+    "chapter": "Machine learning",
+    "file": "11_MACHINE_LEARNING_SLIDE_COMPLETE.md",
+    "title": "58. Encoder-only, decoder-only, and encoder–decoder models",
+    "first_line": 1603,
+    "last_line": 1616,
+    "source_sha256": "d96031926b41be4786ce6b53411a6e1aa6c9758d94b9ca723c2bbcb5540e4dc0",
+    "characters": 1150
+  },
+  {
+    "chapter": "Machine learning",
+    "file": "11_MACHINE_LEARNING_SLIDE_COMPLETE.md",
+    "title": "Workbook supplement — classical ML gaps and precise interview answers",
+    "first_line": 2397,
+    "last_line": 2689,
+    "source_sha256": "839020800ddbe9b174935eaaa74b3ae79256df0aa81900e1c46f36d4132a2872",
+    "characters": 14717
+  },
+  {
+    "chapter": "Computer networking",
+    "file": "07_NETWORKING_SLIDE_COMPLETE.md",
+    "title": "The 30-second map of the course",
+    "first_line": 20,
+    "last_line": 37,
+    "source_sha256": "5795e49baa695354ea762b80a708084eb9b3cceb22983d2392ad78440cba8503",
+    "characters": 1572
+  },
+  {
+    "chapter": "Computer networking",
+    "file": "07_NETWORKING_SLIDE_COMPLETE.md",
+    "title": "Protocols, services, encapsulation",
+    "first_line": 78,
+    "last_line": 101,
+    "source_sha256": "9e29b9efa7c2f6bc50a5639219e800a3cd8feb12927aab0ad975cb4201d257c4",
+    "characters": 1223
+  },
+  {
+    "chapter": "Computer networking",
+    "file": "07_NETWORKING_SLIDE_COMPLETE.md",
+    "title": "What the network layer provides",
+    "first_line": 838,
+    "last_line": 847,
+    "source_sha256": "e0a981eb26e598e64abf1aaa1e63ae5d6c7c5d6a54707ab3ea72ad1df9d6475f",
+    "characters": 696
+  },
+  {
+    "chapter": "Computer networking",
+    "file": "07_NETWORKING_SLIDE_COMPLETE.md",
+    "title": "Same subnet versus remote subnet",
+    "first_line": 848,
+    "last_line": 858,
+    "source_sha256": "1e2ae9dd4314592516419d064277f953bafa217654a86f2b41555aa4ad160c16",
+    "characters": 529
+  },
+  {
+    "chapter": "Computer networking",
+    "file": "07_NETWORKING_SLIDE_COMPLETE.md",
+    "title": "ARP",
+    "first_line": 859,
+    "last_line": 871,
+    "source_sha256": "e2d1ad41ba8c285de3169b5d6eea7c968dcee60ce2b3c45a11198bff67d4397d",
+    "characters": 761
+  },
+  {
+    "chapter": "Computer networking",
+    "file": "07_NETWORKING_SLIDE_COMPLETE.md",
+    "title": "IPv4 header",
+    "first_line": 872,
+    "last_line": 891,
+    "source_sha256": "7dd50e76c8fb81eb5956ffb0448ae059a3959f3fb05c86109bd6a54f2469ca1f",
+    "characters": 868
+  },
+  {
+    "chapter": "Computer networking",
+    "file": "07_NETWORKING_SLIDE_COMPLETE.md",
+    "title": "IPv4 addressing and CIDR",
+    "first_line": 892,
+    "last_line": 914,
+    "source_sha256": "ed55e9d797397d725dc2f1775af752076f6998b90ffc88489e88633b14315d96",
+    "characters": 1009
+  },
+  {
+    "chapter": "Computer networking",
+    "file": "07_NETWORKING_SLIDE_COMPLETE.md",
+    "title": "Public, private, loopback, and link-local IPv4",
+    "first_line": 959,
+    "last_line": 973,
+    "source_sha256": "bbc28de230cb61ee456afef082234ddc0f5f1609acb1aa44410297e87683b7c5",
+    "characters": 409
+  },
+  {
+    "chapter": "Computer networking",
+    "file": "07_NETWORKING_SLIDE_COMPLETE.md",
+    "title": "NAT and PAT",
+    "first_line": 974,
+    "last_line": 999,
+    "source_sha256": "afcbb76376c321c04858c6a9934ddcded9c1d44296da2d4fc3f9b37e87758fb7",
+    "characters": 1194
+  },
+  {
+    "chapter": "Computer networking",
+    "file": "07_NETWORKING_SLIDE_COMPLETE.md",
+    "title": "Ports, sockets, and the five-tuple",
+    "first_line": 1234,
+    "last_line": 1268,
+    "source_sha256": "dfb5c874136269bf277d935691665c222c9af008251467cf3044548cd21ce5fa",
+    "characters": 1165
+  },
+  {
+    "chapter": "Computer networking",
+    "file": "07_NETWORKING_SLIDE_COMPLETE.md",
+    "title": "Part IX — TCP in Detail",
+    "first_line": 1380,
+    "last_line": 1553,
+    "source_sha256": "acafa4e48ca2d3e5230d234630c84644ce05fff694583530ff5bc692e9890dcb",
+    "characters": 8623
+  },
+  {
+    "chapter": "Computer networking",
+    "file": "07_NETWORKING_SLIDE_COMPLETE.md",
+    "title": "Part X — UDP in Detail",
+    "first_line": 1554,
+    "last_line": 1580,
+    "source_sha256": "664d18dee23e9410ece9d2d050c082f3ea8684cd0b499350f69b02d0c18e4ed7",
+    "characters": 1428
+  },
+  {
+    "chapter": "Computer networking",
+    "file": "07_NETWORKING_SLIDE_COMPLETE.md",
+    "title": "Why IPv6",
+    "first_line": 1823,
+    "last_line": 1828,
+    "source_sha256": "d52af5897a8eba71dfd2a2c58147541f049d661820162d7cae1b9678cf2bad12",
+    "characters": 579
+  },
+  {
+    "chapter": "Computer networking",
+    "file": "07_NETWORKING_SLIDE_COMPLETE.md",
+    "title": "IPv4 versus IPv6",
+    "first_line": 1829,
+    "last_line": 1844,
+    "source_sha256": "6c9138709c1b1ced89a4b5f040c9c409b6e66ddf2d43a49e561c824ebdfe9efa",
+    "characters": 694
+  },
+  {
+    "chapter": "Security and cryptography",
+    "file": "13_SECURITY_CORE_COMPLETE.md",
+    "title": "1. Security objectives and vocabulary",
+    "first_line": 11,
+    "last_line": 48,
+    "source_sha256": "d2928777d15911dd38552dbb3c0da282d4540a52faa08a89a09b737f8a63356a",
+    "characters": 2608
+  },
+  {
+    "chapter": "Security and cryptography",
+    "file": "13_SECURITY_CORE_COMPLETE.md",
+    "title": "4. Cryptographic primitives",
+    "first_line": 110,
+    "last_line": 175,
+    "source_sha256": "82c7492485947a768aefe31e93a5d6060c69b54fd798cced70dbe1790a6bcec7",
+    "characters": 3687
+  },
+  {
+    "chapter": "Security and cryptography",
+    "file": "13_SECURITY_CORE_COMPLETE.md",
+    "title": "5. Password storage",
+    "first_line": 176,
+    "last_line": 199,
+    "source_sha256": "103f1754f925c1f0be22551b5f7509834d684547edfc70606200ab2cf35ed713",
+    "characters": 1361
+  },
+  {
+    "chapter": "Security and cryptography",
+    "file": "13_SECURITY_CORE_COMPLETE.md",
+    "title": "8. Authentication, authorization, and access control",
+    "first_line": 259,
+    "last_line": 308,
+    "source_sha256": "2d599064c873a8ff5a2f065772bc52ae4d135404d5ea87bbae91c266f3fff39f",
+    "characters": 2366
+  },
+  {
+    "chapter": "Security and cryptography",
+    "file": "13_SECURITY_CORE_COMPLETE.md",
+    "title": "10.1 Firewall, WAF, IDS, and IPS",
+    "first_line": 341,
+    "last_line": 358,
+    "source_sha256": "13f7d6f54f530f728b788cc845face512bfe991efc422ead423e0c9c242f3c3c",
+    "characters": 1581
+  },
+  {
+    "chapter": "Security and cryptography",
+    "file": "13_SECURITY_CORE_COMPLETE.md",
+    "title": "10.5 DNS and email protections",
+    "first_line": 371,
+    "last_line": 376,
+    "source_sha256": "7cdd8df5c28393d5906ae7e5d1aa7fdd0eba6a0cc1c7d12d46385ba74e2a8566",
+    "characters": 322
+  },
+  {
+    "chapter": "Security and cryptography",
+    "file": "13_SECURITY_CORE_COMPLETE.md",
+    "title": "14.5 Block cipher model, DES, and AES",
+    "first_line": 586,
+    "last_line": 608,
+    "source_sha256": "4cab7136ac80eb1cc7c70864ddec89cfd63caad1c70bc485cd3bd63b35a71b10",
+    "characters": 1112
+  },
+  {
+    "chapter": "Security and cryptography",
+    "file": "13_SECURITY_CORE_COMPLETE.md",
+    "title": "16.2 Diffie–Hellman",
+    "first_line": 685,
+    "last_line": 712,
+    "source_sha256": "ddb8375e477e3e8f89074b403f1c4d57bbf0a59e0b34211090c995661c7cbde4",
+    "characters": 1012
+  },
+  {
+    "chapter": "Security and cryptography",
+    "file": "13_SECURITY_CORE_COMPLETE.md",
+    "title": "16.3 RSA",
+    "first_line": 713,
+    "last_line": 755,
+    "source_sha256": "06b59dbc31c54b98e9dbf4cfbdc24e04b14a48a4f6efbf75a0a775f19fab2dc5",
+    "characters": 1146
+  },
+  {
+    "chapter": "Security and cryptography",
+    "file": "13_SECURITY_CORE_COMPLETE.md",
+    "title": "17.1 Hash security and the birthday bound",
+    "first_line": 811,
+    "last_line": 830,
+    "source_sha256": "1eef1ee0e4899e7776c2812da988dea4fc04da62604aa2c9500da037213de8ea",
+    "characters": 631
+  },
+  {
+    "chapter": "Security and cryptography",
+    "file": "13_SECURITY_CORE_COMPLETE.md",
+    "title": "21.1 Main bug classes",
+    "first_line": 1018,
+    "last_line": 1050,
+    "source_sha256": "09b7736a00baa117ef342c4a2d7badfe76e8eed83a941d3be7dce2def05af62e",
+    "characters": 839
+  },
+  {
+    "chapter": "Security and cryptography",
+    "file": "13_SECURITY_CORE_COMPLETE.md",
+    "title": "21.2 From overwrite to control-flow attack",
+    "first_line": 1051,
+    "last_line": 1068,
+    "source_sha256": "0e63964191db5186b46a88ed2ad5cb7bfca301243aa8192c693fb4e97560c871",
+    "characters": 1122
+  },
+  {
+    "chapter": "Security and cryptography",
+    "file": "13_SECURITY_CORE_COMPLETE.md",
+    "title": "22.1 ARP, spoofing, and local networks",
+    "first_line": 1129,
+    "last_line": 1134,
+    "source_sha256": "93f4c9a8ea7b20fb7a725daf27c7f81afff0126dc2d4cb779b287c3bc576ec09",
+    "characters": 649
+  },
+  {
+    "chapter": "Security and cryptography",
+    "file": "13_SECURITY_CORE_COMPLETE.md",
+    "title": "25.1 Resolver and cache-poisoning model",
+    "first_line": 1215,
+    "last_line": 1241,
+    "source_sha256": "7da76aebe9ead244f8681067af89661f0fcae7093bcbdf65f3faf220fe88b548",
+    "characters": 2176
+  },
+  {
+    "chapter": "Security and cryptography",
+    "file": "13_SECURITY_CORE_COMPLETE.md",
+    "title": "26. Seniors' workbook — safe board simulations and terminology",
+    "first_line": 1299,
+    "last_line": 1415,
+    "source_sha256": "d18b0b1644f07f1ba1b286cf302a6ebbb79b9291ea5e102e7d0f73bb39551c50",
+    "characters": 5872
+  },
+  {
+    "chapter": "Architecture and digital logic",
+    "file": "14_ARCHITECTURE_DLD_MICRO_CORE_COMPLETE.md",
+    "title": "1. Number systems and digital representation",
+    "first_line": 33,
+    "last_line": 66,
+    "source_sha256": "3bc547baad4d04d3b4094591966c1274017f109e1ff69cd02fc8215c3f2fa237",
+    "characters": 2041
+  },
+  {
+    "chapter": "Architecture and digital logic",
+    "file": "14_ARCHITECTURE_DLD_MICRO_CORE_COMPLETE.md",
+    "title": "4. Sequential circuits and timing",
+    "first_line": 145,
+    "last_line": 184,
+    "source_sha256": "7dbfc052c9ca16ab86b87668de540961a8ae68ead37bebcd31d2f5ac12d4390c",
+    "characters": 1918
+  },
+  {
+    "chapter": "Architecture and digital logic",
+    "file": "14_ARCHITECTURE_DLD_MICRO_CORE_COMPLETE.md",
+    "title": "6. Finite-state machines",
+    "first_line": 238,
+    "last_line": 258,
+    "source_sha256": "03a2c54bb06d4d0eddb599499fbfaa6ca31ae193aec6f3c24fb9ab7f8bc784ee",
+    "characters": 802
+  },
+  {
+    "chapter": "Architecture and digital logic",
+    "file": "14_ARCHITECTURE_DLD_MICRO_CORE_COMPLETE.md",
+    "title": "7. Architecture, organization, and ISA",
+    "first_line": 261,
+    "last_line": 292,
+    "source_sha256": "2d0c441f8c5b09859a9751329fa24ae7d6dcdba140b49136ed7cb71f76d491c0",
+    "characters": 1775
+  },
+  {
+    "chapter": "Architecture and digital logic",
+    "file": "14_ARCHITECTURE_DLD_MICRO_CORE_COMPLETE.md",
+    "title": "11. Memory hierarchy and cache",
+    "first_line": 390,
+    "last_line": 444,
+    "source_sha256": "e160c115f316090b4dd933d17d81f43a55bb92c4b3def8236836b0cd865e3ed5",
+    "characters": 2491
+  },
+  {
+    "chapter": "Architecture and digital logic",
+    "file": "14_ARCHITECTURE_DLD_MICRO_CORE_COMPLETE.md",
+    "title": "H1. IEEE 754 binary32 and binary64 — encode -13.25",
+    "first_line": 713,
+    "last_line": 764,
+    "source_sha256": "dae5f1e71771e6b050e2eca0189fdca5b3b5cf4ed94ebdac211c81ffeeae0b63",
+    "characters": 2082
+  },
+  {
+    "chapter": "Architecture and digital logic",
+    "file": "14_ARCHITECTURE_DLD_MICRO_CORE_COMPLETE.md",
+    "title": "H2. Single-cycle versus multicycle versus pipeline: numbers, not slogans",
+    "first_line": 765,
+    "last_line": 791,
+    "source_sha256": "0c273bb130a4abba7236cbf9b8de61c854688944ce71fd7eebb5834394d64ab6",
+    "characters": 1333
+  },
+  {
+    "chapter": "Architecture and digital logic",
+    "file": "14_ARCHITECTURE_DLD_MICRO_CORE_COMPLETE.md",
+    "title": "H3. Overlapping 101 detector — correct Moore/Mealy diagram conventions",
+    "first_line": 792,
+    "last_line": 834,
+    "source_sha256": "c1b73ad512d2433f17a64eb5a372a26e322f2c08dd7eef62e2605cfd4cc8d01f",
+    "characters": 1540
+  },
+  {
+    "chapter": "Architecture and digital logic",
+    "file": "14_ARCHITECTURE_DLD_MICRO_CORE_COMPLETE.md",
+    "title": "23.7 Asynchronous sequential circuits: races and flow tables",
+    "first_line": 943,
+    "last_line": 956,
+    "source_sha256": "697da43126855595086174af58b41aa76790909a83c419a074dd18f794a3567f",
+    "characters": 786
+  },
+  {
+    "chapter": "Architecture and digital logic",
+    "file": "14_ARCHITECTURE_DLD_MICRO_CORE_COMPLETE.md",
+    "title": "25.2 Cache fields and miss equations",
+    "first_line": 1060,
+    "last_line": 1082,
+    "source_sha256": "e848599e8137ad3a6e07c21f4c0c8c67ea3aaa449b06f5e1267bcd9518efa94a",
+    "characters": 664
+  },
+  {
+    "chapter": "Computer graphics",
+    "file": "12_COMPUTER_GRAPHICS_SLIDE_COMPLETE.md",
+    "title": "31. Light as a physical and computational quantity **[ARK 159–171]**",
+    "first_line": 1589,
+    "last_line": 1601,
+    "source_sha256": "a016e55393dec7b7061d67280b9cf48818b0da7191f76cb9f43bbaaf4ea5094b",
+    "characters": 812
+  },
+  {
+    "chapter": "Computer graphics",
+    "file": "12_COMPUTER_GRAPHICS_SLIDE_COMPLETE.md",
+    "title": "32. Color representations and gamma — viva-critical supplement",
+    "first_line": 1602,
+    "last_line": 1659,
+    "source_sha256": "222cf4fdb9fa10601c81595892d644057f0b351aee1545c7fc5f87c58e1efe2a",
+    "characters": 2720
+  },
+  {
+    "chapter": "Computer graphics",
+    "file": "12_COMPUTER_GRAPHICS_SLIDE_COMPLETE.md",
+    "title": "33. Light-source models **[ARK 169–206]**",
+    "first_line": 1660,
+    "last_line": 1725,
+    "source_sha256": "019ce0d945e5e322b136c606025f6977dc95c2b23152663e830cf88151473593",
+    "characters": 1916
+  },
+  {
+    "chapter": "Computer graphics",
+    "file": "12_COMPUTER_GRAPHICS_SLIDE_COMPLETE.md",
+    "title": "34. Surface normals **[ARK 207–213]**",
+    "first_line": 1726,
+    "last_line": 1747,
+    "source_sha256": "0dedd6b20acc389dbcfecdca753cb3503d5028a5029484caf6d7a24c359102f1",
+    "characters": 1522
+  },
+  {
+    "chapter": "Computer graphics",
+    "file": "12_COMPUTER_GRAPHICS_SLIDE_COMPLETE.md",
+    "title": "35. Phong illumination model **[ARK 214–245]**",
+    "first_line": 1748,
+    "last_line": 1804,
+    "source_sha256": "da369dc6550ad11914cea21446f28effa2c9a97e419cdbd48fe15546145e0c6c",
+    "characters": 1560
+  },
+  {
+    "chapter": "Computer graphics",
+    "file": "12_COMPUTER_GRAPHICS_SLIDE_COMPLETE.md",
+    "title": "36. Blinn–Phong **[ARK 246–250]**",
+    "first_line": 1805,
+    "last_line": 1822,
+    "source_sha256": "3bc006183a42aab4108d8074d10e099a7450288a1a9d291f120c07ac4ee7e34c",
+    "characters": 492
+  },
+  {
+    "chapter": "Computer graphics",
+    "file": "12_COMPUTER_GRAPHICS_SLIDE_COMPLETE.md",
+    "title": "38. From physical light to reverse ray casting **[ARK 1–31]**",
+    "first_line": 1898,
+    "last_line": 1908,
+    "source_sha256": "eb362ce3d4c51ffe69b3b0aeee03a9543e288277406c331ca416373f24d4520e",
+    "characters": 626
+  },
+  {
+    "chapter": "Computer graphics",
+    "file": "12_COMPUTER_GRAPHICS_SLIDE_COMPLETE.md",
+    "title": "39. Ray and hit-record invariants **[ARK 32–39]**",
+    "first_line": 1909,
+    "last_line": 1936,
+    "source_sha256": "096f0f945208c33a665eaebfd772e25d6e78332a8b88963506c6e0618ad6eabb",
+    "characters": 744
+  },
+  {
+    "chapter": "Computer graphics",
+    "file": "12_COMPUTER_GRAPHICS_SLIDE_COMPLETE.md",
+    "title": "41. Ray-sphere intersection **[ARK 61–75]**",
+    "first_line": 1988,
+    "last_line": 2057,
+    "source_sha256": "745ecfb116713ebe8c9e5d4451aa2bcc92974037e534e499dbcf47d60aa15d88",
+    "characters": 1600
+  },
+  {
+    "chapter": "Computer graphics",
+    "file": "12_COMPUTER_GRAPHICS_SLIDE_COMPLETE.md",
+    "title": "44. Ray casting versus recursive ray tracing **[ARK 131–145]**",
+    "first_line": 2126,
+    "last_line": 2227,
+    "source_sha256": "01368c41caa8f69fedd2b8901721fe936fef9efa20acc4a8bbae1d6c093d1a23",
+    "characters": 3425
+  },
+  {
+    "chapter": "Theory of computation and compiler phases",
+    "file": "15_TOC_CORE_COMPLETE.md",
+    "title": "1. Alphabets, strings, and languages",
+    "first_line": 15,
+    "last_line": 40,
+    "source_sha256": "b384feb99d16c5a0ac34ee09eaafb224d3c7c946d40ddbd12c2ee53134a81a0b",
+    "characters": 899
+  },
+  {
+    "chapter": "Theory of computation and compiler phases",
+    "file": "15_TOC_CORE_COMPLETE.md",
+    "title": "2.1 Definition",
+    "first_line": 43,
+    "last_line": 67,
+    "source_sha256": "451c303e56fecff0fea093286479e41d37febd0ffd2f9bda2545398d97eb65bc",
+    "characters": 578
+  },
+  {
+    "chapter": "Theory of computation and compiler phases",
+    "file": "15_TOC_CORE_COMPLETE.md",
+    "title": "3.1 Definition",
+    "first_line": 94,
+    "last_line": 101,
+    "source_sha256": "2055233ff75311f603a68ea2740489865be403cf87e1e3197b700f6b27e76b54",
+    "characters": 511
+  },
+  {
+    "chapter": "Theory of computation and compiler phases",
+    "file": "15_TOC_CORE_COMPLETE.md",
+    "title": "4. Regular expressions and equivalence",
+    "first_line": 130,
+    "last_line": 218,
+    "source_sha256": "46ceec3cd0a7b7e1e5f4f1fb43d50f362bd8ddef6620f60708aeae677cafb466",
+    "characters": 3313
+  },
+  {
+    "chapter": "Theory of computation and compiler phases",
+    "file": "15_TOC_CORE_COMPLETE.md",
+    "title": "18. Compiler Mental Model and Phases",
+    "first_line": 622,
+    "last_line": 653,
+    "source_sha256": "c4128dbab38a17f72eef3cdf98f22ae976008d003726140fc3981693457ec89a",
+    "characters": 1672
+  },
+  {
+    "chapter": "Interview, research ownership and industry preparation",
+    "file": "00_INTERVIEW_TEACHING_INDUSTRY_COMPLETE.md",
+    "title": "1.1 Thirty-second introduction",
+    "first_line": 17,
+    "last_line": 20,
+    "source_sha256": "90a5be41146845e6a8e72ef6d6eb58b2eb7061e0caf46816b3c8be7fd88b7333",
+    "characters": 701
+  },
+  {
+    "chapter": "Interview, research ownership and industry preparation",
+    "file": "00_INTERVIEW_TEACHING_INDUSTRY_COMPLETE.md",
+    "title": "2.4 Future plan",
+    "first_line": 61,
+    "last_line": 68,
+    "source_sha256": "31c232966eca1e17ab29ffdb1dab25a2c359dc256256b5f0b10d0340ab8f9b88",
+    "characters": 477
+  },
+  {
+    "chapter": "Interview, research ownership and industry preparation",
+    "file": "00_INTERVIEW_TEACHING_INDUSTRY_COMPLETE.md",
+    "title": "3. Which courses would you teach?",
+    "first_line": 69,
+    "last_line": 92,
+    "source_sha256": "6f94fe5e1db7a6a7011f388a123d7f9a75d1e7148c07a7bcdbb0b3cbe8bb51f3",
+    "characters": 1618
+  },
+  {
+    "chapter": "Interview, research ownership and industry preparation",
+    "file": "17_THESIS_RESEARCH_INDUSTRY_COMPLETE.md",
+    "title": "1. The research answer that never sounds vague",
+    "first_line": 18,
+    "last_line": 69,
+    "source_sha256": "b4872ee8c360e12b2aeda7ad761136fdcbd3a668f526869f0342543866fdf759",
+    "characters": 2038
+  },
+  {
+    "chapter": "Interview, research ownership and industry preparation",
+    "file": "17_THESIS_RESEARCH_INDUSTRY_COMPLETE.md",
+    "title": "11. Baselines, ablations, and uncertainty",
+    "first_line": 711,
+    "last_line": 757,
+    "source_sha256": "25dc8d45a6af76352b58e5ab5bac342cf84fb210dca1d9a8e63fa5ff914ecd33",
+    "characters": 1736
+  },
+  {
+    "chapter": "Interview, research ownership and industry preparation",
+    "file": "17_THESIS_RESEARCH_INDUSTRY_COMPLETE.md",
+    "title": "12.5 Seniors' interview checklist — defend evidence, not just terminology",
+    "first_line": 803,
+    "last_line": 826,
+    "source_sha256": "12702464c29733a8a4fb1a3eee3dc67d65ba9bcf3b48a7513e7f3af0b6aefb99",
+    "characters": 1434
+  }
+]

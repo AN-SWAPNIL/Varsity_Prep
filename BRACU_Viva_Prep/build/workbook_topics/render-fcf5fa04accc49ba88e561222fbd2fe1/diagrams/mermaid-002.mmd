@@ -1,0 +1,16 @@
+flowchart LR
+    S[Source characters] --> L[Lexical analysis<br/>tokens]
+    L --> P[Syntax analysis<br/>parse tree / AST]
+    P --> M[Semantic analysis<br/>types + bindings]
+    M --> I[Intermediate-code generation<br/>IR / TAC / CFG]
+    I --> O[Machine-independent optimization]
+    O --> C[Code generation<br/>selection + registers]
+    C --> Q[Machine-dependent optimization]
+    Q --> T[Assembly / object code]
+    ST[(Symbol table)] --- L
+    ST --- P
+    ST --- M
+    ST --- C
+    E[Error handling] --- L
+    E --- P
+    E --- M

@@ -1,0 +1,2031 @@
+[
+  {
+    "index": 1,
+    "name": "Some Words from me",
+    "state": "visible",
+    "cells": [
+      {
+        "cell": "C5",
+        "text": "When the july revolution was going on, I came to realize that I was largely behind on industry prep and also was not taking prep for any academia as well. At that time, I started taking serious prep for both academia and industry. This is the sheet where I mostly documented everything important. Now that the job season is almost at the end and you all are about to enter the war field, This is a little something for you.\n\nI dedicate this excel file to Mohtassim Masud, Student ID 2105153. Back when I didn't have any job or anything, Masud still asked me for job related and academia advice. I couldn't give him much as I was preparing myself at that time. I feel sorry I couldn't help Masud in any way, I hope this excel sheet is passed down from batch to batch and everyone who comes across it remembers Masud in their heart and prays for him.\n\nI hope this excel sheet helps you in some way or another. And always remember, \"The World Is Not For The Weak Hearted\" - Soumya (CSE19)\n\n",
+        "formula": null
+      },
+      {
+        "cell": "C17",
+        "text": "For 20:\n\nYou have entered 4-1, you are nearly there. Congratz for coming so far. Now I will advice you to start taking prep slowly for jobs. My advice would be to target both academia and industry. You never know what might happen after all. \n\nI guess you all heard about the companies not coming enough for our batch. Hopefully you won't have that problem, but still it's better to be safe than sorry so start prep early on. All the best",
+        "formula": null
+      },
+      {
+        "cell": "C20",
+        "text": "For 21 and others:\n\nFrom your batches, now it's 180 instead of 120 students. So as you can guess, the job market will get even tougher. You don't need to worry about those so early, but just putting it out there so that you keep that in mind. I would highly suggest building a good linkedIn profile and managing it because in the future batchwise/campus recruitment might become less common, at least I personally think so. Nevertheless, All the very best to you all.\n\n\n",
+        "formula": null
+      }
+    ],
+    "links": [],
+    "images": [
+      {
+        "file": "sheet-01-image8.png",
+        "row": 1
+      }
+    ]
+  },
+  {
+    "index": 2,
+    "name": "Useful Links ",
+    "state": "visible",
+    "cells": [
+      {
+        "cell": "C4",
+        "text": "Useful Links",
+        "formula": null
+      },
+      {
+        "cell": "F7",
+        "text": "Last Minute Notes by me",
+        "formula": null
+      },
+      {
+        "cell": "I7",
+        "text": "Shamlao Tejas",
+        "formula": null
+      },
+      {
+        "cell": "K7",
+        "text": "CSE19 list of job circulars",
+        "formula": null
+      },
+      {
+        "cell": "D8",
+        "text": "GATE notes for CSE",
+        "formula": null
+      },
+      {
+        "cell": "I9",
+        "text": "Chaldal and Iqvia",
+        "formula": null
+      },
+      {
+        "cell": "D10",
+        "text": "OS, OOP, DS, Networking Notes",
+        "formula": null
+      },
+      {
+        "cell": "F10",
+        "text": "Digital Logic Design",
+        "formula": null
+      },
+      {
+        "cell": "K11",
+        "text": "19 batch drive links:",
+        "formula": null
+      },
+      {
+        "cell": "D12",
+        "text": "CS Engineering Gyan (CSE GYAN)",
+        "formula": null
+      },
+      {
+        "cell": "F12",
+        "text": "OS Part 1 Summary",
+        "formula": null
+      },
+      {
+        "cell": "I13",
+        "text": "Therap Interview 17",
+        "formula": null
+      },
+      {
+        "cell": "D15",
+        "text": "https://seanprashad.com/leetcode-patterns/",
+        "formula": null
+      },
+      {
+        "cell": "F15",
+        "text": "Security Sohrab Sir Slides Summary",
+        "formula": null
+      },
+      {
+        "cell": "F17",
+        "text": "Basics of Computer Networks",
+        "formula": null
+      },
+      {
+        "cell": "I17",
+        "text": "https://github.com/s-kachroo/SamsungPractice/tree/master",
+        "formula": null
+      },
+      {
+        "cell": "F19",
+        "text": "OS Part 1 questions from slides",
+        "formula": null
+      },
+      {
+        "cell": "K19",
+        "text": "Good Prompt for ChatGPT in order to study off notes?",
+        "formula": null
+      },
+      {
+        "cell": "F21",
+        "text": "Software Engineering",
+        "formula": null
+      },
+      {
+        "cell": "F23",
+        "text": "Machine Learning",
+        "formula": null
+      },
+      {
+        "cell": "E28",
+        "text": "My interview Experiences",
+        "formula": null
+      },
+      {
+        "cell": "D32",
+        "text": "Therap Intewview",
+        "formula": null
+      },
+      {
+        "cell": "F32",
+        "text": "Synesis interview",
+        "formula": null
+      },
+      {
+        "cell": "H32",
+        "text": "Samsung Interview",
+        "formula": null
+      },
+      {
+        "cell": "J32",
+        "text": "My UIU Interview",
+        "formula": null
+      },
+      {
+        "cell": "L32",
+        "text": "BRAC Interview Experience",
+        "formula": null
+      },
+      {
+        "cell": "E45",
+        "text": "Useful Resources From Seniors and Recruitment Ques.",
+        "formula": null
+      },
+      {
+        "cell": "D48",
+        "text": "Fahmid Vai's Doc about UIU",
+        "formula": null
+      },
+      {
+        "cell": "F48",
+        "text": "Farhan Vai(18)'s Doc about Samsung",
+        "formula": null
+      },
+      {
+        "cell": "H48",
+        "text": "Swargo Vai's Chaldal Practise Problems",
+        "formula": null
+      },
+      {
+        "cell": "J48",
+        "text": "Hisham Vai(18)'s Industry guideline",
+        "formula": null
+      },
+      {
+        "cell": "L48",
+        "text": "Muntaka Apu's UIU Prep Doc",
+        "formula": null
+      },
+      {
+        "cell": "D50",
+        "text": "Tamim Vai(18)'s SW Interview Question Website",
+        "formula": null
+      },
+      {
+        "cell": "F50",
+        "text": "18 Batch's Podcast Chotha",
+        "formula": null
+      },
+      {
+        "cell": "H50",
+        "text": "Farhan Vai(18)'s \"Last Piece of Me\"",
+        "formula": null
+      },
+      {
+        "cell": "J50",
+        "text": "Ajwad Vai's UIU Prep Sheet",
+        "formula": null
+      },
+      {
+        "cell": "L50",
+        "text": "Ehsanul Vai's Interview Experiences",
+        "formula": null
+      },
+      {
+        "cell": "D52",
+        "text": "Zarif Vai's OP Github Repo",
+        "formula": null
+      },
+      {
+        "cell": "F52",
+        "text": "View BUET CSE19 Recruitment Questions",
+        "formula": null
+      }
+    ],
+    "links": [
+      {
+        "cell": "I7",
+        "target": "https://docs.google.com/document/d/1aubNJJs_RN6vW9FO9JY4Y5Bky0z5lnKC6CuekBmLucc/edit?tab=t.0"
+      },
+      {
+        "cell": "K7",
+        "target": "https://docs.google.com/spreadsheets/d/106fpuQ8LUw4YCSiABrYCPe6z-IWNJYkmfQ0VH-vVtxk/edit?gid=0"
+      },
+      {
+        "cell": "D8",
+        "target": "https://byjus.com/gate/gate-notes-for-cse/"
+      },
+      {
+        "cell": "I9",
+        "target": "https://docs.google.com/document/d/1g3Ga4ff4YHFCmFPX7ygyF67eHHmAVUL5sx-hN-vsWek/edit?usp=sharing"
+      },
+      {
+        "cell": "D10",
+        "target": "https://drive.google.com/drive/folders/1XGI3YnWEviwJ3MryCH2f7dhlN9tnYTzh"
+      },
+      {
+        "cell": "F10",
+        "target": "https://docs.google.com/document/d/1GAFidRBnAyUC303vgkNuVu6qVrt_8TFGSbi_LbFSipI/edit?usp=sharing"
+      },
+      {
+        "cell": "K11",
+        "target": "https://docs.google.com/document/d/1nf0bugqUYhd3J3MKyr2RHBoH_maz514ycuqCnIL61T0/edit?tab=t.0"
+      },
+      {
+        "cell": "D12",
+        "target": "https://csegyan.com/"
+      },
+      {
+        "cell": "F12",
+        "target": "https://docs.google.com/document/d/1evMgktJNbSYfQyq7KoKFpjuklup8JUgShBGcej1kZi4/edit?usp=sharing"
+      },
+      {
+        "cell": "I13",
+        "target": "https://docs.google.com/document/d/1fHt6839QK96B3qv75Vr8oDctPyG1PF0_Z_bmL8SOdM0/edit?tab=t.0"
+      },
+      {
+        "cell": "D15",
+        "target": "https://seanprashad.com/leetcode-patterns/"
+      },
+      {
+        "cell": "F15",
+        "target": "https://docs.google.com/document/d/12MArjW0O_SqTdYY_gzWQQF6cw985zXH-3SrXhgcm6ug/edit?usp=sharing"
+      },
+      {
+        "cell": "F17",
+        "target": "https://docs.google.com/document/d/1wzK1o1dpdDGx6pEbStfcfsFnwb_1tIaKvmQquPzO8bM/edit?usp=sharing"
+      },
+      {
+        "cell": "I17",
+        "target": "https://github.com/s-kachroo/SamsungPractice/tree/master"
+      },
+      {
+        "cell": "F19",
+        "target": "https://docs.google.com/document/d/1RtaI1e4yvSbA04SgMvJoIRFH93utoGasBAd1rKgeFvo/edit?usp=sharing"
+      },
+      {
+        "cell": "K19",
+        "target": "https://www.reddit.com/r/ChatGPT/comments/1fu7ryy/good_prompt_for_chatgpt_in_order_to_study_off/"
+      },
+      {
+        "cell": "F21",
+        "target": "https://docs.google.com/document/d/151gS47-_NLDMLDexxNu5qwSzurBqpkHU2XfBP4kR78s/edit?tab=t.0"
+      },
+      {
+        "cell": "F23",
+        "target": "https://docs.google.com/document/d/1u8tCysMWDdiwPyIas4Nm3DwtOHVWcGTCwGM8MFHrU1U/edit?usp=sharing"
+      },
+      {
+        "cell": "D32",
+        "target": "https://docs.google.com/document/d/1ZHVtholGCiQZss4hCz44YambHxKqn20o7mRmHMOD06I/edit?usp=sharing"
+      },
+      {
+        "cell": "J32",
+        "target": "https://docs.google.com/document/d/1hljFzttTNT1w3nmSWZ17xHPRHmyKPm31iGm-CJD3opg/edit?usp=sharing"
+      },
+      {
+        "cell": "L32",
+        "target": "https://docs.google.com/document/d/1N45Y85X9hZ58W1duqc03b2Ibq3EWpG3ENGTA09rP2V8/edit?usp=sharing"
+      },
+      {
+        "cell": "D48",
+        "target": "https://docs.google.com/document/d/1klGoTB9WDUklhCsriIxEC6hZfu_bxnP5OmSjGJzkKnE/edit?tab=t.0"
+      },
+      {
+        "cell": "F48",
+        "target": "https://docs.google.com/document/d/1R5yFpGWKwxecFFbsumWNEPqGw-p8hZ2bfrFhiTYIdFM/edit?tab=t.0"
+      },
+      {
+        "cell": "H48",
+        "target": "https://drive.google.com/drive/folders/174qNBlO9-bVdV_rEWiIi3OsH153DadmB?usp=drive_link"
+      },
+      {
+        "cell": "J48",
+        "target": "https://docs.google.com/document/d/18X6ARhk0YopuVxzifvJd8XD8gH7iZAsAYVtA2eMMkJ0/edit?tab=t.0"
+      },
+      {
+        "cell": "L48",
+        "target": "https://docs.google.com/document/d/1Y3JrYGUxGX7zMeh2xa2Ye-jCt78_851q9gaCOvDo2pc/mobilebasic"
+      },
+      {
+        "cell": "D50",
+        "target": "https://tamimehsan.github.io/interview-questions-bangladesh/"
+      },
+      {
+        "cell": "F50",
+        "target": "https://docs.google.com/document/d/1lVgs-aMGDKcnguKP-jrr7Gq7FeGaTuU8tCcw-gmZ4dA/edit?tab=t.0"
+      },
+      {
+        "cell": "H50",
+        "target": "https://drive.google.com/drive/folders/13128-QAkj3jiJvZBUdhwgYq1V-T4U-ea"
+      },
+      {
+        "cell": "J50",
+        "target": "https://docs.google.com/spreadsheets/d/1vQyGF-aIGsRVgjKsymuAVNUygmuQ_jJbWOiTlRV-29A/edit?gid=0"
+      },
+      {
+        "cell": "L50",
+        "target": "https://docs.google.com/document/d/17tJAVzisu1rRoqqw2YO3zUfSdmYnoe89FDwkmNX6y3E/edit?usp=sharing"
+      },
+      {
+        "cell": "D52",
+        "target": "https://github.com/zarif98sjs"
+      },
+      {
+        "cell": "F52",
+        "target": "https://docs.google.com/document/d/1sT9f7ID4k_F5VWnat9Yu5xdcG_wwckrAaQNmBeBmirc/edit?tab=t.0"
+      }
+    ],
+    "images": []
+  },
+  {
+    "index": 3,
+    "name": "Industry Prep",
+    "state": "visible",
+    "cells": [
+      {
+        "cell": "C8",
+        "text": "The Ultimate DP List",
+        "formula": null
+      },
+      {
+        "cell": "E8",
+        "text": "Godly Leetcode List",
+        "formula": null
+      },
+      {
+        "cell": "C10",
+        "text": "Samsung Question Bank",
+        "formula": null
+      },
+      {
+        "cell": "E10",
+        "text": "Neetcode 250",
+        "formula": null
+      },
+      {
+        "cell": "C12",
+        "text": "Top Companies Question Bank",
+        "formula": null
+      },
+      {
+        "cell": "C25",
+        "text": "Some Basic Things to Follow For Industry Prep",
+        "formula": null
+      },
+      {
+        "cell": "D27",
+        "text": "1. Some companies take written tests, they will give you problems to write on paper. So make sure you practise writing codes on paper",
+        "formula": null
+      },
+      {
+        "cell": "D29",
+        "text": "2. Nowadays, lots of companies prefer efficient codes even during written tests. Therap and Synesis(1 problem) had bonus marks assigned for optimized solutions. So practise accordingly",
+        "formula": null
+      },
+      {
+        "cell": "D31",
+        "text": "3. Companies like chaldal will take coding tests and during those you will have to explain the code as you do it, that too in english. So you must start building a habit of it",
+        "formula": null
+      }
+    ],
+    "links": [
+      {
+        "cell": "C8",
+        "target": "https://www.reddit.com/r/leetcode/comments/14o10jd/the_ultimate_dynamic_programming_roadmap/"
+      },
+      {
+        "cell": "E8",
+        "target": "https://seanprashad.com/leetcode-patterns/"
+      },
+      {
+        "cell": "C10",
+        "target": "https://github.com/Rahat-Khan-Pathan/Samsung-Bangladesh-Pre-Employment-Coding-Test-Preparation"
+      },
+      {
+        "cell": "E10",
+        "target": "https://neetcode.io/practice?tab=neetcode250"
+      },
+      {
+        "cell": "C12",
+        "target": "https://github.com/twowaits/SDE-Interview-Questions/tree/master"
+      }
+    ],
+    "images": []
+  },
+  {
+    "index": 4,
+    "name": "DSA",
+    "state": "visible",
+    "cells": [
+      {
+        "cell": "B5",
+        "text": "Find cycle of undirected graph using disjoint set",
+        "formula": null
+      },
+      {
+        "cell": "B7",
+        "text": "Quicksort worked out",
+        "formula": null
+      },
+      {
+        "cell": "E7",
+        "text": "Analysis of Quick Sort Algorithm | Time complexity of Quick Sort Algorithm | O(n^2) | O(n log n)",
+        "formula": null
+      },
+      {
+        "cell": "B9",
+        "text": "Why do we use randomized quicksort?",
+        "formula": null
+      },
+      {
+        "cell": "E9",
+        "text": "Randomized QuickSort leverages random pivot selection to make O(nlogn) complexity likely in practice. It is efficient, in-place, but not stable.",
+        "formula": null
+      },
+      {
+        "cell": "B11",
+        "text": "Underflow vs Overflow in data structures",
+        "formula": null
+      },
+      {
+        "cell": "B13",
+        "text": "Complete vs Full Binary Tree",
+        "formula": null
+      },
+      {
+        "cell": "E13",
+        "text": "Trees   2 Complete and Full",
+        "formula": null
+      },
+      {
+        "cell": "F13",
+        "text": "004 Full binary tree and Complete Binary Tree",
+        "formula": null
+      },
+      {
+        "cell": "B15",
+        "text": "BFS",
+        "formula": null
+      },
+      {
+        "cell": "D15",
+        "text": "Regular Runtime on Adj List: O(V+E)\nFor Sparse Graph: O(V)\nFor Dense Graph: O(V^2)\n\nBFS is a complete Algorithm\nBFS is only optimal for unweighted/same path cost graphs",
+        "formula": null
+      },
+      {
+        "cell": "E15",
+        "text": "Breadth-first search in 4 minutes",
+        "formula": null
+      },
+      {
+        "cell": "B17",
+        "text": "DFS",
+        "formula": null
+      },
+      {
+        "cell": "D17",
+        "text": "Same as BFS\n\nDFS is not a complete algorithm\nDFS is much faster than BFS when the solution has a chance of being deep in the graph",
+        "formula": null
+      },
+      {
+        "cell": "E17",
+        "text": "Depth-first search in 4 minutes",
+        "formula": null
+      },
+      {
+        "cell": "B19",
+        "text": "Heaps",
+        "formula": null
+      },
+      {
+        "cell": "C19",
+        "text": "Used for constant time access of smallest/largest element",
+        "formula": null
+      },
+      {
+        "cell": "E19",
+        "text": "Heaps in 3 minutes — Intro",
+        "formula": null
+      },
+      {
+        "cell": "F19",
+        "text": "Heaps in 6 minutes — Methods",
+        "formula": null
+      },
+      {
+        "cell": "B21",
+        "text": "HeapSort",
+        "formula": null
+      },
+      {
+        "cell": "C21",
+        "text": "Time Complexity: O(nlogn)\nSpace complexity O(1)",
+        "formula": null
+      },
+      {
+        "cell": "D21",
+        "text": "\n\n\nWorks well on large dataseets due to inplace sorting and sorting in disk\nHas more constant factor overhead than quicksort in avg runtime cases",
+        "formula": null
+      },
+      {
+        "cell": "E21",
+        "text": "Heap sort in 4 minutes",
+        "formula": null
+      },
+      {
+        "cell": "H21",
+        "text": "BuildHeap and Heapify function are not the same",
+        "formula": null
+      },
+      {
+        "cell": "B23",
+        "text": "Merge Sort",
+        "formula": null
+      },
+      {
+        "cell": "C23",
+        "text": "Time Complexity: O(nlogn)\nSpace Complexity: O(n)",
+        "formula": null
+      },
+      {
+        "cell": "D23",
+        "text": "Quick Points for Interview:\nDivide and Conquer: Splits array recursively, then merges sorted halves.\nBest for Disk-Based Sorting: Handles large data that can't fit into memory.\nStable and Predictable: Unlike QuickSort, performance is not affected by input order.\nTrade-Off: High memory usage and slower for small datasets compared to in-place algorithms like QuickSort.",
+        "formula": null
+      },
+      {
+        "cell": "E23",
+        "text": "Merge sort in 3 minutes - YouTube",
+        "formula": null
+      },
+      {
+        "cell": "B25",
+        "text": "Binary Search Tree",
+        "formula": null
+      },
+      {
+        "cell": "C25",
+        "text": "Deletion(In BST):",
+        "formula": null
+      },
+      {
+        "cell": "D25",
+        "text": "3 Cases:\na. Leaf Node: DIrectly Delete it, O(1) [Given the node, otherwise we need to search it first]\nb. Node with one children: Delete it and replace it with children node/branch.O(1)\nc. Node with 2 childrens: Swap the node with it's inorder successor or predessesor, then the new position of the node will fall under case a or b \n\n",
+        "formula": null
+      },
+      {
+        "cell": "C26",
+        "text": "Look-up",
+        "formula": null
+      },
+      {
+        "cell": "D26",
+        "text": "Look up in a BST is on avg O(logn). but if tree is skewed, it may be O(n)",
+        "formula": null
+      },
+      {
+        "cell": "B30",
+        "text": "Binary Tree",
+        "formula": null
+      },
+      {
+        "cell": "C30",
+        "text": "Deletion: O(n). Because a BT is not necessarily balanced.\n                O(nlogn) if balanced somehow",
+        "formula": null
+      },
+      {
+        "cell": "B32",
+        "text": "Binary Search",
+        "formula": null
+      },
+      {
+        "cell": "C33",
+        "text": "How can we do binary search for an value where the number of elements in the array is infinite?\n\nAns: Use exponential seraching\n\n\n",
+        "formula": null
+      },
+      {
+        "cell": "D33",
+        "text": "1. Full Binary Tree (Internal node has 0/2 children)\n2. Perfect Binary Tree\n3. Complete Binary Tree\n4. Degenerate Tree\n5. Skewed Tree\n6. Balanced Binary Tree",
+        "formula": null
+      },
+      {
+        "cell": "C34",
+        "text": "Binary Search vs Linear Search:\n\na. If we just need to search one elemnent in an unsorted array, use Linear search. O(n)\nb. If we just need to search one elemnet in a sorted array, use Binary Search. O(logn)\nc. If we need to do k queries in an array, it's best to use Binary search. First sorting and then query.\nThis will take a total of O(nlogn) + O(klogn) time. But for linear search it will take O(nk) time\n\nComplete under the assumption that input array is sorted",
+        "formula": null
+      },
+      {
+        "cell": "B36",
+        "text": "Divide and Conquer",
+        "formula": null
+      },
+      {
+        "cell": "C36",
+        "text": "Divide and Conquer: Solves a problem by breaking it into independent subproblems (or treats them as independent). No caching is done, so overlapping subproblems are recomputed multiple times, leading to inefficiency in cases where subproblems overlap.\n\n",
+        "formula": null
+      },
+      {
+        "cell": "E36",
+        "text": "L-3.0: Divide and Conquer | Algorithm - YouTube",
+        "formula": null
+      },
+      {
+        "cell": "B38",
+        "text": "Dynamic Programming",
+        "formula": null
+      },
+      {
+        "cell": "C38",
+        "text": "Dynamic Programming: Leverages overlapping substructure by solving each subproblem only once and caching (memoization or tabulation) the results for future reuse. This eliminates redundant computations and makes the approach efficient.",
+        "formula": null
+      },
+      {
+        "cell": "B40",
+        "text": "Basic OOP Concepts",
+        "formula": null
+      },
+      {
+        "cell": "B42",
+        "text": "Call by Value by Call by reference",
+        "formula": null
+      },
+      {
+        "cell": "C42",
+        "text": "Pass by Value:\nA copy of the actual value is passed to the function.\nChanges made inside the function do not affect the original variable.\n\nPass by Reference:\nA reference (or address) of the actual variable is passed to the function.\nChanges made inside the function affect the original variable.",
+        "formula": null
+      },
+      {
+        "cell": "E42",
+        "text": "Call by value and Call by reference in c with an example | Visualizing Pointers in C - YouTube",
+        "formula": null
+      },
+      {
+        "cell": "B44",
+        "text": "Constant Time vs Near Complex Time",
+        "formula": null
+      },
+      {
+        "cell": "C44",
+        "text": "O(1) vs O(log*n)",
+        "formula": null
+      },
+      {
+        "cell": "B46",
+        "text": "Hash Table ",
+        "formula": null
+      },
+      {
+        "cell": "C46",
+        "text": "If we know all the datapoints in advance, then we can theoratically design a perfect hash function",
+        "formula": null
+      },
+      {
+        "cell": "D46",
+        "text": "Load Factor: (Total number of stored items/array size)\n\nSimple Uniform Hashing: We shall assume that any given element is equally likely to hash into any of the m slots, independently of where any other element has hashed to.\n\nOpen Addressing: All elements occupy the hashtable itself. No extra linked list branches or anything like that. Probing is done for open addressing\n\nProbing: The act of searching for an empty space in the hastable for insertion\n\nDeletion in Open Addressing: When we delete a key, we mark it as deleted instead of NIL. Otherwise when searching we might not find the element we were suppose to, eventhough it exists.\nChaining is more commonly used when frequent deletion in hash table is to be done\n",
+        "formula": null
+      },
+      {
+        "cell": "E46",
+        "text": "Hash Tables and Hash Functions",
+        "formula": null
+      },
+      {
+        "cell": "B48",
+        "text": "Hash Table vs Array comparison",
+        "formula": null
+      },
+      {
+        "cell": "C48",
+        "text": "Key-Value Flexibility: Use meaningful keys instead of integer indices.\nEfficient Lookups: Average 𝑂(1)\nO(1) for search, insert, and delete operations.\nDynamic Growth: Adapts to varying data sizes without manual resizing.\nMemory Efficiency: Handles sparse data well.\nVersatility: Supports diverse key types and dynamic datasets.",
+        "formula": null
+      },
+      {
+        "cell": "B50",
+        "text": "Hash Functions",
+        "formula": null
+      },
+      {
+        "cell": "C50",
+        "text": "Hash Function has two parts: Hash code and Compression Function.\nThe goal of a hash function is to disperse the keys in a random way so that less collision occurs\n\nHash Code: Transforms the key into an integer\nCompression Function: Transforms the integers into a int ranged form 0 to N-1",
+        "formula": null
+      },
+      {
+        "cell": "D50",
+        "text": "Primary Clustering: When a group of elements is hashed to adjacent slots, creating long clusters of occupied slots.\n\nSecondary Clustering: Secondary clustering occurs when keys that hash to the same initial position follow the same probe sequence and end up clustering together. ",
+        "formula": null
+      },
+      {
+        "cell": "B52",
+        "text": "Regular Hashing vs Uniform Hashing",
+        "formula": null
+      },
+      {
+        "cell": "C52",
+        "text": "Regular Hashing: Practical implementation of hashing, distributions may not be perfect or uniform\n\nUniform hashing: All positions are equally likely to be hashed for the given key",
+        "formula": null
+      },
+      {
+        "cell": "B54",
+        "text": "Double Hashing",
+        "formula": null
+      },
+      {
+        "cell": "C54",
+        "text": "Double hashing uses a hash function of the form\n\th(k, i) = ( h1(k) + ih2(k) ) mod m\nwhere both h1 and h2 are auxiliary hash functions.\nThe value h2(k) must be relatively prime to the hash-table size m for the entire hash table to be searched. \nA convenient way to ensure this condition is to let m be a power of 2 and to design h2 so that it always produces an odd number. \nAnother way is to let m be prime and to design h2 so that it always returns a positive integer less than m.",
+        "formula": null
+      },
+      {
+        "cell": "B56",
+        "text": "Rehashing",
+        "formula": null
+      },
+      {
+        "cell": "C56",
+        "text": "Done when Load Factor>=.9 for separate chaining, Load Factor>=.5 for open addressing",
+        "formula": null
+      },
+      {
+        "cell": "B58",
+        "text": "Time Complexity Measure Methods",
+        "formula": null
+      },
+      {
+        "cell": "B62",
+        "text": "Differnece between method overloading and method overring",
+        "formula": null
+      },
+      {
+        "cell": "B64",
+        "text": "Shallow Copy vs Deep Copy",
+        "formula": null
+      },
+      {
+        "cell": "B66",
+        "text": "Diamond Problem with JAVA",
+        "formula": null
+      },
+      {
+        "cell": "B68",
+        "text": "Virtual Function",
+        "formula": null
+      },
+      {
+        "cell": "C68",
+        "text": "Used for Dynamic Binding, if we put virtual keyword in front of a function it will use the child class def even if addressed by parent pointer. If no virutal word, then it accesses base class",
+        "formula": null
+      },
+      {
+        "cell": "B70",
+        "text": "Pure Virtual Function",
+        "formula": null
+      },
+      {
+        "cell": "B72",
+        "text": "Abstract Class",
+        "formula": null
+      }
+    ],
+    "links": [
+      {
+        "cell": "E7",
+        "target": "https://www.youtube.com/watch?v=YQhfIoK8UDY"
+      },
+      {
+        "cell": "E13",
+        "target": "https://www.youtube.com/watch?v=Lta807sEOQY"
+      },
+      {
+        "cell": "F13",
+        "target": "https://www.youtube.com/watch?v=bvpiyKo9hnI"
+      },
+      {
+        "cell": "E15",
+        "target": "https://www.youtube.com/watch?v=HZ5YTanv5QE"
+      },
+      {
+        "cell": "E17",
+        "target": "https://www.youtube.com/watch?v=Urx87-NMm6c"
+      },
+      {
+        "cell": "E19",
+        "target": "https://www.youtube.com/watch?v=0wPlzMU-k00"
+      },
+      {
+        "cell": "F19",
+        "target": "https://www.youtube.com/watch?v=pAU21g-jBiE"
+      },
+      {
+        "cell": "E21",
+        "target": "https://www.youtube.com/watch?v=2DmK_H7IdTo"
+      },
+      {
+        "cell": "E23",
+        "target": "https://www.youtube.com/watch?v=4VqmGXwpLqc"
+      },
+      {
+        "cell": "E36",
+        "target": "https://www.youtube.com/watch?v=I8w2XN0w-fQ"
+      },
+      {
+        "cell": "E42",
+        "target": "https://www.youtube.com/watch?v=kCiNYzHuIX8"
+      },
+      {
+        "cell": "E46",
+        "target": "https://www.youtube.com/watch?v=KyUTuwz_b7Q"
+      }
+    ],
+    "images": []
+  },
+  {
+    "index": 5,
+    "name": "ML",
+    "state": "visible",
+    "cells": [
+      {
+        "cell": "B5",
+        "text": "Machine Learning what is it",
+        "formula": null
+      },
+      {
+        "cell": "B7",
+        "text": "Supervised vs Unsupervised vs Reinforcement Learning",
+        "formula": null
+      },
+      {
+        "cell": "B9",
+        "text": "Training vs Validation vs Test set",
+        "formula": null
+      },
+      {
+        "cell": "B11",
+        "text": "Hypothesis Space",
+        "formula": null
+      },
+      {
+        "cell": "B13",
+        "text": "Consistent vs Inconsistent Hypothesis",
+        "formula": null
+      },
+      {
+        "cell": "B15",
+        "text": "Generalization and Overfitting",
+        "formula": null
+      },
+      {
+        "cell": "B17",
+        "text": "Bias and Variance of a Hypothesis Space",
+        "formula": null
+      },
+      {
+        "cell": "D17",
+        "text": "Machine Learning Fundamentals: Bias and Variance",
+        "formula": null
+      },
+      {
+        "cell": "B19",
+        "text": "Ockham's Razor",
+        "formula": null
+      },
+      {
+        "cell": "D19",
+        "text": "Examples in Machine Learning\nModel Selection:\n\nLinear regression vs. a high-degree polynomial regression:\nA simple linear model might capture the trend well without overfitting.\nA high-degree polynomial might fit the training data perfectly but fail on test data due to overfitting.\nFeature Selection:\n\nIf you have 100 features, using all of them may lead to overfitting.\nChoosing only the most important features (simplifying the model) often yields better results.\nRegularization:\n\nTechniques like L1/L2 regularization or dropout penalize overly complex models, encouraging simplicity.",
+        "formula": null
+      },
+      {
+        "cell": "B21",
+        "text": "L1 and L2 regulazeiation",
+        "formula": null
+      },
+      {
+        "cell": "B23",
+        "text": "Confusion Matrix",
+        "formula": null
+      },
+      {
+        "cell": "D23",
+        "text": "A confusion matrix is a table used to evaluate the performance of a classification model. It summarizes the model's predictions against the actual outcomes and helps visualize how well the model distinguishes between different classes.",
+        "formula": null
+      },
+      {
+        "cell": "B25",
+        "text": "Performance Metrics",
+        "formula": null
+      },
+      {
+        "cell": "B27",
+        "text": "Linear Regression",
+        "formula": null
+      },
+      {
+        "cell": "B29",
+        "text": "Gradient Descent",
+        "formula": null
+      },
+      {
+        "cell": "B31",
+        "text": "Batch Gradient Descent",
+        "formula": null
+      },
+      {
+        "cell": "B33",
+        "text": "Stochastic Gradient Descent",
+        "formula": null
+      },
+      {
+        "cell": "B35",
+        "text": "Ensemble Model",
+        "formula": null
+      },
+      {
+        "cell": "B37",
+        "text": "Linear Classification vs Logistic Regression",
+        "formula": null
+      },
+      {
+        "cell": "B39",
+        "text": "PCA on Curse of Dimentionality and Overfitting",
+        "formula": null
+      },
+      {
+        "cell": "B41",
+        "text": "PCA vs Linear Regression Difference",
+        "formula": null
+      },
+      {
+        "cell": "B43",
+        "text": "K-fold Cross Validation",
+        "formula": null
+      },
+      {
+        "cell": "D43",
+        "text": "K-Fold Cross Validation is a model validation technique used to assess how well a machine learning model generalizes to unseen data. It helps to prevent overfitting and ensures that the model's performance is robust across different subsets of data.\n\nThe main idea is to split the dataset into K subsets (or \"folds\"), and then use each fold in turn as a testing set while training the model on the remaining K-1 folds. This process is repeated K times, and the model's performance is averaged over the K trials to get a final performance estimate.",
+        "formula": null
+      },
+      {
+        "cell": "F43",
+        "text": "The evaluation score (accuracy, precision, etc.) that you get from each fold reflects how well the model is likely to perform on unseen data. The purpose is not to choose a \"best model\" from the K trained models but to estimate the generalization ability of the model. The final performance estimate is the average score across the K folds.",
+        "formula": null
+      },
+      {
+        "cell": "B45",
+        "text": "Hypothesis",
+        "formula": null
+      },
+      {
+        "cell": "D45",
+        "text": "a hypothesis refers to the model or function that the algorithm creates to map input data (features) to the output (predictions). It is essentially the candidate solution to the problem that the algorithm learns during the training process.",
+        "formula": null
+      },
+      {
+        "cell": "F45",
+        "text": "The hypothesis should not just fit the training data well but also generalize to new, unseen data. A good hypothesis is one that captures the underlying patterns in the data and is not overly complex (which would lead to overfitting) or too simple (which could lead to underfitting).",
+        "formula": null
+      },
+      {
+        "cell": "B47",
+        "text": "Accuracy",
+        "formula": null
+      },
+      {
+        "cell": "F47",
+        "text": "Misleading when dataset is not balanced",
+        "formula": null
+      },
+      {
+        "cell": "B49",
+        "text": "Precision",
+        "formula": null
+      },
+      {
+        "cell": "A54",
+        "text": "Classification Metrics",
+        "formula": null
+      },
+      {
+        "cell": "A60",
+        "text": "Regression Metrics",
+        "formula": null
+      },
+      {
+        "cell": "A64",
+        "text": "Clustering Mertics",
+        "formula": null
+      },
+      {
+        "cell": "B66",
+        "text": "Ensemble Learning",
+        "formula": null
+      },
+      {
+        "cell": "D66",
+        "text": "Ensemble learning is a technique in machine learning where you combine multiple models—often called “weak learners”—to create one strong model. The idea is that while each individual model might make mistakes, by combining their predictions you can reduce errors and improve overall performance.",
+        "formula": null
+      },
+      {
+        "cell": "F66",
+        "text": "Diversity: Each model might see the data slightly differently or make different errors.\nCombination: The final prediction is made by combining (averaging, voting, or using a meta-model) the outputs of individual models.\nImproved Accuracy & Robustness: Ensembles tend to perform better and be more robust than a single model, as they can compensate for each other’s weaknesses.",
+        "formula": null
+      },
+      {
+        "cell": "B68",
+        "text": "Boosting",
+        "formula": null
+      },
+      {
+        "cell": "D68",
+        "text": "Boosting builds a strong model by training several weak models sequentially. Each model focuses more on the mistakes made by the previous ones.",
+        "formula": null
+      },
+      {
+        "cell": "B70",
+        "text": "Bagging",
+        "formula": null
+      },
+      {
+        "cell": "D70",
+        "text": "Bagging aims to reduce the variance of a model by training multiple models independently on different random samples of the data.",
+        "formula": null
+      },
+      {
+        "cell": "B72",
+        "text": "Stacking",
+        "formula": null
+      },
+      {
+        "cell": "D73",
+        "text": "Stacking combines multiple different models (which could be of various types) by training a “meta-model” that learns how best to combine their predictions.",
+        "formula": null
+      },
+      {
+        "cell": "B75",
+        "text": "Small Scale Learning",
+        "formula": null
+      },
+      {
+        "cell": "D75",
+        "text": "Usually examples for training consisting of tens to thousands",
+        "formula": null
+      },
+      {
+        "cell": "B77",
+        "text": "Large Scale Learning",
+        "formula": null
+      },
+      {
+        "cell": "D77",
+        "text": "Examples for training sets exceeding millions",
+        "formula": null
+      },
+      {
+        "cell": "B79",
+        "text": "Regularization",
+        "formula": null
+      },
+      {
+        "cell": "D79",
+        "text": "Simple functions can''t often capture the full essense of the data, but taking too complicated functins tend to overfit on these data points. So to \"\"dumb\"\"down the complex models a bit to generalize them, we introduce regularization that is a form of penalizing them on purpose so that they don''t overfit",
+        "formula": null
+      },
+      {
+        "cell": "B81",
+        "text": "ReinforceMent Learning",
+        "formula": null
+      },
+      {
+        "cell": "B83",
+        "text": "Value Based Method",
+        "formula": null
+      },
+      {
+        "cell": "D83",
+        "text": "we learn a value function that maps a state to the expected value of being at that state.",
+        "formula": null
+      },
+      {
+        "cell": "B85",
+        "text": "Policy Based Method",
+        "formula": null
+      },
+      {
+        "cell": "B87",
+        "text": "Horizon Effect",
+        "formula": null
+      },
+      {
+        "cell": "D87",
+        "text": "In case of decision trees, it is almost impossible to tel if a single new node will change the tree structure dramatically and lead to a better result",
+        "formula": null
+      }
+    ],
+    "links": [
+      {
+        "cell": "D17",
+        "target": "https://www.youtube.com/watch?v=EuBBz3bI-aA"
+      }
+    ],
+    "images": []
+  },
+  {
+    "index": 6,
+    "name": "DB",
+    "state": "visible",
+    "cells": [
+      {
+        "cell": "A1",
+        "text": "Work in progress",
+        "formula": null
+      }
+    ],
+    "links": [],
+    "images": []
+  },
+  {
+    "index": 7,
+    "name": "AI",
+    "state": "visible",
+    "cells": [
+      {
+        "cell": "B4",
+        "text": "Agent",
+        "formula": null
+      },
+      {
+        "cell": "C4",
+        "text": "Intelligent Agent",
+        "formula": null
+      },
+      {
+        "cell": "C5",
+        "text": "Discrete Agent",
+        "formula": null
+      },
+      {
+        "cell": "C6",
+        "text": "Rational Agent",
+        "formula": null
+      },
+      {
+        "cell": "C7",
+        "text": "Ideal Agent",
+        "formula": null
+      },
+      {
+        "cell": "C8",
+        "text": "Autonomous Agent",
+        "formula": null
+      },
+      {
+        "cell": "B10",
+        "text": "Percepts",
+        "formula": null
+      },
+      {
+        "cell": "B12",
+        "text": "Environment",
+        "formula": null
+      },
+      {
+        "cell": "C12",
+        "text": "Fully Observable",
+        "formula": null
+      },
+      {
+        "cell": "C13",
+        "text": "Deterministic",
+        "formula": null
+      },
+      {
+        "cell": "C14",
+        "text": "Episodic",
+        "formula": null
+      },
+      {
+        "cell": "C15",
+        "text": "Static",
+        "formula": null
+      },
+      {
+        "cell": "C16",
+        "text": "Discrete",
+        "formula": null
+      },
+      {
+        "cell": "C17",
+        "text": "Single Agent",
+        "formula": null
+      },
+      {
+        "cell": "B19",
+        "text": "Uninformed Search",
+        "formula": null
+      },
+      {
+        "cell": "E19",
+        "text": "While searching you have no clue whether one non-goal state is better than any other. Your search is blind.",
+        "formula": null
+      },
+      {
+        "cell": "G19",
+        "text": "Examples: BFS, DFS, Iterative Deepening Search, Depth Limited Search etc",
+        "formula": null
+      },
+      {
+        "cell": "B21",
+        "text": "Optimality",
+        "formula": null
+      },
+      {
+        "cell": "E21",
+        "text": "Finding the optimal solution first if it exists",
+        "formula": null
+      },
+      {
+        "cell": "G21",
+        "text": "BFS is optimal given unit path cost\nDFS is not optimal\nIterative DFS is optimal",
+        "formula": null
+      },
+      {
+        "cell": "B23",
+        "text": "Completeness",
+        "formula": null
+      },
+      {
+        "cell": "E23",
+        "text": "What is a Complete Algorithm?\nA complete algorithm is one that:\n\nTerminates for all valid inputs.\nProduces a correct solution if one exists.\nIndicates failure when no valid solution exists.",
+        "formula": null
+      },
+      {
+        "cell": "G23",
+        "text": "BFS is complete, given width of tree is finite\nDFS is not complete, for infinite branches\nIterative Deepening Search and Depth Limited Search are complete",
+        "formula": null
+      },
+      {
+        "cell": "B25",
+        "text": "Informed Search",
+        "formula": null
+      },
+      {
+        "cell": "E25",
+        "text": "Informed Search, also known as Heuristic Search, is a type of search algorithm in Artificial Intelligence that uses additional knowledge about the problem to guide the search toward the goal more efficiently.",
+        "formula": null
+      },
+      {
+        "cell": "B28",
+        "text": "Admissible Heuristic",
+        "formula": null
+      },
+      {
+        "cell": "E28",
+        "text": "An algorithm is admissible if it is guaranteed to find the optimal solution (i.e., the least-cost path to the goal) whenever a solution exists.\n\n\nh(n) should never overestimate the actual cost to reach the goal. It can either be exact or an underestimate.\n\n\n",
+        "formula": null
+      },
+      {
+        "cell": "B30",
+        "text": "PEAS Framework",
+        "formula": null
+      },
+      {
+        "cell": "E30",
+        "text": "Performance\nEnvironment\nActuators\nSensors",
+        "formula": null
+      },
+      {
+        "cell": "B32",
+        "text": "Zero Sum Game",
+        "formula": null
+      },
+      {
+        "cell": "E32",
+        "text": "A zero-sum game is a situation where one player's gain is equal to another player's loss, resulting in a net gain of zero.",
+        "formula": null
+      },
+      {
+        "cell": "B34",
+        "text": "Minimax Algorithm",
+        "formula": null
+      },
+      {
+        "cell": "C34",
+        "text": "a. Complete when the game tree is finite and there is eventually a terminal state\n\nb. Minimax is kind of like DFS, but difference in the sense that it evaluates nodes and also alternates between maximum and minimum nodes. DFS merely visits nodes and doesn't do any alteration\n\nc. Minimax fails with randomness because it assumes all moves are deliberate decisions aimed at maximizing or minimizing utility.\n\nd. Doesn't work for more than two players, for that we can explore Nash Equilibrium",
+        "formula": null
+      },
+      {
+        "cell": "D34",
+        "text": "Time Complexity: O(b^d)",
+        "formula": null
+      },
+      {
+        "cell": "E34",
+        "text": "The Minimax algorithm is a decision-making algorithm used in two-player, zero-sum games, where one player's gain is the other player's loss. It works by recursively exploring all possible moves in the game tree, assuming both players play optimally: the maximizing player aims to maximize their score, while the minimizing player tries to minimize the maximizing player's score. The algorithm evaluates all possible outcomes and chooses the move that leads to the best possible result for the current player, assuming the opponent also plays optimally. It is typically used in games like chess or tic-tac-toe.",
+        "formula": null
+      }
+    ],
+    "links": [],
+    "images": []
+  },
+  {
+    "index": 8,
+    "name": "Operating System",
+    "state": "visible",
+    "cells": [
+      {
+        "cell": "A1",
+        "text": "Work in progress",
+        "formula": null
+      },
+      {
+        "cell": "B3",
+        "text": "Monolithic vs Microkernal",
+        "formula": null
+      },
+      {
+        "cell": "K4",
+        "text": "OS Notes From APNA KAKSA",
+        "formula": null
+      },
+      {
+        "cell": "B5",
+        "text": "User Mode vs Kernal Mode",
+        "formula": null
+      },
+      {
+        "cell": "B7",
+        "text": "Program vs Process",
+        "formula": null
+      },
+      {
+        "cell": "B9",
+        "text": "Process Control Block elements",
+        "formula": null
+      },
+      {
+        "cell": "B11",
+        "text": "Process Life Cycle",
+        "formula": null
+      },
+      {
+        "cell": "B13",
+        "text": "Multiprogramming",
+        "formula": null
+      },
+      {
+        "cell": "B15",
+        "text": "Process vs Threads ",
+        "formula": null
+      },
+      {
+        "cell": "E15",
+        "text": "Why Are Threads Needed On Single Core Processors - YouTube",
+        "formula": null
+      }
+    ],
+    "links": [
+      {
+        "cell": "K4",
+        "target": "https://drive.google.com/file/d/1B_kmekdghu-sO8-eXZ1kc4Xx_YtB8BPM/view"
+      },
+      {
+        "cell": "E15",
+        "target": "https://www.youtube.com/watch?v=M9HHWFp84f0"
+      }
+    ],
+    "images": []
+  },
+  {
+    "index": 9,
+    "name": "Computer Network",
+    "state": "visible",
+    "cells": [
+      {
+        "cell": "A1",
+        "text": "Work in progress",
+        "formula": null
+      },
+      {
+        "cell": "B3",
+        "text": "OSI Model",
+        "formula": null
+      },
+      {
+        "cell": "C3",
+        "text": "Open System Interconnection",
+        "formula": null
+      }
+    ],
+    "links": [],
+    "images": []
+  },
+  {
+    "index": 10,
+    "name": "Computer Archi",
+    "state": "visible",
+    "cells": [
+      {
+        "cell": "B8",
+        "text": "IEEE 754 Floating Point representation",
+        "formula": null
+      },
+      {
+        "cell": "D8",
+        "text": "Single Precision and Double Precision",
+        "formula": null
+      },
+      {
+        "cell": "F8",
+        "text": "Decimal to IEEE 754 Floating Point Representation",
+        "formula": null
+      },
+      {
+        "cell": "B10",
+        "text": "RISC vs CISC",
+        "formula": null
+      },
+      {
+        "cell": "F10",
+        "text": "RISC vs CISC | Computer Organization & Architecture - YouTube",
+        "formula": null
+      },
+      {
+        "cell": "B12",
+        "text": "Single Cycle instruction vs Multi Cycle Instruction",
+        "formula": null
+      }
+    ],
+    "links": [
+      {
+        "cell": "F8",
+        "target": "https://www.youtube.com/watch?v=8afbTaA-gOQ"
+      },
+      {
+        "cell": "F10",
+        "target": "https://www.youtube.com/watch?v=ZW1gb3h-f9k&t=432s"
+      }
+    ],
+    "images": []
+  },
+  {
+    "index": 11,
+    "name": "Things to Explain on Board (Pra",
+    "state": "visible",
+    "cells": [
+      {
+        "cell": "B3",
+        "text": "RSA Encryption",
+        "formula": null
+      },
+      {
+        "cell": "D3",
+        "text": "The RSA Encryption Algorithm (1 of 2: Computing an Example)",
+        "formula": null
+      },
+      {
+        "cell": "E3",
+        "text": "The RSA Encryption Algorithm (2 of 2: Generating the Keys)",
+        "formula": null
+      },
+      {
+        "cell": "B5",
+        "text": "AES Encryption",
+        "formula": null
+      },
+      {
+        "cell": "B7",
+        "text": "Man in the middle attack",
+        "formula": null
+      },
+      {
+        "cell": "B9",
+        "text": "Bellman Ford",
+        "formula": null
+      },
+      {
+        "cell": "D9",
+        "text": "Bellman-Ford Algorithm (Single source shortest path) | Data Structure & Algorithm | Bangla Tutorial - YouTube",
+        "formula": null
+      },
+      {
+        "cell": "F9",
+        "text": "How to detect negative weight cycle with BF",
+        "formula": null
+      },
+      {
+        "cell": "B11",
+        "text": "Floyd Warshall",
+        "formula": null
+      },
+      {
+        "cell": "D11",
+        "text": "Floyd Warshall Algorithm (All pairs shortest path) | Data Structure & Algorithm | Bangla Tutorial - YouTube",
+        "formula": null
+      },
+      {
+        "cell": "F11",
+        "text": "(Floyd warshall doesn't work with negative cycle graphs. So understand clearly between directed and undirected graphs and where this algorithns actually works.",
+        "formula": null
+      },
+      {
+        "cell": "B13",
+        "text": "Dijkstra",
+        "formula": null
+      },
+      {
+        "cell": "D13",
+        "text": "Dijkstras Shortest Path Algorithm Explained | With Example | Graph Theory - YouTube",
+        "formula": null
+      },
+      {
+        "cell": "F13",
+        "text": "Why Dijkstra's Algorithm Doesn't Work with Negative Weights - YouTube",
+        "formula": null
+      },
+      {
+        "cell": "B15",
+        "text": "How neg cycles pose a problem and how to solve it using different algorithms",
+        "formula": null
+      },
+      {
+        "cell": "B17",
+        "text": "IP Spoofing",
+        "formula": null
+      },
+      {
+        "cell": "B19",
+        "text": "DNS Spoofing",
+        "formula": null
+      },
+      {
+        "cell": "B21",
+        "text": "HTTP Spoofing",
+        "formula": null
+      },
+      {
+        "cell": "B23",
+        "text": "Email Hijacking",
+        "formula": null
+      },
+      {
+        "cell": "B25",
+        "text": "Wifi Eavesdropping",
+        "formula": null
+      },
+      {
+        "cell": "B27",
+        "text": "Cache Poisoning",
+        "formula": null
+      },
+      {
+        "cell": "B29",
+        "text": "Authentication vs Authorization",
+        "formula": null
+      },
+      {
+        "cell": "D29",
+        "text": "Authentication vs Authorization Explained",
+        "formula": null
+      },
+      {
+        "cell": "B31",
+        "text": "MAC vs IP Address",
+        "formula": null
+      },
+      {
+        "cell": "B33",
+        "text": "Symetric Crypto vs Assymetric Crypto",
+        "formula": null
+      },
+      {
+        "cell": "B35",
+        "text": "QuickSort Simulation worked out",
+        "formula": null
+      },
+      {
+        "cell": "D35",
+        "text": "L-3.1: How Quick Sort Works | Performance of Quick Sort with Example | Divide and Conquer",
+        "formula": null
+      },
+      {
+        "cell": "B37",
+        "text": "Heap Sort",
+        "formula": null
+      },
+      {
+        "cell": "D37",
+        "text": "L-3.13: Heap sort with Example | Heapify Method",
+        "formula": null
+      },
+      {
+        "cell": "B39",
+        "text": "Buffer Overflow attacks",
+        "formula": null
+      },
+      {
+        "cell": "B41",
+        "text": "SQL Injection attacks",
+        "formula": null
+      }
+    ],
+    "links": [
+      {
+        "cell": "D3",
+        "target": "https://www.youtube.com/watch?v=4zahvcJ9glg"
+      },
+      {
+        "cell": "E3",
+        "target": "https://www.youtube.com/watch?v=oOcTVTpUsPQ"
+      },
+      {
+        "cell": "D9",
+        "target": "https://www.youtube.com/watch?v=2fZw1BtkoTk"
+      },
+      {
+        "cell": "D11",
+        "target": "https://www.youtube.com/watch?v=tFQAoyEu6Bk"
+      },
+      {
+        "cell": "D13",
+        "target": "https://www.youtube.com/watch?v=bZkzH5x0SKU"
+      },
+      {
+        "cell": "F13",
+        "target": "https://www.youtube.com/watch?v=eXPw7BBMFNk&t=92s"
+      },
+      {
+        "cell": "D29",
+        "target": "https://youtu.be/7ijBiXddB7w?si=psNlBW5ihhofLePe"
+      },
+      {
+        "cell": "D35",
+        "target": "https://www.youtube.com/watch?v=tWCaFVJMUi8"
+      },
+      {
+        "cell": "D37",
+        "target": "https://www.youtube.com/watch?v=nJ6FdAIr_6g"
+      }
+    ],
+    "images": []
+  },
+  {
+    "index": 12,
+    "name": "BRAC Ques Bank",
+    "state": "visible",
+    "cells": [
+      {
+        "cell": "A3",
+        "text": "Person 1",
+        "formula": null
+      },
+      {
+        "cell": "C3",
+        "text": "1. Explain Thesis\n2. Explain Networking project -> Scope, setup, types of experiments\n3. Symmetric and Assymetric Encryptions -> RSA breakablility, Symmetric key transfer\n4. What subjects I prefer teaching. Ans: any if given some prep time\n5. Kaykobad sir regarding one of his previous works",
+        "formula": null
+      },
+      {
+        "cell": "A5",
+        "text": "Person 2",
+        "formula": null
+      },
+      {
+        "cell": "C5",
+        "text": "First e ask korsilo kon course bhalo lage nai CSE te\nAmi bolsilam Software Engineering\nTarpore Software theke question ask korse\nOigulo jodio kichuta parsi\nTarpor, graphics course theke ask kora shuru korse\nAdditive and Subtractive color models ask korse\nEita bolsi jani na\nTarpor bolse CMYK niye kichu bolte\nEtao jani na\nTarpor ask korse kon ekta algorithm graphics er\nAmi bolsi etar naam ami first shuntesi \nAmader eta porano hoi nai\nSo, graphics theke jai ask korse ami just bolsi ami eta pari na\nTarpor ask korse, Number theory theke. Amar Olympiad and CP background er jonne. \nDiophantine Equations ki\nAnd random jinish. Oigulo parsi. \nSoftware e amake bolsilo, agile and waterfall model comparision korte\n\n",
+        "formula": null
+      },
+      {
+        "cell": "A7",
+        "text": "Person 3",
+        "formula": null
+      },
+      {
+        "cell": "C7",
+        "text": "1. Introduce yourself\n2. What courses you may take\n3. Topic of thesis, explain in a way that people who are not from the bioinformatics field would understand. Applications of the thesis topic\n4. Questions from the security course. Three basic principles (maybe) of security (The answer is ICA). How to achieve them. Types of encryption algorithms. \n5. Questions from ray tracing as i mentioned it in cv. What I did in the assignment. Can we accurately model lighting etc.\n6. Some discussion related to a paper I was part of.\n7. What is underflow? I asked if we were talking about floating point numbers. The questioner had “trying to access data when the structure is empty. For example, popping an empty stack” in mind.\n8. Difference between array and linked list. Which one is dynamic\nI believe I was able to speak somewhat fluently in English. I could not answer around 40% of the security questions I would say. But the interview went smoothly. At least 2 of the sirs in the interview board had a kind of warm, welcoming smile throughout the interview and they were the ones asking most of the questions. \n",
+        "formula": null
+      },
+      {
+        "cell": "A9",
+        "text": "Person 4",
+        "formula": null
+      },
+      {
+        "cell": "C9",
+        "text": "1. Thesis explanation - 1-1.5 minutes\n  2. Basic questions: Pass by reference vs pass by value, IPV4 and its limitations, DP vs D&C, signed integer addition. \n  3. My preferred courses\nThe teachers at the interview panel were very friendly and considerate. All of them were probably BracU faculty, I did not see anyone from BUET.",
+        "formula": null
+      },
+      {
+        "cell": "A11",
+        "text": "Person 5",
+        "formula": null
+      },
+      {
+        "cell": "C11",
+        "text": "Introduction, thesis explanation + related questions. \nSecurity related questions (my thesis is on security). Encryption, hashing, salt, ethics, buffer overflow. Access control. Authentication vs authorization. \nOS related questions. Deadlock, types of deadlocks, paging, replacement policies, scheduling policies.\nML related questions. Asked about my ML internship, how I did it, benefits of XGBoost over gradient boosting or other boosting algorithms. Discussed about the NLP project, findings, architecture, whether we could have used a different architecture. ",
+        "formula": null
+      },
+      {
+        "cell": "A13",
+        "text": "Person 6",
+        "formula": null
+      },
+      {
+        "cell": "C13",
+        "text": "1. When to use a linked list vs array\n2. DP vs Divide and conquer \n3. Bellman Ford \n4. Why add bias term to IEEE floating point exponent representation\n5. Something about semaphores \n6. Thesis. NLP lab. Research aspirations\n7. Which courses can I take?",
+        "formula": null
+      },
+      {
+        "cell": "A19",
+        "text": "Person 8",
+        "formula": null
+      },
+      {
+        "cell": "C19",
+        "text": "There were 4 teachers on the interview board. Everyone had a copy of my cv in front of\nthem. The department head was the first person on the board. She didn’t ask any\nquestions, appreciated that I came early for the interview.\nInterviewer 2 asked me to tell me about myself, my research interest, which courses do I\nwant to take. For the last question I said I want to take database, networking, os course. He\nasked me questions from memory hierarchy, multi-level cache etc.\nInterviewer 3 asked some questions about networking and security. She asked me why\nthere is a need for NAT, how one side in a TCP session realizes the other side didn’t receive\nthe data, the CIA principles in security, and the working principle of asymmetric key\nencryption.\nInterviewer 4 asked me what I had studied in the simulation course. I only remembered the parts\nI studied for offline and 2 CTs, which was not much, and I talked about those things I remember\nand finally said that it was an ongoing course. He told me not to add ongoing courses to the\n“notable courses” section of my CV. Then, he asked me what the ACID principles are and to\nexplain them. Finally, he asked me some questions about circular arrays and ended the\ninterview.\nI don’t remember a lot of the questions. The interview was about 20+ minutes long.\nMembers of the interview boards varied depending on the time of the interview, so did the\nexperience from person to person. My suggestion would be not to be nervous and study the\nmain topics of all the core courses.\nGot the offer, joined.",
+        "formula": null
+      },
+      {
+        "cell": "A21",
+        "text": "Person 9",
+        "formula": null
+      },
+      {
+        "cell": "C21",
+        "text": "1. First tell about yourself, might include thesis and other things not mentioned in cv here.\n2. Then they ask what kind of course you would like to take, Answered DSA, ML, Security\n3. Rabiul Sir, a ML expert, asked about supervised and unsupervised learning. Then asked to name some unsupervised learning example. After that asked how k means clustering works, then asked the name of a algorithm which i havent heard before. Thats where he stopped\n4. The security Sir asked about man in the middle attack and it's simulation to how to steal data. Then public key cyrptography and what it is. Then if i have head about RSA and then to tell about RSA how it works. Some small questions, dont remember what they were. Maybe about CIA principles. Then what is the difference between authenticaion and authorization. I couldnt answer this one.\n5. Then Farig Sir. He asked about the completeness of an algorithm which i thought was from dsa but was actually from AI. I was a bit dumbfounded He helped me a bit with the definition of completeness algorithm defition.. Then asked about which one between BFS and DFS is a complete algorithm. DFS is incomplete. Then asked a leetcode question related to two pointers, this was the Buying and Selling of stock. I showed approach on the board with two pointer approach. He was satisfied, he stopped me there.\n6. My experience was good. They weren't hostile. They were supportive. They helped me in places where i got stuck on security and dsa. they gave me time to think. The atmosphere was good as well. They were welcoming. Pray that Kaykobad Sir isn;t on the intewview board. ",
+        "formula": null
+      },
+      {
+        "cell": "A23",
+        "text": "Person 9",
+        "formula": null
+      },
+      {
+        "cell": "C23",
+        "text": "Graph\nBFS, DFS complexity, improvement\nDynamic Programming, what to do when DP is not applicable\nDifference between DP and D&C",
+        "formula": null
+      },
+      {
+        "cell": "A25",
+        "text": "Person 10",
+        "formula": null
+      },
+      {
+        "cell": "C25",
+        "text": "After CV submission, 1 interview only. English interview (unless they start asking in Bangla). Asked Thesis related questions and projects that I included in the CV. Told me which courses I am comfortable with teaching (Proper answer is \"I will be able to handle anything you give me, but I am specialized in such and such). Asked me to explain negative cycles of a graph in a piece of paper.\n\nAlso told to explain bellman ford\n\n\n",
+        "formula": null
+      },
+      {
+        "cell": "D25",
+        "text": "->",
+        "formula": null
+      },
+      {
+        "cell": "A29",
+        "text": "Person 11",
+        "formula": null
+      },
+      {
+        "cell": "C29",
+        "text": "amar interview er first half e just amar thesis niye jiggesh korse. ekdom ins and outs shob ask korse, kisui baad rakhe nai question korte\n\nporer half e amake jiggesh korse - if given opportunity to work at BRACU, which courses you're willing to take. Ami ML, OS and Networking bolsi (ei part ta shob uni viva tei ask kore, jei jei course er naam bolba oigula tuke rakhbe and oikhan thekei question korbe). amake viva board er ekjon sir amader AI course er jinishpati jiggesh korsilo (agent kokhon rational hobe etc). ML er moddhe maximum likelihood estimation, EM algorithm theke ask korsilo (mane ekdom basic part theke not the DL part). But ami ML bolte DL er prep niye gesilam and didn't have that good of preparation tbh. The viva board member who asked these questions got a bit angry for not being able to answer those simple questions (he had every right to be so, karon ami cv te ml related jinishpati diye bhorti kore rakhsilam and introduce korar shomoy - passionate about ML bolsilam :3). Then the HoD madam asked me some tcp related questions. oigula thikthak parsi\n\nBRACU e amar viva shob chaite baaje hoisilo and ami onekta nishchit silam je hobe na amar. But first half e jokhon thesis niye kotha boltesilam, amar presentation ta bhalo hoisilo (at least amar kase tai mone hoise). unader keo impressed mone hoisilo. (one of the board member whispered to his fellow colleague - kaaj undergrad hishebe onek bhalo korse). probably oitai amake save korse\n\n\narekta jinish ektu maintain koiro... Kaykobad sir amader farewell e eshe frustration jharsilen - je uni jokhon amader viva nicchilen tokhon naki 1-2 jon - \"hello everyone\" or \"hello guys\" bole introduce korte lagsilo\n\nacademic viva gula ektu formal kisim er hoy (compared to the industry ones). eigula ektu kheyal raikho arki",
+        "formula": null
+      },
+      {
+        "cell": "A31",
+        "text": "Person 12",
+        "formula": null
+      },
+      {
+        "cell": "C31",
+        "text": "\nFor me, I felt like their questions actually depends on your course preferences, thesis and other experiences.\n\nAt first, they asked me about which courses I am interested to conduct. I have mentioned about ds, algo, ai, compiler, os etc.\n\nThen they asked me about these- \nFor algo, they asked me about dijkstra, topsort, bellman ford related questions.\n\nFor Ai, they asked about alpha-beta pruning.\n\nFor Os, they asked me about scheduling algorithms, paging, cache replacement algorithms.\n\nFinally they asked me about my thesis in depth. And about my extra curricular activities.\n\nUsually they follow your CV and ask about every details (extra curricular, internship etc).Edited\n\nFor me, I felt like their questions actually depends on your course preferences, thesis and other experiences.\n\nAt first, they asked me about which courses I am interested to conduct. I have mentioned about ds, algo, ai, compiler, os etc.\n\nThen they asked me about these- \nFor algo, they asked me about dijkstra, topsort, bellman ford related questions.\n\nFor Ai, they asked about alpha-beta pruning.\n\nFor Os, they asked me about scheduling algorithms, paging, cache replacement algorithms.\n\nFinally they asked me about my thesis in depth. And about my extra curricular activities.\n\nUsually they follow your CV and ask about every details (extra curricular, internship etc).",
+        "formula": null
+      },
+      {
+        "cell": "A35",
+        "text": "Person 13",
+        "formula": null
+      },
+      {
+        "cell": "C35",
+        "text": "First asked about ungabunga graphics question.\nThen was asked about Asynchronus Seq Circuit, couldnt answer. Then was asked about basic DSA by sadia madam. \nWas not particularly asked about thesis, i think because i didnt't highlight it that much when introducing myself. Should have said more about thesis at the beginning",
+        "formula": null
+      },
+      {
+        "cell": "A37",
+        "text": "Person 14",
+        "formula": null
+      },
+      {
+        "cell": "C37",
+        "text": "cv theke dhorchilo kichu+ thesis theke\nml theke bias & variance dhorchilo, ar distance related ekta chilo mone nai\nos theke process ki, erpor pagetable theke maybe dhorchilo ekta bujhi nai ota\ndsa theke graph, tree er difference, dp, divide & conquer er difference eshob\n\nuiu te to first e lecture deya lage\noitar pore ar daake nai\nlecture e shurute nijer background + thesis\nerpor ekta topic dibe bolar jonno\namake maybe encapsulation dichilo",
+        "formula": null
+      },
+      {
+        "cell": "A39",
+        "text": "Person 15",
+        "formula": null
+      },
+      {
+        "cell": "C39",
+        "text": "Amake tbh oto ques kori nai. Bakira aro beshi help korte parbe. Thesis niye khub valo idea rekho. Oita niye onekkhon kotha bolsi. \n\nAcademic ques ekta korse je ekta array sorted hoile okhane kon sorting lago tumi use korba. Etai\n\nEkhon 4 bochorer important course gular jiniah dekhe jaba. Onek kiau mone na thakte pare but konokichu na parle smartly handle korai hcche main. Ans parteso naki oitate ashole oto weight thake na ja bujhsi\n\nTomar resume ar interview e personality egula dekhe\n\nKaykobad sir chara sobai english e kotha bolsen. Practice kore jeyo. Onek fluent hoya lagbe na thikthak hole it will help\n",
+        "formula": null
+      },
+      {
+        "cell": "A41",
+        "text": "Person 16",
+        "formula": null
+      },
+      {
+        "cell": "C41",
+        "text": "First e Kon Kon course e tmi comfortable/Valo paro ei dhoroner qs ask korte pare\nhen oigula thk qs kore\networking bolte paro oitar qs pray same e Kore like tcp udp er difference, IP address, Mac address, ipv6 esb\n\nR graphics tmi comfortable na hole bolar dorkar nai. Oita thk kothin Kore ektu\n\nNetworking thk eguloi\nR software thkeo korsilo j nosql db thk SQL e kmne convert kora jay\nR ml o bolsilam Ami\nMl thk adaboost, gradient descent, transformer, lstm thk ask korse\n\nCommon r important qs gula pore gelei hbe. Shob ans deya lagbe emn na. But confident thakba etai. R vule gele Oita bolba j porsi but currently recall korte partesina. R ekdom e na porle oitao bolba.\n",
+        "formula": null
+      },
+      {
+        "cell": "A43",
+        "text": "Person 17",
+        "formula": null
+      },
+      {
+        "cell": "C43",
+        "text": "umm so networking, comp archi, ml, discrete math theke detail e question korsilo...so orai ask kore kon kon topic poraite interested, then oikhan theke deep e question kore... so motamoti 3-4 ta topic alada kore bhalo kore pore gele better (rather than going through all the topics)\n\n",
+        "formula": null
+      },
+      {
+        "cell": "A45",
+        "text": "Person 18",
+        "formula": null
+      },
+      {
+        "cell": "C45",
+        "text": "Dsa networking security ml ai\n\nHae ar beshi tel thakle os dekhte paro \n\nOs e focus rakho\n\nCompiler er 4 ta stage er high level knowledge thaklei hobe\n\nAr Uiu r jnno oop important\n\nHae eto details e porar kisu nai\nYou just need to give them the impression that you have a grasp on these topics and if given the chance to review them a bit, you will be able to take classes on the same topics seamlessly\n\n",
+        "formula": null
+      },
+      {
+        "cell": "A47",
+        "text": "Person 19",
+        "formula": null
+      },
+      {
+        "cell": "C47",
+        "text": "Atmosphere: Conference room a L shape er ekta table a 5-6 jon teacher bosha chilen, r ami ek konay boshsi.\nAC er temperature onk komano chilo, thanday jome gesi. \n\nInterview:\n1) Introduction - eta bolar somoy ami ektu nervousness er karone blunder korsilam. Pore abar comeback korsi koyek seconds er vitor but ektu nojore porse\n\n2) Dept head First a thesis baade onno research gula theke bivinno terminology ask korsilo. Kichu basic difference ask krse, like threat detection r threat hunting er difference ki\n\n3) Then arekta sir o security topic er research theke kichu terminologies ask krsen jegula pari nai\n\n4) erpor NLP guru Farig sir cv te deya amr ekta nlp competition er bepare ask krsilen karon uni oitar stage round er judge chilen. Pore bolsilam j stage round a jai nai amra, competition ta continue kori nai. But cv joma deyar somoy eta running chilo, tokhn add krsilam. So incomplete competition cv te thakay tara disappointed hoisen\n\nThen thesis theke kichu jinish ask korsen. Kichu parsi, kisu pari nai. Erpor unake student vebe Language Model and Large Language Model er difference er upor ekta lecture dite bolsilen banglay\n\n4) Operating System theke ekjon sir ask korsen. Egula parsilam. Scheduling, context switch eshob niye ask korsilen\n\n\nFarig sir baade baki shobai english a communicate korsilen\n\nAr kono course theke kore nai\n\nCV te thaka shob segments er upor prep niye jaoa. Etai shudhu\n\nEkebarei kichu na bolte para bad impression. Amr somoy jeta problem hoisilo je unara Abbreviation use korsen bolar somoy\n\nOthoba emon ques jeta actually normally kheyal ashe na\n\nLike threat detection niye kono paper a name dey detection, kono paper a hunting. Paper porar somoy clear cut difference ta kheyal rakha tough\n\nResearch field related course gula dekhte paro\n",
+        "formula": null
+      },
+      {
+        "cell": "A49",
+        "text": "Person 20",
+        "formula": null
+      },
+      {
+        "cell": "C49",
+        "text": "first e favorite course ki chilo seta jigesh korse. erpor oi course related kichu ques korse. thesis niye besh valoi ques jigesh kore, cv te onno kono research experience er kotha lekha thakle oigulao jigesh kore. ML course theke sobaike kom beshi jigesh korse shunsi\n\nami os ar db er kotha bolsilam. os thekei ques jigesh korsilo. context switching ki, locality ki, scheduling e roundrobin e je time interval thake oita beshi kom hole ki problem, cache replacement er strategy\n\noutcome ki? practical life e kivabe impact felte pare? data kivabe paiso? data r description esob i\n\n\nami actually os er preparation niye gesilam, egula parsilam motamoti. ML er kicu ques pari nai\n\nami kind of confident chilam je dak pabo. kicu ans parbo na agei expected chilo. i think kicu ques pari na jeneo ans korte giye vul val bole felsilam. oita na kore mone nai bolleo hoto\n\nami sure na best approach konta. but vul bola theke mone nai bola better mone hoy amar kache\n",
+        "formula": null
+      },
+      {
+        "cell": "A51",
+        "text": "Person 21",
+        "formula": null
+      },
+      {
+        "cell": "C51",
+        "text": "Accha, khub short notice e interview dite hoisilo. 4-5 jon faculty chilen ekta round table e.  Ami gie boshlam. Then first e thesis nie ask korsilo. Ki kaj kortesi, kototuk hoise. Erpor different topic theke ekekjn qsn ask korse\n\nAmk graphics, networking,  cp(as amr cv te chilo) etc theke qsn ask korse\n\nI couldn’t ans a lot of the questions\n\nGraphics theke onk kisu jemn ambient light ki, different lighting model nie egula jigges korsilo. Networking theke may be nat,pat, port esb ask korsilo. Aro onno course thekeo ask korsilo. Vule gesi ekhn\n\nNa. Amk course er preferences ask korse tader sob qsn ask kora seshe",
+        "formula": null
+      }
+    ],
+    "links": [],
+    "images": [
+      {
+        "file": "sheet-12-image14.png",
+        "row": 21
+      },
+      {
+        "file": "sheet-12-image11.png",
+        "row": 19
+      },
+      {
+        "file": "sheet-12-image7.png",
+        "row": 19
+      },
+      {
+        "file": "sheet-12-image13.png",
+        "row": 19
+      }
+    ]
+  },
+  {
+    "index": 13,
+    "name": "Random Screenshots",
+    "state": "visible",
+    "cells": [],
+    "links": [],
+    "images": [
+      {
+        "file": "sheet-13-image12.png",
+        "row": 3
+      },
+      {
+        "file": "sheet-13-image6.png",
+        "row": 20
+      },
+      {
+        "file": "sheet-13-image1.png",
+        "row": 20
+      },
+      {
+        "file": "sheet-13-image3.png",
+        "row": 40
+      },
+      {
+        "file": "sheet-13-image5.png",
+        "row": 43
+      },
+      {
+        "file": "sheet-13-image2.png",
+        "row": 5
+      },
+      {
+        "file": "sheet-13-image9.png",
+        "row": 19
+      }
+    ]
+  },
+  {
+    "index": 14,
+    "name": "Runtime Analysis",
+    "state": "visible",
+    "cells": [
+      {
+        "cell": "B6",
+        "text": "Bellman Ford vs Dijkstra",
+        "formula": null
+      },
+      {
+        "cell": "B13",
+        "text": "Different Kinds of sorting algorithms",
+        "formula": null
+      }
+    ],
+    "links": [],
+    "images": [
+      {
+        "file": "sheet-14-image15.png",
+        "row": 6
+      },
+      {
+        "file": "sheet-14-image4.png",
+        "row": 6
+      },
+      {
+        "file": "sheet-14-image10.png",
+        "row": 13
+      },
+      {
+        "file": "sheet-14-image16.png",
+        "row": 6
+      },
+      {
+        "file": "sheet-14-image17.png",
+        "row": 13
+      }
+    ]
+  },
+  {
+    "index": 15,
+    "name": "Niche Topics",
+    "state": "hidden",
+    "cells": [
+      {
+        "cell": "C4",
+        "text": "Johnsons algorithm",
+        "formula": null
+      },
+      {
+        "cell": "C6",
+        "text": "Kleene's algorithnm",
+        "formula": null
+      }
+    ],
+    "links": [],
+    "images": []
+  }
+]

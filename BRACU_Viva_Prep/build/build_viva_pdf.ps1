@@ -31,7 +31,8 @@ $sourceNames = @(
     '16_NUMERICAL_METHODS_CORE_COMPLETE.md',
     '17_THESIS_RESEARCH_INDUSTRY_COMPLETE.md',
     '18_LAST_DAY_RECALL_AND_MOCKS.md',
-    '19_CORE_COURSES_COMMON_INTERVIEW_QA.md'
+    '19_CORE_COURSES_COMMON_INTERVIEW_QA.md',
+    '20_SENIORS_WORKBOOK_COVERAGE_AUDIT.md'
 )
 
 $sourcePaths = foreach ($name in $sourceNames) {
@@ -95,7 +96,7 @@ if ($LASTEXITCODE -ne 0) {
     throw "Mermaid rendering failed with exit code $LASTEXITCODE"
 }
 
-$reader = 'markdown-yaml_metadata_block+tex_math_dollars+tex_math_single_backslash+raw_html+fenced_divs+link_attributes'
+$reader = 'markdown-yaml_metadata_block-simple_tables-multiline_tables-grid_tables+tex_math_dollars+tex_math_single_backslash+raw_html+fenced_divs+link_attributes'
 $resourcePath = "$generatedFull;$packFull"
 & pandoc $combinedPath `
     --from=$reader `

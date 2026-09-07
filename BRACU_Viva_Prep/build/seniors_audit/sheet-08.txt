@@ -1,0 +1,18 @@
+# 8. Operating System (visible)
+
+A1: Work in progress
+B3: Monolithic vs Microkernal
+K4: OS Notes From APNA KAKSA
+B5: User Mode vs Kernal Mode
+B7: Program vs Process
+B9: Process Control Block elements
+B11: Process Life Cycle
+B13: Multiprogramming
+B15: Process vs Threads 
+E15: Why Are Threads Needed On Single Core Processors - YouTube
+
+LINKS
+K4: https://drive.google.com/file/d/1B_kmekdghu-sO8-eXZ1kc4Xx_YtB8BPM/view
+E15: https://www.youtube.com/watch?v=M9HHWFp84f0
+
+IMAGES

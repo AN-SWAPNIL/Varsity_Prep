@@ -1,0 +1,20 @@
+# 3. Industry Prep (visible)
+
+C8: The Ultimate DP List
+E8: Godly Leetcode List
+C10: Samsung Question Bank
+E10: Neetcode 250
+C12: Top Companies Question Bank
+C25: Some Basic Things to Follow For Industry Prep
+D27: 1. Some companies take written tests, they will give you problems to write on paper. So make sure you practise writing codes on paper
+D29: 2. Nowadays, lots of companies prefer efficient codes even during written tests. Therap and Synesis(1 problem) had bonus marks assigned for optimized solutions. So practise accordingly
+D31: 3. Companies like chaldal will take coding tests and during those you will have to explain the code as you do it, that too in english. So you must start building a habit of it
+
+LINKS
+C8: https://www.reddit.com/r/leetcode/comments/14o10jd/the_ultimate_dynamic_programming_roadmap/
+E8: https://seanprashad.com/leetcode-patterns/
+C10: https://github.com/Rahat-Khan-Pathan/Samsung-Bangladesh-Pre-Employment-Coding-Test-Preparation
+E10: https://neetcode.io/practice?tab=neetcode250
+C12: https://github.com/twowaits/SDE-Interview-Questions/tree/master
+
+IMAGES

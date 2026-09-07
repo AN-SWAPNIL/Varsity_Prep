@@ -1,0 +1,264 @@
+# 12. BRAC Ques Bank (visible)
+
+A3: Person 1
+C3: 1. Explain Thesis
+2. Explain Networking project -> Scope, setup, types of experiments
+3. Symmetric and Assymetric Encryptions -> RSA breakablility, Symmetric key transfer
+4. What subjects I prefer teaching. Ans: any if given some prep time
+5. Kaykobad sir regarding one of his previous works
+A5: Person 2
+C5: First e ask korsilo kon course bhalo lage nai CSE te
+Ami bolsilam Software Engineering
+Tarpore Software theke question ask korse
+Oigulo jodio kichuta parsi
+Tarpor, graphics course theke ask kora shuru korse
+Additive and Subtractive color models ask korse
+Eita bolsi jani na
+Tarpor bolse CMYK niye kichu bolte
+Etao jani na
+Tarpor ask korse kon ekta algorithm graphics er
+Ami bolsi etar naam ami first shuntesi 
+Amader eta porano hoi nai
+So, graphics theke jai ask korse ami just bolsi ami eta pari na
+Tarpor ask korse, Number theory theke. Amar Olympiad and CP background er jonne. 
+Diophantine Equations ki
+And random jinish. Oigulo parsi. 
+Software e amake bolsilo, agile and waterfall model comparision korte
+
+
+A7: Person 3
+C7: 1. Introduce yourself
+2. What courses you may take
+3. Topic of thesis, explain in a way that people who are not from the bioinformatics field would understand. Applications of the thesis topic
+4. Questions from the security course. Three basic principles (maybe) of security (The answer is ICA). How to achieve them. Types of encryption algorithms. 
+5. Questions from ray tracing as i mentioned it in cv. What I did in the assignment. Can we accurately model lighting etc.
+6. Some discussion related to a paper I was part of.
+7. What is underflow? I asked if we were talking about floating point numbers. The questioner had “trying to access data when the structure is empty. For example, popping an empty stack” in mind.
+8. Difference between array and linked list. Which one is dynamic
+I believe I was able to speak somewhat fluently in English. I could not answer around 40% of the security questions I would say. But the interview went smoothly. At least 2 of the sirs in the interview board had a kind of warm, welcoming smile throughout the interview and they were the ones asking most of the questions. 
+
+A9: Person 4
+C9: 1. Thesis explanation - 1-1.5 minutes
+  2. Basic questions: Pass by reference vs pass by value, IPV4 and its limitations, DP vs D&C, signed integer addition. 
+  3. My preferred courses
+The teachers at the interview panel were very friendly and considerate. All of them were probably BracU faculty, I did not see anyone from BUET.
+A11: Person 5
+C11: Introduction, thesis explanation + related questions. 
+Security related questions (my thesis is on security). Encryption, hashing, salt, ethics, buffer overflow. Access control. Authentication vs authorization. 
+OS related questions. Deadlock, types of deadlocks, paging, replacement policies, scheduling policies.
+ML related questions. Asked about my ML internship, how I did it, benefits of XGBoost over gradient boosting or other boosting algorithms. Discussed about the NLP project, findings, architecture, whether we could have used a different architecture. 
+A13: Person 6
+C13: 1. When to use a linked list vs array
+2. DP vs Divide and conquer 
+3. Bellman Ford 
+4. Why add bias term to IEEE floating point exponent representation
+5. Something about semaphores 
+6. Thesis. NLP lab. Research aspirations
+7. Which courses can I take?
+A19: Person 8
+C19: There were 4 teachers on the interview board. Everyone had a copy of my cv in front of
+them. The department head was the first person on the board. She didn’t ask any
+questions, appreciated that I came early for the interview.
+Interviewer 2 asked me to tell me about myself, my research interest, which courses do I
+want to take. For the last question I said I want to take database, networking, os course. He
+asked me questions from memory hierarchy, multi-level cache etc.
+Interviewer 3 asked some questions about networking and security. She asked me why
+there is a need for NAT, how one side in a TCP session realizes the other side didn’t receive
+the data, the CIA principles in security, and the working principle of asymmetric key
+encryption.
+Interviewer 4 asked me what I had studied in the simulation course. I only remembered the parts
+I studied for offline and 2 CTs, which was not much, and I talked about those things I remember
+and finally said that it was an ongoing course. He told me not to add ongoing courses to the
+“notable courses” section of my CV. Then, he asked me what the ACID principles are and to
+explain them. Finally, he asked me some questions about circular arrays and ended the
+interview.
+I don’t remember a lot of the questions. The interview was about 20+ minutes long.
+Members of the interview boards varied depending on the time of the interview, so did the
+experience from person to person. My suggestion would be not to be nervous and study the
+main topics of all the core courses.
+Got the offer, joined.
+A21: Person 9
+C21: 1. First tell about yourself, might include thesis and other things not mentioned in cv here.
+2. Then they ask what kind of course you would like to take, Answered DSA, ML, Security
+3. Rabiul Sir, a ML expert, asked about supervised and unsupervised learning. Then asked to name some unsupervised learning example. After that asked how k means clustering works, then asked the name of a algorithm which i havent heard before. Thats where he stopped
+4. The security Sir asked about man in the middle attack and it's simulation to how to steal data. Then public key cyrptography and what it is. Then if i have head about RSA and then to tell about RSA how it works. Some small questions, dont remember what they were. Maybe about CIA principles. Then what is the difference between authenticaion and authorization. I couldnt answer this one.
+5. Then Farig Sir. He asked about the completeness of an algorithm which i thought was from dsa but was actually from AI. I was a bit dumbfounded He helped me a bit with the definition of completeness algorithm defition.. Then asked about which one between BFS and DFS is a complete algorithm. DFS is incomplete. Then asked a leetcode question related to two pointers, this was the Buying and Selling of stock. I showed approach on the board with two pointer approach. He was satisfied, he stopped me there.
+6. My experience was good. They weren't hostile. They were supportive. They helped me in places where i got stuck on security and dsa. they gave me time to think. The atmosphere was good as well. They were welcoming. Pray that Kaykobad Sir isn;t on the intewview board. 
+A23: Person 9
+C23: Graph
+BFS, DFS complexity, improvement
+Dynamic Programming, what to do when DP is not applicable
+Difference between DP and D&C
+A25: Person 10
+C25: After CV submission, 1 interview only. English interview (unless they start asking in Bangla). Asked Thesis related questions and projects that I included in the CV. Told me which courses I am comfortable with teaching (Proper answer is "I will be able to handle anything you give me, but I am specialized in such and such). Asked me to explain negative cycles of a graph in a piece of paper.
+
+Also told to explain bellman ford
+
+
+
+D25: ->
+A29: Person 11
+C29: amar interview er first half e just amar thesis niye jiggesh korse. ekdom ins and outs shob ask korse, kisui baad rakhe nai question korte
+
+porer half e amake jiggesh korse - if given opportunity to work at BRACU, which courses you're willing to take. Ami ML, OS and Networking bolsi (ei part ta shob uni viva tei ask kore, jei jei course er naam bolba oigula tuke rakhbe and oikhan thekei question korbe). amake viva board er ekjon sir amader AI course er jinishpati jiggesh korsilo (agent kokhon rational hobe etc). ML er moddhe maximum likelihood estimation, EM algorithm theke ask korsilo (mane ekdom basic part theke not the DL part). But ami ML bolte DL er prep niye gesilam and didn't have that good of preparation tbh. The viva board member who asked these questions got a bit angry for not being able to answer those simple questions (he had every right to be so, karon ami cv te ml related jinishpati diye bhorti kore rakhsilam and introduce korar shomoy - passionate about ML bolsilam :3). Then the HoD madam asked me some tcp related questions. oigula thikthak parsi
+
+BRACU e amar viva shob chaite baaje hoisilo and ami onekta nishchit silam je hobe na amar. But first half e jokhon thesis niye kotha boltesilam, amar presentation ta bhalo hoisilo (at least amar kase tai mone hoise). unader keo impressed mone hoisilo. (one of the board member whispered to his fellow colleague - kaaj undergrad hishebe onek bhalo korse). probably oitai amake save korse
+
+
+arekta jinish ektu maintain koiro... Kaykobad sir amader farewell e eshe frustration jharsilen - je uni jokhon amader viva nicchilen tokhon naki 1-2 jon - "hello everyone" or "hello guys" bole introduce korte lagsilo
+
+academic viva gula ektu formal kisim er hoy (compared to the industry ones). eigula ektu kheyal raikho arki
+A31: Person 12
+C31: 
+For me, I felt like their questions actually depends on your course preferences, thesis and other experiences.
+
+At first, they asked me about which courses I am interested to conduct. I have mentioned about ds, algo, ai, compiler, os etc.
+
+Then they asked me about these- 
+For algo, they asked me about dijkstra, topsort, bellman ford related questions.
+
+For Ai, they asked about alpha-beta pruning.
+
+For Os, they asked me about scheduling algorithms, paging, cache replacement algorithms.
+
+Finally they asked me about my thesis in depth. And about my extra curricular activities.
+
+Usually they follow your CV and ask about every details (extra curricular, internship etc).Edited
+
+For me, I felt like their questions actually depends on your course preferences, thesis and other experiences.
+
+At first, they asked me about which courses I am interested to conduct. I have mentioned about ds, algo, ai, compiler, os etc.
+
+Then they asked me about these- 
+For algo, they asked me about dijkstra, topsort, bellman ford related questions.
+
+For Ai, they asked about alpha-beta pruning.
+
+For Os, they asked me about scheduling algorithms, paging, cache replacement algorithms.
+
+Finally they asked me about my thesis in depth. And about my extra curricular activities.
+
+Usually they follow your CV and ask about every details (extra curricular, internship etc).
+A35: Person 13
+C35: First asked about ungabunga graphics question.
+Then was asked about Asynchronus Seq Circuit, couldnt answer. Then was asked about basic DSA by sadia madam. 
+Was not particularly asked about thesis, i think because i didnt't highlight it that much when introducing myself. Should have said more about thesis at the beginning
+A37: Person 14
+C37: cv theke dhorchilo kichu+ thesis theke
+ml theke bias & variance dhorchilo, ar distance related ekta chilo mone nai
+os theke process ki, erpor pagetable theke maybe dhorchilo ekta bujhi nai ota
+dsa theke graph, tree er difference, dp, divide & conquer er difference eshob
+
+uiu te to first e lecture deya lage
+oitar pore ar daake nai
+lecture e shurute nijer background + thesis
+erpor ekta topic dibe bolar jonno
+amake maybe encapsulation dichilo
+A39: Person 15
+C39: Amake tbh oto ques kori nai. Bakira aro beshi help korte parbe. Thesis niye khub valo idea rekho. Oita niye onekkhon kotha bolsi. 
+
+Academic ques ekta korse je ekta array sorted hoile okhane kon sorting lago tumi use korba. Etai
+
+Ekhon 4 bochorer important course gular jiniah dekhe jaba. Onek kiau mone na thakte pare but konokichu na parle smartly handle korai hcche main. Ans parteso naki oitate ashole oto weight thake na ja bujhsi
+
+Tomar resume ar interview e personality egula dekhe
+
+Kaykobad sir chara sobai english e kotha bolsen. Practice kore jeyo. Onek fluent hoya lagbe na thikthak hole it will help
+
+A41: Person 16
+C41: First e Kon Kon course e tmi comfortable/Valo paro ei dhoroner qs ask korte pare
+hen oigula thk qs kore
+etworking bolte paro oitar qs pray same e Kore like tcp udp er difference, IP address, Mac address, ipv6 esb
+
+R graphics tmi comfortable na hole bolar dorkar nai. Oita thk kothin Kore ektu
+
+Networking thk eguloi
+R software thkeo korsilo j nosql db thk SQL e kmne convert kora jay
+R ml o bolsilam Ami
+Ml thk adaboost, gradient descent, transformer, lstm thk ask korse
+
+Common r important qs gula pore gelei hbe. Shob ans deya lagbe emn na. But confident thakba etai. R vule gele Oita bolba j porsi but currently recall korte partesina. R ekdom e na porle oitao bolba.
+
+A43: Person 17
+C43: umm so networking, comp archi, ml, discrete math theke detail e question korsilo...so orai ask kore kon kon topic poraite interested, then oikhan theke deep e question kore... so motamoti 3-4 ta topic alada kore bhalo kore pore gele better (rather than going through all the topics)
+
+
+A45: Person 18
+C45: Dsa networking security ml ai
+
+Hae ar beshi tel thakle os dekhte paro 
+
+Os e focus rakho
+
+Compiler er 4 ta stage er high level knowledge thaklei hobe
+
+Ar Uiu r jnno oop important
+
+Hae eto details e porar kisu nai
+You just need to give them the impression that you have a grasp on these topics and if given the chance to review them a bit, you will be able to take classes on the same topics seamlessly
+
+
+A47: Person 19
+C47: Atmosphere: Conference room a L shape er ekta table a 5-6 jon teacher bosha chilen, r ami ek konay boshsi.
+AC er temperature onk komano chilo, thanday jome gesi. 
+
+Interview:
+1) Introduction - eta bolar somoy ami ektu nervousness er karone blunder korsilam. Pore abar comeback korsi koyek seconds er vitor but ektu nojore porse
+
+2) Dept head First a thesis baade onno research gula theke bivinno terminology ask korsilo. Kichu basic difference ask krse, like threat detection r threat hunting er difference ki
+
+3) Then arekta sir o security topic er research theke kichu terminologies ask krsen jegula pari nai
+
+4) erpor NLP guru Farig sir cv te deya amr ekta nlp competition er bepare ask krsilen karon uni oitar stage round er judge chilen. Pore bolsilam j stage round a jai nai amra, competition ta continue kori nai. But cv joma deyar somoy eta running chilo, tokhn add krsilam. So incomplete competition cv te thakay tara disappointed hoisen
+
+Then thesis theke kichu jinish ask korsen. Kichu parsi, kisu pari nai. Erpor unake student vebe Language Model and Large Language Model er difference er upor ekta lecture dite bolsilen banglay
+
+4) Operating System theke ekjon sir ask korsen. Egula parsilam. Scheduling, context switch eshob niye ask korsilen
+
+
+Farig sir baade baki shobai english a communicate korsilen
+
+Ar kono course theke kore nai
+
+CV te thaka shob segments er upor prep niye jaoa. Etai shudhu
+
+Ekebarei kichu na bolte para bad impression. Amr somoy jeta problem hoisilo je unara Abbreviation use korsen bolar somoy
+
+Othoba emon ques jeta actually normally kheyal ashe na
+
+Like threat detection niye kono paper a name dey detection, kono paper a hunting. Paper porar somoy clear cut difference ta kheyal rakha tough
+
+Research field related course gula dekhte paro
+
+A49: Person 20
+C49: first e favorite course ki chilo seta jigesh korse. erpor oi course related kichu ques korse. thesis niye besh valoi ques jigesh kore, cv te onno kono research experience er kotha lekha thakle oigulao jigesh kore. ML course theke sobaike kom beshi jigesh korse shunsi
+
+ami os ar db er kotha bolsilam. os thekei ques jigesh korsilo. context switching ki, locality ki, scheduling e roundrobin e je time interval thake oita beshi kom hole ki problem, cache replacement er strategy
+
+outcome ki? practical life e kivabe impact felte pare? data kivabe paiso? data r description esob i
+
+
+ami actually os er preparation niye gesilam, egula parsilam motamoti. ML er kicu ques pari nai
+
+ami kind of confident chilam je dak pabo. kicu ans parbo na agei expected chilo. i think kicu ques pari na jeneo ans korte giye vul val bole felsilam. oita na kore mone nai bolleo hoto
+
+ami sure na best approach konta. but vul bola theke mone nai bola better mone hoy amar kache
+
+A51: Person 21
+C51: Accha, khub short notice e interview dite hoisilo. 4-5 jon faculty chilen ekta round table e.  Ami gie boshlam. Then first e thesis nie ask korsilo. Ki kaj kortesi, kototuk hoise. Erpor different topic theke ekekjn qsn ask korse
+
+Amk graphics, networking,  cp(as amr cv te chilo) etc theke qsn ask korse
+
+I couldn’t ans a lot of the questions
+
+Graphics theke onk kisu jemn ambient light ki, different lighting model nie egula jigges korsilo. Networking theke may be nat,pat, port esb ask korsilo. Aro onno course thekeo ask korsilo. Vule gesi ekhn
+
+Na. Amk course er preferences ask korse tader sob qsn ask kora seshe
+
+LINKS
+
+IMAGES
+{'file': 'sheet-12-image14.png', 'row': 21}
+{'file': 'sheet-12-image11.png', 'row': 19}
+{'file': 'sheet-12-image7.png', 'row': 19}
+{'file': 'sheet-12-image13.png', 'row': 19}

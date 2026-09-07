@@ -1,0 +1,13 @@
+# 13. Random Screenshots (visible)
+
+
+LINKS
+
+IMAGES
+{'file': 'sheet-13-image12.png', 'row': 3}
+{'file': 'sheet-13-image6.png', 'row': 20}
+{'file': 'sheet-13-image1.png', 'row': 20}
+{'file': 'sheet-13-image3.png', 'row': 40}
+{'file': 'sheet-13-image5.png', 'row': 43}
+{'file': 'sheet-13-image2.png', 'row': 5}
+{'file': 'sheet-13-image9.png', 'row': 19}

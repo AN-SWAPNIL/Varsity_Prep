@@ -1,5 +1,23 @@
 # Bismillah.
 
+## Separate seniors' workbook-only companion
+
+[Workbook topics PDF](BRACU_Seniors_Workbook_Topics_Explained.pdf) and
+[its Markdown](BRACU_Seniors_Workbook_Topics_Explained.md) copy the relevant
+existing sections for the Excel topic list, including screenshots and hidden
+topics. This is separate from the full reference PDF below. Source ranges are
+recorded in `build/workbook_topics/selection.json`.
+
+From the workspace root, regenerate both selections and build this companion:
+
+```powershell
+python .\BRACU_Viva_Prep\build\assemble_workbook_topics.py
+powershell -ExecutionPolicy Bypass -File .\BRACU_Viva_Prep\build\build_workbook_topics_pdf.ps1 -Pack BRACU
+```
+
+Use `-Pack UIU` to build the filtered UIU companion. The commands do not replace
+either university's full reference PDF.
+
 # BRACU CSE Faculty Viva — Final Source-Grounded Preparation Pack
 
 This is the active viva-preparation set. The current academic folders were re-audited on **24 July 2026** after the source collection was reduced to the main slides and notes.
@@ -12,6 +30,25 @@ The fresh source snapshot contains:
 - **2,114 pages with little or no extractable text**, flagged for visual rather than text-only review
 
 The aim is not to transcribe every administrative or repeated slide. The aim is to preserve the concepts an examiner can ask you to define, derive, compare, trace, implement, debug, or teach. Important algorithms include contracts, invariants, proofs, complexity, edge cases, and code. Important quantitative courses include formulas, assumptions, worked calculations, and failure cases.
+
+## September 2026 seniors' workbook audit
+
+The later source `Varsity_Topics_List_In Memory of Masud.xlsx` was checked
+against the active books, including all **15 sheets** (one hidden) and **17
+embedded images**. See `20_SENIORS_WORKBOOK_COVERAGE_AUDIT.md` for the complete
+topic/cell/image-to-section mapping, corrections, and evidence limits.
+
+The additions include search/sort and shortest-path simulations, number theory,
+ML consistency/PCA/clustering/LSTM/policy learning, a database migration case,
+single-core OS examples, security demonstrations, IEEE-754 encoding, Moore/Mealy
+tables, and Kleene's algorithm. Existing detailed chapters and archived material
+were preserved. The new examples passed 9,581 automated assertions; this is not
+a claim that every old snippet or every externally linked resource was tested.
+Thesis/industry personal facts were refreshed from `My_Resume/main.tex`.
+
+This new audit does **not** mean the entire academic-slide corpus was reread
+again in September. It checks the seniors' listed topics against the existing
+slide-grounded books and labels the additional explanations separately.
 
 ## Current source routing
 
@@ -65,6 +102,7 @@ The aim is not to transcribe every administrative or repeated slide. The aim is 
 18. `17_THESIS_RESEARCH_INDUSTRY_COMPLETE.md`
 19. `18_LAST_DAY_RECALL_AND_MOCKS.md`
 20. `19_CORE_COURSES_COMMON_INTERVIEW_QA.md` — cross-university, source-mapped oral question bank for DSA, ML, Discrete, OOP, Networking, SWE, Security, DBMS, AI, and OS
+21. `20_SENIORS_WORKBOOK_COVERAGE_AUDIT.md` — complete workbook topic/screenshot checklist and correction ledger
 
 The combined printable file is `BRACU_CSE_Viva_Slide_Based_Detailed_Ahmmad_Nur_Swapnil.pdf`.
 

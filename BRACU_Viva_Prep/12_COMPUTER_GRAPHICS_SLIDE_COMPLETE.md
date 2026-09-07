@@ -1615,6 +1615,30 @@ $$
 
 Printing adds black `K` for density/economy and because real inks are not ideal. One common conversion sets `K=min(C,M,Y)` then rescales remaining components; exact color management depends on device profiles.
 
+### Board simulation — additive versus subtractive (seniors' workbook C5)
+
+```text
+emitted light (ideal additive RGB):
+red + green -> yellow     red + blue -> magenta
+green + blue -> cyan     all three  -> white
+
+white light through ideal pigments (subtractive CMY):
+cyan removes red; magenta removes green; yellow removes blue
+cyan + yellow leaves green; all three ideally leave black
+```
+
+For normalized linear RGB `(0.2,0.6,0.8)`, ideal CMY is `(0.8,0.4,0.2)`.
+With black extraction $K=0.2$, the normalized residual CMYK is
+`((.8-.2)/.8, (.4-.2)/.8, (.2-.2)/.8, .2) = (.75,.25,0,.2)`.
+If $K=1$, choose residual C=M=Y=0 instead of dividing by zero. Real printed
+color needs calibrated profiles; this ideal calculation is a board model,
+not a prediction of an actual printer's output.
+
+For follow-ups, use the existing Phong numerical calculation in §34 and the
+ray-generation/intersection/reflection traces later in this book. Ambient is
+an approximation to indirect illumination, not “all physically simulated
+light.” No finite toy ray tracer perfectly models every real lighting effect.
+
 ### HSV/HSL
 
 HSV/HSL reorganize RGB into hue plus saturation and a brightness/lightness component. They are convenient for user selection and editing, not physically uniform color spaces. Hue becomes undefined/irrelevant when saturation is zero.

@@ -1,0 +1,84 @@
+{
+  "pages": 162,
+  "bookmarks": [
+    [
+      1,
+      "UIU — Seniors' Workbook Topics Explained",
+      1
+    ],
+    [
+      1,
+      "1. Structured programming: parameter passing",
+      7
+    ],
+    [
+      1,
+      "2. Object-oriented programming",
+      9
+    ],
+    [
+      1,
+      "3. Discrete mathematics and number theory",
+      22
+    ],
+    [
+      1,
+      "4. Data structures, searching, sorting and dynamic programming",
+      31
+    ],
+    [
+      1,
+      "5. Graph algorithms, hashing and amortized analysis",
+      74
+    ],
+    [
+      1,
+      "6. Database topics from the interviews",
+      95
+    ],
+    [
+      1,
+      "7. Software engineering",
+      100
+    ],
+    [
+      1,
+      "8. Operating systems",
+      105
+    ],
+    [
+      1,
+      "9. Artificial intelligence",
+      121
+    ],
+    [
+      1,
+      "10. Machine learning",
+      133
+    ]
+  ],
+  "topic_pages": {
+    "build heap and heapsort are different": 69,
+    "bias variance the precise answer": 137,
+    "lstm gates memory path": 161
+  },
+  "preview_pages": [
+    1,
+    7,
+    9,
+    22,
+    31,
+    69,
+    70,
+    74,
+    95,
+    100,
+    105,
+    121,
+    133,
+    137,
+    138,
+    161,
+    162
+  ]
+}

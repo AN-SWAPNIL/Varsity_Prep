@@ -1,0 +1,78 @@
+# 5. ML (visible)
+
+B5: Machine Learning what is it
+B7: Supervised vs Unsupervised vs Reinforcement Learning
+B9: Training vs Validation vs Test set
+B11: Hypothesis Space
+B13: Consistent vs Inconsistent Hypothesis
+B15: Generalization and Overfitting
+B17: Bias and Variance of a Hypothesis Space
+D17: Machine Learning Fundamentals: Bias and Variance
+B19: Ockham's Razor
+D19: Examples in Machine Learning
+Model Selection:
+
+Linear regression vs. a high-degree polynomial regression:
+A simple linear model might capture the trend well without overfitting.
+A high-degree polynomial might fit the training data perfectly but fail on test data due to overfitting.
+Feature Selection:
+
+If you have 100 features, using all of them may lead to overfitting.
+Choosing only the most important features (simplifying the model) often yields better results.
+Regularization:
+
+Techniques like L1/L2 regularization or dropout penalize overly complex models, encouraging simplicity.
+B21: L1 and L2 regulazeiation
+B23: Confusion Matrix
+D23: A confusion matrix is a table used to evaluate the performance of a classification model. It summarizes the model's predictions against the actual outcomes and helps visualize how well the model distinguishes between different classes.
+B25: Performance Metrics
+B27: Linear Regression
+B29: Gradient Descent
+B31: Batch Gradient Descent
+B33: Stochastic Gradient Descent
+B35: Ensemble Model
+B37: Linear Classification vs Logistic Regression
+B39: PCA on Curse of Dimentionality and Overfitting
+B41: PCA vs Linear Regression Difference
+B43: K-fold Cross Validation
+D43: K-Fold Cross Validation is a model validation technique used to assess how well a machine learning model generalizes to unseen data. It helps to prevent overfitting and ensures that the model's performance is robust across different subsets of data.
+
+The main idea is to split the dataset into K subsets (or "folds"), and then use each fold in turn as a testing set while training the model on the remaining K-1 folds. This process is repeated K times, and the model's performance is averaged over the K trials to get a final performance estimate.
+F43: The evaluation score (accuracy, precision, etc.) that you get from each fold reflects how well the model is likely to perform on unseen data. The purpose is not to choose a "best model" from the K trained models but to estimate the generalization ability of the model. The final performance estimate is the average score across the K folds.
+B45: Hypothesis
+D45: a hypothesis refers to the model or function that the algorithm creates to map input data (features) to the output (predictions). It is essentially the candidate solution to the problem that the algorithm learns during the training process.
+F45: The hypothesis should not just fit the training data well but also generalize to new, unseen data. A good hypothesis is one that captures the underlying patterns in the data and is not overly complex (which would lead to overfitting) or too simple (which could lead to underfitting).
+B47: Accuracy
+F47: Misleading when dataset is not balanced
+B49: Precision
+A54: Classification Metrics
+A60: Regression Metrics
+A64: Clustering Mertics
+B66: Ensemble Learning
+D66: Ensemble learning is a technique in machine learning where you combine multiple models—often called “weak learners”—to create one strong model. The idea is that while each individual model might make mistakes, by combining their predictions you can reduce errors and improve overall performance.
+F66: Diversity: Each model might see the data slightly differently or make different errors.
+Combination: The final prediction is made by combining (averaging, voting, or using a meta-model) the outputs of individual models.
+Improved Accuracy & Robustness: Ensembles tend to perform better and be more robust than a single model, as they can compensate for each other’s weaknesses.
+B68: Boosting
+D68: Boosting builds a strong model by training several weak models sequentially. Each model focuses more on the mistakes made by the previous ones.
+B70: Bagging
+D70: Bagging aims to reduce the variance of a model by training multiple models independently on different random samples of the data.
+B72: Stacking
+D73: Stacking combines multiple different models (which could be of various types) by training a “meta-model” that learns how best to combine their predictions.
+B75: Small Scale Learning
+D75: Usually examples for training consisting of tens to thousands
+B77: Large Scale Learning
+D77: Examples for training sets exceeding millions
+B79: Regularization
+D79: Simple functions can''t often capture the full essense of the data, but taking too complicated functins tend to overfit on these data points. So to ""dumb""down the complex models a bit to generalize them, we introduce regularization that is a form of penalizing them on purpose so that they don''t overfit
+B81: ReinforceMent Learning
+B83: Value Based Method
+D83: we learn a value function that maps a state to the expected value of being at that state.
+B85: Policy Based Method
+B87: Horizon Effect
+D87: In case of decision trees, it is almost impossible to tel if a single new node will change the tree structure dramatically and lead to a better result
+
+LINKS
+D17: https://www.youtube.com/watch?v=EuBBz3bI-aA
+
+IMAGES

@@ -165,6 +165,57 @@ Introduce one start with no incoming edges and one accept with no outgoing edges
 
 ---
 
+## 4.3 Kleene's algorithm — hidden seniors' workbook topic, with simulation
+
+**Source:** hidden sheet “Niche Topics”, C6. Kleene's theorem is the equivalence
+result; Kleene's algorithm constructs a regex using dynamic programming over
+allowed intermediate states. It is not merely applying the star operator.
+
+Number states $1,\ldots,n$. Let $R_{ij}^{(k)}$ denote all labels of paths from
+$i$ to $j$ whose internal states are among $1,\ldots,k$.
+
+$$R_{ij}^{(k)}=R_{ij}^{(k-1)}\ \mid\
+R_{ik}^{(k-1)}(R_{kk}^{(k-1)})^*R_{kj}^{(k-1)}.$$
+
+Base $R^{(0)}$: union all direct edge labels, and include $\epsilon$ on the
+diagonal for the zero-edge path; no path is $\emptyset$, not $\epsilon$.
+Either a path never visits state $k$, or it first enters $k$, loops there zero
+or more times, and finally leaves. This is the same decomposition pattern as
+Floyd–Warshall, with union/concatenation/star replacing min/add.
+
+```text
+before allowing k:                  after allowing k:
+i ----d----> j                      i -- (d | a c* b) --> j
+ \          ^
+  a         b
+   v       /
+      k --c--> k
+```
+
+For a start state with loop `a`, a `b` edge to an accepting state with loop `c`,
+the final language is `a*bc*`: zero or more a's, exactly one b, then c's. It
+accepts `b`, `aabcc`; rejects the empty string, `ac`, and `bb`.
+
+```text
+R = matrix of base regular expressions
+for k in 1..n:
+    old = R
+    R = fresh n-by-n matrix
+    for i in 1..n:
+        for j in 1..n:
+            R[i,j] = union(old[i,j],
+                           concat(old[i,k], star(old[k,k]), old[k,j]))
+answer = union of R[start,f] over all accepting f
+```
+
+Use immutable expression nodes or separate matrices so all recurrence operands
+refer to the previous stage. Simplify $\emptyset R=\emptyset$,
+$\epsilon R=R$, $\emptyset\mid R=R$, and $\emptyset^*=\epsilon$.
+There are $O(n^3)$ **symbolic updates**, but expanded regex strings can be
+exponentially large. Do not equate the update count with $O(n^3)$ time to print
+the fully expanded expression. Shared expression DAGs avoid needless copies.
+[Cornell's automaton-to-regex explanation](https://www.cs.cornell.edu/courses/cs2800/2017sp/lectures/lec27-kleene.html).
+
 # 5. DFA minimization and Myhill-Nerode
 
 ## 5.1 Distinguishable states

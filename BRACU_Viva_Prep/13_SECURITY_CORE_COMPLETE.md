@@ -1296,7 +1296,124 @@ The RFC 9846 callout in Section 18 is explicitly marked **current external valid
 
 ---
 
-# 26. Final security self-test
+# 26. Seniors' workbook — safe board simulations and terminology
+
+**Source:** “Things to Explain on Board” B3–B41, BRAC Ques Bank C11/C21/C47.
+Use paper or isolated local toy examples, never another person's network/account.
+
+## 26.1 Man in the middle: encryption without authenticated identity
+
+Mallory substitutes her public DH value in both directions, establishing two
+different secrets rather than breaking the mathematical key exchange:
+
+```text
+Alice                  Mallory                    Bob
+ A=g^a ------->         intercept
+                       M=g^m ------------------->
+                       intercept       <--------- B=g^b
+         <----- M=g^m
+
+Alice-Mallory key: g^(am)    Mallory-Bob key: g^(bm)
+encrypted under K_AM -> decrypt/re-encrypt -> encrypted under K_MB
+```
+
+Toy values $p=23,g=5,a=6,b=15,m=7$ give A=8, B=19, M=17.
+Alice computes $17^6\bmod23=12$; Mallory computes $8^7\bmod23=12$.
+Bob computes $17^{15}\bmod23=15$; Mallory computes $19^7\bmod23=15$.
+Both victims see encryption, but it terminates at Mallory. Authenticate the
+peer's key and exchange transcript. Correctly validated TLS prevents mere
+Wi-Fi/router control from decrypting application data; a compromised endpoint
+or trusted interception certificate changes the threat model.
+
+“Use Bob's RSA public key” also needs proof that it really is Bob's key.
+Factoring the RSA modulus is sufficient to recover the private key; general
+RSA inversion is not proven equivalent to factoring. Weak randomness, padding
+bugs, side channels or stolen keys can compromise deployments without factoring
+a sound modulus. Use §16.3's full toy RSA arithmetic and hybrid-encryption
+explanation; symmetric crypto is normally used for bulk data after authenticated
+key establishment, not public-key encryption of every message byte.
+
+## 26.2 AES state operations you can draw
+
+The 16-byte block is arranged column-major. For bytes 00 through 0f, ShiftRows:
+
+```text
+before                     after row rotations
+00 04 08 0c                00 04 08 0c
+01 05 09 0d                05 09 0d 01
+02 06 0a 0e                0a 0e 02 06
+03 07 0b 0f                0f 03 07 0b
+```
+
+SubBytes is an invertible nonlinear S-box (`00 -> 63`). MixColumns multiplies
+each column by the field matrix with rows `02 03 01 01`, `01 02 03 01`,
+`01 01 02 03`, `03 01 01 02`. Addition is XOR; field reduction uses
+$x^8+x^4+x^3+x+1$. Column `[d4,bf,5d,30]` becomes `[04,66,81,e5]`.
+AddRoundKey XORs the state with a round key.
+
+```text
+AES128(block, key):
+    round_keys = KeyExpansion(key)   # 11 round keys
+    state = block XOR round_keys[0]
+    for round in 1..9:
+        state = SubBytes(state)
+        state = ShiftRows(state)
+        state = MixColumns(state)
+        state = state XOR round_keys[round]
+    state = ShiftRows(SubBytes(state)) XOR round_keys[10]
+    return state
+```
+
+AES-192/256 have 12/14 rounds; block size remains 128 bits. The final round
+omits MixColumns. This block primitive still needs a suitable mode, such as
+authenticated encryption with correct nonce handling. Do not deploy a homemade
+AES implementation. [NIST FIPS 197](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.197-upd1.pdf).
+
+## 26.3 Distinguish similar attack names
+
+| Term | Mechanism | Defensive explanation |
+|---|---|---|
+| IP spoofing | forge source IP field | source filtering and authenticated protocols; IP alone is not identity |
+| DNS spoofing/cache poisoning | false name→address answer | validate DNSSEC where available and validate TLS identity |
+| HTTP spoofing | ambiguous informal name | clarify fake page, forged response, or headers; never trust arbitrary client-supplied identity headers |
+| Email spoofing | forge apparent sender | SPF/DKIM/DMARC address different domain-authentication properties |
+| Email hijacking | compromise mailbox/session | revoke sessions, recover credentials, MFA, audit forwarding rules |
+| Wi-Fi eavesdropping | observe radio/network traffic | link protection plus end-to-end TLS; metadata may remain visible |
+| Web cache poisoning | contaminate a cached response | correct cache-key design and trusted request normalization; not identical to DNS poisoning |
+| Buffer overflow | write beyond an object's bounds | length checks, safe APIs, sanitizers, hardening |
+| SQL injection | input alters query structure | bind data parameters; allowlist dynamic identifiers |
+
+Authentication establishes identity; authorization checks a particular action
+on a particular object. Encryption/hashing do not automatically grant permission.
+Use §19.4's parameterized SQL and §21.1's safe replacement for code drills.
+
+## 26.4 A safe buffer-overflow classroom demonstration
+
+`char name[4]` has four cells. `"ABCD"` requires five bytes including NUL:
+
+```text
+fits:     | A | B | C | NUL |
+too long: | A | B | C | D | NUL -> beyond the object
+```
+
+Out-of-bounds C behavior is undefined: crash, silent corruption or apparent
+success are possible. A practical demo can use dummy input in an isolated local
+program with AddressSanitizer where available, show the diagnostic, and repair
+the bounds. No exploit payload, live target or disabled defenses is necessary
+to demonstrate the bug. A string needs room for its terminator; binary data
+needs explicit length rather than a presumed terminator.
+
+## 26.5 Threat detection versus threat hunting
+
+Detection identifies suspicious activity using rules, analytics or models,
+often generating alerts. Hunting proactively tests a hypothesis in telemetry,
+including activity existing detections may miss. A failed-login alert is a
+detection; investigating whether already-authenticated sessions show suspicious
+device changes is a hunt. A hunt can produce a new detection rule. In research,
+define your actual inputs, procedure, outputs and evaluation instead of assuming
+the title's “detection” or “hunting” proves a particular method or novelty.
+
+# 27. Final security self-test
 
 - [ ] Define every CIA property with one control and one failure example.
 - [ ] State an asset/adversary/trust boundary before proposing a defense.

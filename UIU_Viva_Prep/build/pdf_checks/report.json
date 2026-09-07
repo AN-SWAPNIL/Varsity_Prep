@@ -1,0 +1,119 @@
+{
+  "pdf": "UIU_CSE_Demo_and_Interview_Preparation_Ahmmad_Nur_Swapnil.pdf",
+  "pages": 671,
+  "bookmarks": 242,
+  "chapters": [
+    [
+      1,
+      "UIU CSE Lecturer Demo and Interview Preparation",
+      1
+    ],
+    [
+      1,
+      "UIU Random-Topic Whiteboard Demo and Interview Guide",
+      52
+    ],
+    [
+      1,
+      "C Programming — Current-Slide-and-Code Viva Recall",
+      62
+    ],
+    [
+      1,
+      "Object-Oriented Programming: C++ and Java — Current-Slide Viva Recall",
+      89
+    ],
+    [
+      1,
+      "CSE 103 Discrete Mathematics — Slide-Complete Viva Recall",
+      133
+    ],
+    [
+      1,
+      "Data Structures and Algorithms I -- Slide-Complete Viva Recall Book",
+      204
+    ],
+    [
+      1,
+      "Data Structures and Algorithms II: Slide-Complete Viva Recall",
+      270
+    ],
+    [
+      1,
+      "Database Management Systems — Slide-Complete Viva Recall",
+      357
+    ],
+    [
+      1,
+      "Software Engineering — Slide-Complete Viva Recall",
+      439
+    ],
+    [
+      1,
+      "Operating Systems — Slide-Complete Viva Recall",
+      474
+    ],
+    [
+      1,
+      "Artificial Intelligence — complete slide-grounded viva recall",
+      500
+    ],
+    [
+      1,
+      "Machine Learning — Slide-Complete Viva Recall Book",
+      532
+    ],
+    [
+      1,
+      "Thesis, Research, and Industry Viva Defense",
+      597
+    ],
+    [
+      1,
+      "UIU Relevant Common Interview Questions and Detailed Answers",
+      619
+    ],
+    [
+      1,
+      "Seniors' workbook coverage audit — September 2026",
+      662
+    ]
+  ],
+  "topic_pages": {
+    "Runtime polymorphism": 55,
+    "Linear Diophantine equations": 198,
+    "Build-heap and heapsort are different": 264,
+    "One buy, one later sell": 265,
+    "PCA versus regression, with an actual": 586,
+    "LSTM — gates": 589
+  },
+  "preview_pages": [
+    1,
+    52,
+    55,
+    56,
+    62,
+    89,
+    133,
+    198,
+    199,
+    204,
+    264,
+    265,
+    266,
+    270,
+    357,
+    439,
+    474,
+    500,
+    532,
+    586,
+    587,
+    589,
+    590,
+    597,
+    619,
+    662,
+    671
+  ]
+}

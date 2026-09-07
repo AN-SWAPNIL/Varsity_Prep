@@ -1,0 +1,7 @@
+flowchart LR
+    V["Virtual address<br/>10 | 10 | 12 bits"] --> D["Page directory<br/>select PDE"]
+    D --> T["Second-level table<br/>select PTE"]
+    T --> F["Physical frame number"]
+    V --> O["Unchanged 12-bit offset"]
+    F --> P["Physical address<br/>PFN | offset"]
+    O --> P

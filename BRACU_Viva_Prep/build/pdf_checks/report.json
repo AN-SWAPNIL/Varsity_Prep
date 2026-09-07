@@ -1,0 +1,164 @@
+{
+  "pdf": "BRACU_CSE_Viva_Slide_Based_Detailed_Ahmmad_Nur_Swapnil.pdf",
+  "pages": 950,
+  "bookmarks": 362,
+  "chapters": [
+    [
+      1,
+      "BRACU CSE Faculty Viva — Final Source-Grounded Preparation Pack",
+      72
+    ],
+    [
+      1,
+      "BRAC University Viva — Introduction, Teaching, and Industry Defense",
+      80
+    ],
+    [
+      1,
+      "Data Structures and Algorithms I -- Slide-Complete Viva Recall Book",
+      92
+    ],
+    [
+      1,
+      "Data Structures and Algorithms II: Slide-Complete Viva Recall",
+      158
+    ],
+    [
+      1,
+      "Object-Oriented Programming: C++ and Java — Current-Slide Viva Recall",
+      245
+    ],
+    [
+      1,
+      "C Programming — Current-Slide-and-Code Viva Recall",
+      289
+    ],
+    [
+      1,
+      "Database Management Systems — Slide-Complete Viva Recall",
+      316
+    ],
+    [
+      1,
+      "Operating Systems — Slide-Complete Viva Recall",
+      398
+    ],
+    [
+      1,
+      "Computer Networks — Slide-Complete Viva Recall",
+      424
+    ],
+    [
+      1,
+      "Software Engineering — Slide-Complete Viva Recall",
+      481
+    ],
+    [
+      1,
+      "Artificial Intelligence — complete slide-grounded viva recall",
+      516
+    ],
+    [
+      1,
+      "CSE 103 Discrete Mathematics — Slide-Complete Viva Recall",
+      548
+    ],
+    [
+      1,
+      "Machine Learning — Slide-Complete Viva Recall Book",
+      619
+    ],
+    [
+      1,
+      "Computer Graphics — slide-complete viva recall guide",
+      684
+    ],
+    [
+      1,
+      "Cybersecurity — Core-Complete Viva Recall",
+      742
+    ],
+    [
+      1,
+      "Computer Architecture, Digital Logic, and Microprocessors — Core-Complete Viva Recall",
+      778
+    ],
+    [
+      1,
+      "Theory of Computation and Compiler Design — Slide-Grounded Viva Recall",
+      808
+    ],
+    [
+      1,
+      "Numerical Methods — Core-Complete Viva Recall",
+      839
+    ],
+    [
+      1,
+      "Thesis, Research, and Industry Viva Defense",
+      851
+    ],
+    [
+      1,
+      "Last-Day Recall, Reported Questions, and Mock Vivas",
+      873
+    ],
+    [
+      1,
+      "Core CSE Viva and Interview Question Bank",
+      886
+    ],
+    [
+      1,
+      "Seniors' workbook coverage audit — September 2026",
+      941
+    ]
+  ],
+  "topic_pages": {
+    "Build-heap and heapsort are different": 152,
+    "One buy, one later sell": 153,
+    "Runtime polymorphism": 245,
+    "Linear Diophantine equations": 613,
+    "PCA versus regression, with an actual": 673,
+    "LSTM — gates": 676,
+    "Man in the middle: encryption": 774
+  },
+  "preview_pages": [
+    1,
+    72,
+    80,
+    92,
+    152,
+    153,
+    154,
+    158,
+    245,
+    246,
+    289,
+    316,
+    398,
+    424,
+    481,
+    516,
+    548,
+    613,
+    614,
+    619,
+    673,
+    674,
+    676,
+    677,
+    684,
+    742,
+    774,
+    775,
+    778,
+    808,
+    839,
+    851,
+    873,
+    886,
+    941,
+    950
+  ]
+}

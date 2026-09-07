@@ -1,0 +1,14 @@
+# 10. Computer Archi (visible)
+
+B8: IEEE 754 Floating Point representation
+D8: Single Precision and Double Precision
+F8: Decimal to IEEE 754 Floating Point Representation
+B10: RISC vs CISC
+F10: RISC vs CISC | Computer Organization & Architecture - YouTube
+B12: Single Cycle instruction vs Multi Cycle Instruction
+
+LINKS
+F8: https://www.youtube.com/watch?v=8afbTaA-gOQ
+F10: https://www.youtube.com/watch?v=ZW1gb3h-f9k&t=432s
+
+IMAGES

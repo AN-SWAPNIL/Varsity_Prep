@@ -1,0 +1,168 @@
+# 4. DSA (visible)
+
+B5: Find cycle of undirected graph using disjoint set
+B7: Quicksort worked out
+E7: Analysis of Quick Sort Algorithm | Time complexity of Quick Sort Algorithm | O(n^2) | O(n log n)
+B9: Why do we use randomized quicksort?
+E9: Randomized QuickSort leverages random pivot selection to make O(nlogn) complexity likely in practice. It is efficient, in-place, but not stable.
+B11: Underflow vs Overflow in data structures
+B13: Complete vs Full Binary Tree
+E13: Trees   2 Complete and Full
+F13: 004 Full binary tree and Complete Binary Tree
+B15: BFS
+D15: Regular Runtime on Adj List: O(V+E)
+For Sparse Graph: O(V)
+For Dense Graph: O(V^2)
+
+BFS is a complete Algorithm
+BFS is only optimal for unweighted/same path cost graphs
+E15: Breadth-first search in 4 minutes
+B17: DFS
+D17: Same as BFS
+
+DFS is not a complete algorithm
+DFS is much faster than BFS when the solution has a chance of being deep in the graph
+E17: Depth-first search in 4 minutes
+B19: Heaps
+C19: Used for constant time access of smallest/largest element
+E19: Heaps in 3 minutes — Intro
+F19: Heaps in 6 minutes — Methods
+B21: HeapSort
+C21: Time Complexity: O(nlogn)
+Space complexity O(1)
+D21: 
+
+
+Works well on large dataseets due to inplace sorting and sorting in disk
+Has more constant factor overhead than quicksort in avg runtime cases
+E21: Heap sort in 4 minutes
+H21: BuildHeap and Heapify function are not the same
+B23: Merge Sort
+C23: Time Complexity: O(nlogn)
+Space Complexity: O(n)
+D23: Quick Points for Interview:
+Divide and Conquer: Splits array recursively, then merges sorted halves.
+Best for Disk-Based Sorting: Handles large data that can't fit into memory.
+Stable and Predictable: Unlike QuickSort, performance is not affected by input order.
+Trade-Off: High memory usage and slower for small datasets compared to in-place algorithms like QuickSort.
+E23: Merge sort in 3 minutes - YouTube
+B25: Binary Search Tree
+C25: Deletion(In BST):
+D25: 3 Cases:
+a. Leaf Node: DIrectly Delete it, O(1) [Given the node, otherwise we need to search it first]
+b. Node with one children: Delete it and replace it with children node/branch.O(1)
+c. Node with 2 childrens: Swap the node with it's inorder successor or predessesor, then the new position of the node will fall under case a or b 
+
+
+C26: Look-up
+D26: Look up in a BST is on avg O(logn). but if tree is skewed, it may be O(n)
+B30: Binary Tree
+C30: Deletion: O(n). Because a BT is not necessarily balanced.
+                O(nlogn) if balanced somehow
+B32: Binary Search
+C33: How can we do binary search for an value where the number of elements in the array is infinite?
+
+Ans: Use exponential seraching
+
+
+
+D33: 1. Full Binary Tree (Internal node has 0/2 children)
+2. Perfect Binary Tree
+3. Complete Binary Tree
+4. Degenerate Tree
+5. Skewed Tree
+6. Balanced Binary Tree
+C34: Binary Search vs Linear Search:
+
+a. If we just need to search one elemnent in an unsorted array, use Linear search. O(n)
+b. If we just need to search one elemnet in a sorted array, use Binary Search. O(logn)
+c. If we need to do k queries in an array, it's best to use Binary search. First sorting and then query.
+This will take a total of O(nlogn) + O(klogn) time. But for linear search it will take O(nk) time
+
+Complete under the assumption that input array is sorted
+B36: Divide and Conquer
+C36: Divide and Conquer: Solves a problem by breaking it into independent subproblems (or treats them as independent). No caching is done, so overlapping subproblems are recomputed multiple times, leading to inefficiency in cases where subproblems overlap.
+
+
+E36: L-3.0: Divide and Conquer | Algorithm - YouTube
+B38: Dynamic Programming
+C38: Dynamic Programming: Leverages overlapping substructure by solving each subproblem only once and caching (memoization or tabulation) the results for future reuse. This eliminates redundant computations and makes the approach efficient.
+B40: Basic OOP Concepts
+B42: Call by Value by Call by reference
+C42: Pass by Value:
+A copy of the actual value is passed to the function.
+Changes made inside the function do not affect the original variable.
+
+Pass by Reference:
+A reference (or address) of the actual variable is passed to the function.
+Changes made inside the function affect the original variable.
+E42: Call by value and Call by reference in c with an example | Visualizing Pointers in C - YouTube
+B44: Constant Time vs Near Complex Time
+C44: O(1) vs O(log*n)
+B46: Hash Table 
+C46: If we know all the datapoints in advance, then we can theoratically design a perfect hash function
+D46: Load Factor: (Total number of stored items/array size)
+
+Simple Uniform Hashing: We shall assume that any given element is equally likely to hash into any of the m slots, independently of where any other element has hashed to.
+
+Open Addressing: All elements occupy the hashtable itself. No extra linked list branches or anything like that. Probing is done for open addressing
+
+Probing: The act of searching for an empty space in the hastable for insertion
+
+Deletion in Open Addressing: When we delete a key, we mark it as deleted instead of NIL. Otherwise when searching we might not find the element we were suppose to, eventhough it exists.
+Chaining is more commonly used when frequent deletion in hash table is to be done
+
+E46: Hash Tables and Hash Functions
+B48: Hash Table vs Array comparison
+C48: Key-Value Flexibility: Use meaningful keys instead of integer indices.
+Efficient Lookups: Average 𝑂(1)
+O(1) for search, insert, and delete operations.
+Dynamic Growth: Adapts to varying data sizes without manual resizing.
+Memory Efficiency: Handles sparse data well.
+Versatility: Supports diverse key types and dynamic datasets.
+B50: Hash Functions
+C50: Hash Function has two parts: Hash code and Compression Function.
+The goal of a hash function is to disperse the keys in a random way so that less collision occurs
+
+Hash Code: Transforms the key into an integer
+Compression Function: Transforms the integers into a int ranged form 0 to N-1
+D50: Primary Clustering: When a group of elements is hashed to adjacent slots, creating long clusters of occupied slots.
+
+Secondary Clustering: Secondary clustering occurs when keys that hash to the same initial position follow the same probe sequence and end up clustering together. 
+B52: Regular Hashing vs Uniform Hashing
+C52: Regular Hashing: Practical implementation of hashing, distributions may not be perfect or uniform
+
+Uniform hashing: All positions are equally likely to be hashed for the given key
+B54: Double Hashing
+C54: Double hashing uses a hash function of the form
+	h(k, i) = ( h1(k) + ih2(k) ) mod m
+where both h1 and h2 are auxiliary hash functions.
+The value h2(k) must be relatively prime to the hash-table size m for the entire hash table to be searched. 
+A convenient way to ensure this condition is to let m be a power of 2 and to design h2 so that it always produces an odd number. 
+Another way is to let m be prime and to design h2 so that it always returns a positive integer less than m.
+B56: Rehashing
+C56: Done when Load Factor>=.9 for separate chaining, Load Factor>=.5 for open addressing
+B58: Time Complexity Measure Methods
+B62: Differnece between method overloading and method overring
+B64: Shallow Copy vs Deep Copy
+B66: Diamond Problem with JAVA
+B68: Virtual Function
+C68: Used for Dynamic Binding, if we put virtual keyword in front of a function it will use the child class def even if addressed by parent pointer. If no virutal word, then it accesses base class
+B70: Pure Virtual Function
+B72: Abstract Class
+
+LINKS
+E7: https://www.youtube.com/watch?v=YQhfIoK8UDY
+E13: https://www.youtube.com/watch?v=Lta807sEOQY
+F13: https://www.youtube.com/watch?v=bvpiyKo9hnI
+E15: https://www.youtube.com/watch?v=HZ5YTanv5QE
+E17: https://www.youtube.com/watch?v=Urx87-NMm6c
+E19: https://www.youtube.com/watch?v=0wPlzMU-k00
+F19: https://www.youtube.com/watch?v=pAU21g-jBiE
+E21: https://www.youtube.com/watch?v=2DmK_H7IdTo
+E23: https://www.youtube.com/watch?v=4VqmGXwpLqc
+E36: https://www.youtube.com/watch?v=I8w2XN0w-fQ
+E42: https://www.youtube.com/watch?v=kCiNYzHuIX8
+E46: https://www.youtube.com/watch?v=KyUTuwz_b7Q
+
+IMAGES

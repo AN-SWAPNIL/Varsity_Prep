@@ -704,6 +704,134 @@ Security and safety overlap but differ: safety protects people/environment from 
 - “DMA means CPU is uninvolved.” CPU/driver sets up, synchronizes, maps buffers, and handles completion/errors.
 - “An RTOS makes a system real-time.” Schedulability and bounded worst-case behavior do.
 
+# Seniors' workbook board cards — IEEE 754, multicycle control, and FSMs
+
+**Source:** Computer Archi B8/B10/B12, BRAC Ques Bank C9/C13/C35, Random
+Screenshots image5. These add calculations and state tables to the original
+hardware explanations; hardware is not treated as a weak subject.
+
+## H1. IEEE 754 binary32 and binary64 — encode -13.25
+
+| Format | Sign | Exponent bits | Fraction bits | Exponent bias |
+|---|---:|---:|---:|---:|
+| binary32 (single) | 1 | 8 | 23 | 127 |
+| binary64 (double) | 1 | 11 | 52 | 1023 |
+
+For a normal finite value with exponent field $E$ and fraction integer $F$:
+
+$$x=(-1)^s\left(1+\frac{F}{2^t}\right)2^{E-b},$$
+
+where $t$ is fraction width and $b$ is bias. The leading 1 is implicit, giving
+24 or 53 significant binary bits for normal values.
+
+```text
+13       = 1101 in binary
+.25      = .01 in binary
+13.25    = 1101.01 = 1.10101 * 2^3
+sign     = 1 (negative)
+exponent = 3 + 127 = 130 = 10000010
+fraction = 10101000000000000000000
+
+binary32: 1 | 10000010 | 10101000000000000000000
+hex:      C1540000
+```
+
+For binary64, exponent is $3+1023=1026$, and the same `10101` fraction is
+zero-padded to 52 bits. This number is exactly representable because its
+fraction is a finite binary fraction; decimal 0.1 is not.
+
+**Why bias the exponent?** Encode negative and positive exponents using an
+unsigned field. For positive finite numbers, exponent/fraction bit order then
+supports useful lexicographic magnitude ordering. This does not mean comparing
+arbitrary floating-point bit patterns as unsigned integers implements all IEEE
+comparisons: negative numbers, signed zeros and NaNs need special handling.
+Bias is a representation offset, not the ML statistical bias.
+
+| Exponent field | Fraction | Meaning |
+|---|---|---|
+| 0 | 0 | signed zero |
+| 0 | nonzero | subnormal: $(-1)^s(F/2^t)2^{1-b}$, no implicit 1 |
+| neither all zero nor all one | any | normal formula |
+| all ones | 0 | signed infinity |
+| all ones | nonzero | NaN |
+
+Smallest positive binary32 normal is $2^{-126}$; smallest positive subnormal
+is $2^{-149}$. Subnormals provide gradual underflow rather than an abrupt jump
+from the smallest normal to zero. Numeric underflow concerns very tiny results;
+stack underflow concerns an empty structure. Rounding mode and exception flags
+matter: not every result in the subnormal range necessarily signals an
+underflow exception.
+
+## H2. Single-cycle versus multicycle versus pipeline: numbers, not slogans
+
+Suppose IF/ID/EX/MEM/WB each takes 200 ps; ignore register and control overhead.
+
+| Organization | Clock | Load latency | ALU instruction latency | Long-stream throughput |
+|---|---:|---:|---:|---|
+| Single-cycle | 1000 ps | 1 cycle = 1000 ps | 1 cycle = 1000 ps | one per 1000 ps |
+| Multicycle, no overlap | 200 ps | 5 cycles = 1000 ps | 4 cycles = 800 ps, skipping memory | depends on instruction mix |
+| Ideal 5-stage pipeline | 200 ps | 5 stages = 1000 ps | passes pipeline stages | one per 200 ps after filling |
+
+With 50% loads and 50% four-cycle ALU instructions, multicycle CPI is 4.5,
+time/instruction 900 ps. This does not contradict its higher CPI: cycle times
+differ. Multicycle control uses an FSM to select the next step and reuses units;
+pipelining overlaps **different** instructions, introducing hazards. Unequal
+stage delays, setup overhead, branches and memory misses change these numbers.
+
+```text
+multicycle: I1 IF ID EX MEM WB | I2 IF ID EX WB
+pipeline:   I1 IF ID EX MEM WB
+               I2 IF ID EX MEM WB
+                  I3 IF ID EX MEM WB
+```
+
+RISC/CISC describe ISA design traditions, not a universal speed ranking;
+single/multicycle/pipeline describe implementations. A given ISA can have more
+than one implementation style.
+
+## H3. Overlapping 101 detector — correct Moore/Mealy diagram conventions
+
+In a **Mealy** diagram label edges `input/output`. States represent the longest
+suffix so far that is a prefix of `101`: A=none, B=`1`, C=`10`.
+
+| State | input 0: next/output | input 1: next/output |
+|---|---|---|
+| A | A/0 | B/0 |
+| B | C/0 | B/0 |
+| C | A/0 | B/1 |
+
+```text
+A --1/0--> B --0/0--> C --1/1--> B
+A --0/0--> A     B --1/0--> B     C --0/0--> A
+```
+
+The C→B transition emits 1 and retains the final `1` as the next match's prefix.
+Input `1 0 1 0 1` gives output `0 0 1 0 1`.
+
+In a **Moore** diagram put output **inside/on the state**, and label edges with
+input only. Add D=`101 just recognized`, output 1; A/B/C output 0.
+
+| State/output | input 0 → | input 1 → |
+|---|---|---|
+| A/0 | A | B |
+| B/0 | C | B |
+| C/0 | A | D |
+| D/1 | C | B |
+
+```text
+(A/0) --1--> (B/0) --0--> (C/0) --1--> (D/1)
+                                          D --0--> C, D --1--> B
+```
+
+After each consumed bit of `10101`, states are B,C,D,C,D, outputs 0,0,1,0,1.
+There is also the initial A output 0 before input consumption. Mealy can react
+combinationally to the current input; Moore reacts when the state register
+changes. Whether a classroom trace calls this “one cycle later” depends on
+whether outputs are sampled before/after the edge and whether Mealy output is
+registered. State the timing convention instead of shifting sequences blindly.
+The workbook screenshot's labels are ambiguous; these tables define every
+transition, reset state and output explicitly.
+
 ## 23. DLD Slide Additions: Minimization, Arithmetic, PLDs, and Asynchronous Machines
 
 ### 23.1 Quine–McCluskey tabulation

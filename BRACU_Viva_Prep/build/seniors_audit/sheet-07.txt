@@ -1,0 +1,65 @@
+# 7. AI (visible)
+
+B4: Agent
+C4: Intelligent Agent
+C5: Discrete Agent
+C6: Rational Agent
+C7: Ideal Agent
+C8: Autonomous Agent
+B10: Percepts
+B12: Environment
+C12: Fully Observable
+C13: Deterministic
+C14: Episodic
+C15: Static
+C16: Discrete
+C17: Single Agent
+B19: Uninformed Search
+E19: While searching you have no clue whether one non-goal state is better than any other. Your search is blind.
+G19: Examples: BFS, DFS, Iterative Deepening Search, Depth Limited Search etc
+B21: Optimality
+E21: Finding the optimal solution first if it exists
+G21: BFS is optimal given unit path cost
+DFS is not optimal
+Iterative DFS is optimal
+B23: Completeness
+E23: What is a Complete Algorithm?
+A complete algorithm is one that:
+
+Terminates for all valid inputs.
+Produces a correct solution if one exists.
+Indicates failure when no valid solution exists.
+G23: BFS is complete, given width of tree is finite
+DFS is not complete, for infinite branches
+Iterative Deepening Search and Depth Limited Search are complete
+B25: Informed Search
+E25: Informed Search, also known as Heuristic Search, is a type of search algorithm in Artificial Intelligence that uses additional knowledge about the problem to guide the search toward the goal more efficiently.
+B28: Admissible Heuristic
+E28: An algorithm is admissible if it is guaranteed to find the optimal solution (i.e., the least-cost path to the goal) whenever a solution exists.
+
+
+h(n) should never overestimate the actual cost to reach the goal. It can either be exact or an underestimate.
+
+
+
+B30: PEAS Framework
+E30: Performance
+Environment
+Actuators
+Sensors
+B32: Zero Sum Game
+E32: A zero-sum game is a situation where one player's gain is equal to another player's loss, resulting in a net gain of zero.
+B34: Minimax Algorithm
+C34: a. Complete when the game tree is finite and there is eventually a terminal state
+
+b. Minimax is kind of like DFS, but difference in the sense that it evaluates nodes and also alternates between maximum and minimum nodes. DFS merely visits nodes and doesn't do any alteration
+
+c. Minimax fails with randomness because it assumes all moves are deliberate decisions aimed at maximizing or minimizing utility.
+
+d. Doesn't work for more than two players, for that we can explore Nash Equilibrium
+D34: Time Complexity: O(b^d)
+E34: The Minimax algorithm is a decision-making algorithm used in two-player, zero-sum games, where one player's gain is the other player's loss. It works by recursively exploring all possible moves in the game tree, assuming both players play optimally: the maximizing player aims to maximize their score, while the minimizing player tries to minimize the maximizing player's score. The algorithm evaluates all possible outcomes and chooses the move that leads to the best possible result for the current player, assuming the opponent also plays optimally. It is typically used in games like chess or tic-tac-toe.
+
+LINKS
+
+IMAGES
